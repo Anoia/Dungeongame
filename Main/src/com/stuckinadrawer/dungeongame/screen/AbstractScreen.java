@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.stuckinadrawer.dungeongame.DungeonGame;
 
-public class AbstractScreen implements Screen{
+class AbstractScreen implements Screen{
 
     DungeonGame dungeonGame;
     BitmapFont font;
     SpriteBatch batch;
 
 
-    public AbstractScreen(DungeonGame dungeonGame){
+    AbstractScreen(DungeonGame dungeonGame){
         this.dungeonGame = dungeonGame;
         this.font = new BitmapFont(Gdx.files.internal("visitor.fnt"), Gdx.files.internal("visitor_0.png"), false);
         this.batch = new SpriteBatch();

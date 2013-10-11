@@ -15,12 +15,13 @@ import com.stuckinadrawer.dungeongame.components.Solid;
 
 public class PlayerInputSystem implements InputProcessor{
 
-    World world;
-    OrthographicCamera camera;
-    Entity[][] level;
+    private World world;
+    private OrthographicCamera camera;
+    private Entity[][] level;
     @Mapper
+    private
     ComponentMapper<Solid> solidComponentMapper;
-    Vector3 oldScreenCoordsDragged;
+    private Vector3 oldScreenCoordsDragged;
 
     public PlayerInputSystem(World world, OrthographicCamera camera, Entity[][] level) {
         this.world = world;
@@ -49,22 +50,22 @@ public class PlayerInputSystem implements InputProcessor{
         int y = position.getY();
         switch (character){
             case 'w':
-                if(!isSolid(x, y+1)){
+                if(isWalkable(x, y + 1)){
                     position.setY(y+1);
                 }
                 break;
             case 'a':
-                if(!isSolid(x-1, y)){
+                if(isWalkable(x - 1, y)){
                     position.setX(x-1);
                 }
                 break;
             case 's':
-                if(!isSolid(x, y-1)){
+                if(isWalkable(x, y - 1)){
                     position.setY(y-1);
                 }
                 break;
             case 'd':
-                if(!isSolid(x+1, y)){
+                if(isWalkable(x + 1, y)){
                     position.setX(x+1);
                 }
                 break;
@@ -73,16 +74,11 @@ public class PlayerInputSystem implements InputProcessor{
         return false;
     }
 
-    private boolean isSolid(int x, int y){
+    private boolean isWalkable(int x, int y){
 
         Entity tile = level[x][y];
         Solid solid = solidComponentMapper.get(tile);
-        if(solid!=null){
-            return true;
-        } else{
-            return false;
-
-        }
+        return solid == null;
 
     }
 

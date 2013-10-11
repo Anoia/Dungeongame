@@ -1,6 +1,5 @@
 package com.stuckinadrawer.dungeongame.screen;
 
-import com.artemis.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,11 +7,10 @@ import com.stuckinadrawer.dungeongame.DungeonGame;
 
 public class TitleScreen extends AbstractScreen {
 
-    float time = 0;
+    private float time = 0;
 
     public TitleScreen(DungeonGame dungeonGame) {
         super(dungeonGame);
-        World world = new World();
     }
 
     @Override

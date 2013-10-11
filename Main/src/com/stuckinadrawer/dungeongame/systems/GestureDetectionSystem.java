@@ -12,10 +12,11 @@ import com.stuckinadrawer.dungeongame.components.Solid;
 
 public class GestureDetectionSystem implements GestureDetector.GestureListener{
 
-    World world;
-    OrthographicCamera camera;
-    Entity[][] level;
+    private World world;
+    private OrthographicCamera camera;
+    private Entity[][] level;
     @Mapper
+    private
     ComponentMapper<Solid> solidComponentMapper;
 
     public GestureDetectionSystem(World world, OrthographicCamera camera, Entity[][] level){

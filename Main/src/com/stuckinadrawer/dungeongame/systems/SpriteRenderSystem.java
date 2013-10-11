@@ -20,8 +20,10 @@ import java.util.*;
 
 public class SpriteRenderSystem extends EntitySystem{
     @Mapper
+    private
     ComponentMapper<Position> positionMapper;
     @Mapper
+    private
     ComponentMapper<Sprite> spriteMapper;
 
     private HashMap<String, AtlasRegion> regions;
@@ -68,8 +70,8 @@ public class SpriteRenderSystem extends EntitySystem{
     @Override
     protected void processEntities(ImmutableBag<Entity> entities) {
 
-        for(int i = 0; sortedEntities.size() > i; i++) {
-            process(sortedEntities.get(i));
+        for (Entity sortedEntity : sortedEntities) {
+            process(sortedEntity);
         }
     }
 
