@@ -1,0 +1,81 @@
+dungeon.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+floor1
+  rotate: false
+  xy: 10, 136
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+enemy1
+  rotate: false
+  xy: 132, 10
+  size: 26, 30
+  orig: 32, 32
+  offset: 3, 1
+  index: -1
+torch1
+  rotate: false
+  xy: 202, 10
+  size: 10, 32
+  orig: 32, 32
+  offset: 11, 0
+  index: -1
+player
+  rotate: false
+  xy: 52, 10
+  size: 30, 32
+  orig: 32, 32
+  offset: 2, 0
+  index: -1
+floor2
+  rotate: false
+  xy: 10, 94
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+banner1
+  rotate: false
+  xy: 10, 220
+  size: 28, 26
+  orig: 32, 32
+  offset: 2, 4
+  index: -1
+enemy2
+  rotate: false
+  xy: 10, 178
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall1
+  rotate: false
+  xy: 10, 52
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wall2
+  rotate: false
+  xy: 10, 10
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+enemy4
+  rotate: false
+  xy: 92, 10
+  size: 30, 30
+  orig: 32, 32
+  offset: 2, 0
+  index: -1
+enemy3
+  rotate: false
+  xy: 168, 10
+  size: 24, 32
+  orig: 32, 32
+  offset: 3, 0
+  index: -1
