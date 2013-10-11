@@ -5,6 +5,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.managers.TagManager;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -87,8 +88,13 @@ public class PlayerInputSystem implements InputProcessor{
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("ScreenX: "+screenX +" ScreenY: "+screenY+" pointer: + "+pointer + " button: "+button);
+
         Vector3 v = new Vector3(screenX, screenY, 0);
+        oldScreenCoordsDragged = new Vector3(v);
+
+        Gdx.app.log("hallo", "TOUCH DOWN: X: " + screenX + " Y: "+ screenY);
+        System.out.println("ScreenX: "+screenX +" ScreenY: "+screenY+" pointer: + "+pointer + " button: "+button);
+        v = new Vector3(screenX, screenY, 0);
         camera.unproject(v);
 
         int x = (int) v.x/Constants.TILE_SIZE;
@@ -103,15 +109,18 @@ public class PlayerInputSystem implements InputProcessor{
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        Gdx.app.log("hallo", "TOUCH UP");
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        Gdx.app.log("hallo", "TOUCH DRAGGED");
         Vector3 v = new Vector3(screenX, screenY, 0);
         float deltaX = oldScreenCoordsDragged.x - v.x;
         float deltaY = v.y - oldScreenCoordsDragged.y;
         camera.translate(deltaX, deltaY, 0);
+        Gdx.app.log("hallo", "DELTA X: "+deltaX+" Y: "+deltaY);
         oldScreenCoordsDragged = new Vector3(v);
         return false;
     }

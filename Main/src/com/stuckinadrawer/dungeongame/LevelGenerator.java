@@ -2,6 +2,7 @@ package com.stuckinadrawer.dungeongame;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 
 import java.util.ArrayList;
@@ -14,24 +15,24 @@ public class LevelGenerator {
 
     private Tiles[][] level;
     private ArrayList<Room> rooms;
-    private int levelWidth = 64;
-    private int levelHeight = 64;
+    private int levelWidth = 30;
+    private int levelHeight = 30;
     private World world;
 
     int roomCount;
     int minSize = 5;
-    int maxSize = 20;
+    int maxSize = 10;
 
 
     public LevelGenerator(World world){
         this.world = world;
-        roomCount = MathUtils.random(20, 25);
+        roomCount = MathUtils.random(2, 4);
         initEmptyLevel();
     }
 
     public Entity[][] generateLevel(){
 
-
+        Gdx.app.log("hallo", "Level is now generating");
 
         generateRooms();
         moveRoomsCloser();

@@ -6,12 +6,14 @@ import com.artemis.managers.TagManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.MathUtils;
 import com.stuckinadrawer.dungeongame.Constants;
 import com.stuckinadrawer.dungeongame.DungeonGame;
 import com.stuckinadrawer.dungeongame.EntityFactory;
 import com.stuckinadrawer.dungeongame.LevelGenerator;
 import com.stuckinadrawer.dungeongame.components.Position;
+import com.stuckinadrawer.dungeongame.systems.GestureDetectionSystem;
 import com.stuckinadrawer.dungeongame.systems.PlayerInputSystem;
 import com.stuckinadrawer.dungeongame.systems.SpriteRenderSystem;
 
@@ -46,7 +48,7 @@ public class GameScreen extends AbstractScreen{
         LevelGenerator generator = new LevelGenerator(world);
         level = generator.generateLevel();
 
-        Gdx.input.setInputProcessor(new PlayerInputSystem(world, camera, level));
+        Gdx.input.setInputProcessor(new GestureDetector(new GestureDetectionSystem(world, camera, level)));
         EntityFactory.createEnemy(world, 0, 0).addToWorld();
 
 
