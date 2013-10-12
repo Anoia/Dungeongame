@@ -11,16 +11,16 @@ public class LevelGenerator {
 
     private int roomCount;
     private int minSize = 5;
-    private int maxSize = 10;
+    private int maxSize = 15;
     private Tiles[][] level;
     private ArrayList<Room> rooms;
-    private int levelWidth = 30;
-    private int levelHeight = 30;
+    private int levelWidth = 64;
+    private int levelHeight = 64;
     private World world;
 
     public LevelGenerator(World world) {
         this.world = world;
-        roomCount = MathUtils.random(2, 4);
+        roomCount = MathUtils.random(15, 25);
         initEmptyLevel();
     }
 

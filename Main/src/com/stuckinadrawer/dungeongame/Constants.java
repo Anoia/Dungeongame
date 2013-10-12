@@ -6,5 +6,6 @@ public class Constants {
 
     public class Tags{
         public static final String PLAYER = "player";
+        public static final String PLAYER_PATHFINDING_GOAL = "goal";
     }
 }

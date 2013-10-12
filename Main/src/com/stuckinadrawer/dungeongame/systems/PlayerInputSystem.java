@@ -15,7 +15,7 @@ import com.stuckinadrawer.dungeongame.components.Solid;
 
 public class PlayerInputSystem implements InputProcessor{
 
-    private World world;
+    World world;
     private OrthographicCamera camera;
     private Entity[][] level;
     @Mapper

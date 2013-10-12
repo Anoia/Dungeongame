@@ -9,6 +9,8 @@ import com.stuckinadrawer.dungeongame.components.Sprite;
 
 public class EntityFactory {
 
+    //###WORLD ENTITIES###
+
     public static Entity createPlayer(World world, int x, int y){
         Entity entity = world.createEntity();
 
@@ -54,6 +56,15 @@ public class EntityFactory {
         entity.addComponent(new Position(x, y));
         entity.addComponent(new Sprite("wall2", Sprite.Layer.TILE));
         entity.addComponent(new Solid());
+        return entity;
+    }
+
+    //###OTHER ENTITIES###
+
+    public static Entity createPathfindingGoal(World world, int x, int y){
+        Entity entity = world.createEntity();
+        entity.addComponent(new Position(x, y));
+        world.getManager(TagManager.class).register(Constants.Tags.PLAYER_PATHFINDING_GOAL, entity);
         return entity;
     }
 }

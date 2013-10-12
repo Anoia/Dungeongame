@@ -8,13 +8,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.stuckinadrawer.dungeongame.Constants;
+import com.stuckinadrawer.dungeongame.EntityFactory;
 import com.stuckinadrawer.dungeongame.components.Solid;
 
 public class GestureDetectionSystem implements GestureDetector.GestureListener{
 
     private World world;
     private OrthographicCamera camera;
-    private Entity[][] level;
     @Mapper
     private
     ComponentMapper<Solid> solidComponentMapper;
@@ -23,7 +25,6 @@ public class GestureDetectionSystem implements GestureDetector.GestureListener{
 
         this.world = world;
         this.camera = camera;
-        this.level = level;
         solidComponentMapper = world.getMapper(Solid.class);
 
     }
@@ -35,9 +36,14 @@ public class GestureDetectionSystem implements GestureDetector.GestureListener{
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-
-
         Gdx.app.log("hallo", "TAP: X: " + x + " Y: "+ y);
+
+        Vector3 v = new Vector3(x, y, 0);
+        camera.unproject(v);
+
+        Entity goal = EntityFactory.createPathfindingGoal(world, (int) v.x/ Constants.TILE_SIZE, (int) v.y/Constants.TILE_SIZE);
+        goal.addToWorld();
+        world.getSystem(PathfindingSystem.class).processSystem();
         return false;
     }
 

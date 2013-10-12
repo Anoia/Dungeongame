@@ -15,6 +15,11 @@ public class Position extends Component {
         this(0, 0);
     }
 
+    public void set(Position pos){
+        this.x = pos.x;
+        this.y = pos.y;
+    }
+
 
     public int getX() {
         return x;
@@ -30,5 +35,10 @@ public class Position extends Component {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString(){
+        return "("+this.getX()+","+this.getY()+")";
     }
 }
