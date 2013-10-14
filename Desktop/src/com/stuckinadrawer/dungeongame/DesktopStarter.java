@@ -9,8 +9,8 @@ public class DesktopStarter {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "The Dungeongame";
         cfg.useGL20 = true;
-        cfg.width = 800*2;
-        cfg.height = 480*2;
+        cfg.width = 800;
+        cfg.height = 480;
         new LwjglApplication(new DungeonGame(), cfg);
     }
 }

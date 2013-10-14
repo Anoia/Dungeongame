@@ -31,11 +31,21 @@ public class LevelGenerator {
         generateRooms();
         moveRoomsCloser();
         buildCorridors();
+        createEnemies();
         putRoomsInMap();
         buildWalls();
 
 
         return createEntityLevel();
+    }
+
+    private void createEnemies() {
+        for(Room r: rooms){
+            int x = MathUtils.random(r.x+1, r.x+r.width-1);
+            int y = MathUtils.random(r.y+1, r.y+r.height-1);
+            Entity entity = EntityFactory.createEnemy(world, x, y);
+            entity.addToWorld();
+        }
     }
 
     private void buildWalls() {

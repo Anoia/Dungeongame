@@ -30,7 +30,7 @@ public class PathfindingSystem extends VoidEntitySystem {
     protected void processSystem() {
         Position playerGoal = world.getManager(TagManager.class).getEntity(Constants.Tags.PLAYER_PATHFINDING_GOAL).getComponent(Position.class);
         Position player = world.getManager(TagManager.class).getEntity(Constants.Tags.PLAYER).getComponent(Position.class);
-        Gdx.app.log("hallo", "find path from: "+ player.getX()+" "+player.getY()+" to: " +playerGoal.getX() + " " + playerGoal.getY());
+        //Gdx.app.log("hallo", "find path from: "+ player.getX()+" "+player.getY()+" to: " +playerGoal.getX() + " " + playerGoal.getY());
         if(isWalkable(playerGoal.getX(), playerGoal.getY())){
 
             createPath(new Node(player), new Node(playerGoal));
@@ -101,7 +101,7 @@ public class PathfindingSystem extends VoidEntitySystem {
         }
 
         //
-        Gdx.app.log("hallo", "PATH FOUND: ");
+       // Gdx.app.log("hallo", "PATH FOUND: ");
         String pathString = " ";
         LinkedList<Position> path = new LinkedList<Position>();
         Node current = goal;
@@ -111,7 +111,7 @@ public class PathfindingSystem extends VoidEntitySystem {
             path.push(current.pos);
             current = current.parent;
         }
-        Gdx.app.log("hello", pathString);
+       // Gdx.app.log("hello", pathString);
         GameScreen.movementPath = path;
     }
 
@@ -146,8 +146,8 @@ public class PathfindingSystem extends VoidEntitySystem {
         if(isWalkable(neighbour.getX(), neighbour.getY())){
             neighbours.add(new Node(neighbour));
         }
-        System.out.println("Neighbours added!");
-        System.out.println(n.pos.toString() + " has " + neighbours.size() +" acceptable neighbours");
+       // System.out.println("Neighbours added!");
+        //System.out.println(n.pos.toString() + " has " + neighbours.size() +" acceptable neighbours");
         return neighbours;
     }
 

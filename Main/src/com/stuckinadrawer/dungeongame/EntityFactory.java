@@ -3,9 +3,7 @@ package com.stuckinadrawer.dungeongame;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.TagManager;
-import com.stuckinadrawer.dungeongame.components.Position;
-import com.stuckinadrawer.dungeongame.components.Solid;
-import com.stuckinadrawer.dungeongame.components.Sprite;
+import com.stuckinadrawer.dungeongame.components.*;
 
 public class EntityFactory {
 
@@ -16,6 +14,7 @@ public class EntityFactory {
 
         entity.addComponent(new Position(x, y));
         entity.addComponent(new Sprite("player", Sprite.Layer.ACTOR));
+        entity.addComponent(new Health(20));
 
         world.getManager(TagManager.class).register(Constants.Tags.PLAYER, entity);
 
@@ -40,6 +39,8 @@ public class EntityFactory {
         Entity entity = world.createEntity();
         entity.addComponent(new Position(x, y));
         entity.addComponent(new Sprite("enemy1", Sprite.Layer.ACTOR));
+        entity.addComponent(new Health(10));
+        entity.addComponent(new AI());
         return entity;
     }
 

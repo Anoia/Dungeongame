@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.components.Position;
+import com.stuckinadrawer.dungeongame.systems.AISystem;
 import com.stuckinadrawer.dungeongame.systems.GestureDetectionSystem;
 import com.stuckinadrawer.dungeongame.systems.PathfindingSystem;
 import com.stuckinadrawer.dungeongame.systems.SpriteRenderSystem;
@@ -46,6 +47,7 @@ public class GameScreen extends AbstractScreen {
         LevelGenerator generator = new LevelGenerator(world);
         level = generator.generateLevel();
         world.setSystem(new PathfindingSystem(world,level), true);
+        world.setSystem(new AISystem());
         Gdx.input.setInputProcessor(new GestureDetector(new GestureDetectionSystem(world, camera, level)));
         //Gdx.input.setInputProcessor(new PlayerInputSystem(world, camera, level));
         EntityFactory.createEnemy(world, 0, 0).addToWorld();
