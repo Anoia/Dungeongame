@@ -7,8 +7,7 @@ import com.stuckinadrawer.dungeongame.components.*;
 
 public class EntityFactory {
 
-    //###WORLD ENTITIES###
-
+    //###ACTOR ENTITIES###
     public static Entity createPlayer(World world, int x, int y){
         Entity entity = world.createEntity();
 
@@ -21,20 +20,6 @@ public class EntityFactory {
         return entity;
     }
 
-    public static Entity createRoomFloorTile(World world, int x, int y){
-        Entity entity = world.createEntity();
-        entity.addComponent(new Position(x, y));
-        entity.addComponent(new Sprite("floor1", Sprite.Layer.TILE));
-        return entity;
-    }
-
-    public static Entity createCorridorFloorTile(World world, int x, int y){
-        Entity entity = world.createEntity();
-        entity.addComponent(new Position(x, y));
-        entity.addComponent(new Sprite("floor2", Sprite.Layer.TILE));
-        return entity;
-    }
-
     public static Entity createEnemy(World world, int x, int y){
         Entity entity = world.createEntity();
         entity.addComponent(new Position(x, y));
@@ -43,12 +28,33 @@ public class EntityFactory {
         entity.addComponent(new AI());
         return entity;
     }
+    //###TILE ENTITIES###
+
+
+    public static Entity createRoomFloorTile(World world, int x, int y){
+        Entity entity = world.createEntity();
+        entity.addComponent(new Position(x, y));
+        entity.addComponent(new Sprite("floor1", Sprite.Layer.TILE));
+        entity.addComponent(new Tile());
+        return entity;
+    }
+
+    public static Entity createCorridorFloorTile(World world, int x, int y){
+        Entity entity = world.createEntity();
+        entity.addComponent(new Position(x, y));
+        entity.addComponent(new Sprite("floor1", Sprite.Layer.TILE));
+        entity.addComponent(new Tile());
+        return entity;
+    }
+
+
 
     public static Entity createWallTile(World world, int x, int y) {
         Entity entity = world.createEntity();
         entity.addComponent(new Position(x, y));
         entity.addComponent(new Sprite("wall1", Sprite.Layer.TILE));
         entity.addComponent(new Solid());
+        entity.addComponent(new Tile());
         return entity;
     }
 
@@ -57,6 +63,7 @@ public class EntityFactory {
         entity.addComponent(new Position(x, y));
         entity.addComponent(new Sprite("wall2", Sprite.Layer.TILE));
         entity.addComponent(new Solid());
+        entity.addComponent(new Tile());
         return entity;
     }
 

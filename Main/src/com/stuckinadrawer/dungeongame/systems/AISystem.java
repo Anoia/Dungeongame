@@ -13,7 +13,7 @@ public class AISystem extends EntityProcessingSystem{
 
     @Override
     protected void process(Entity e) {
-
+        System.out.println("processing AI");
     }
 
 

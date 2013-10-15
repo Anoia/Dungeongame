@@ -12,21 +12,25 @@ import com.badlogic.gdx.math.Vector3;
 import com.stuckinadrawer.dungeongame.Constants;
 import com.stuckinadrawer.dungeongame.EntityFactory;
 import com.stuckinadrawer.dungeongame.components.Solid;
+import com.stuckinadrawer.dungeongame.components.Tile;
 
 public class GestureDetectionSystem implements GestureDetector.GestureListener{
 
     private World world;
     private OrthographicCamera camera;
+    private Entity[][] level;
     @Mapper
-    private
-    ComponentMapper<Solid> solidComponentMapper;
+    private ComponentMapper<Solid> solidComponentMapper;
+    @Mapper
+    private ComponentMapper<Tile> tileComponentMapper;
+
 
     public GestureDetectionSystem(World world, OrthographicCamera camera, Entity[][] level){
-
+        this.level = level;
         this.world = world;
         this.camera = camera;
         solidComponentMapper = world.getMapper(Solid.class);
-
+        tileComponentMapper = world.getMapper(Tile.class);
     }
 
     @Override
@@ -41,9 +45,10 @@ public class GestureDetectionSystem implements GestureDetector.GestureListener{
         Vector3 v = new Vector3(x, y, 0);
         camera.unproject(v);
 
-        Entity goal = EntityFactory.createPathfindingGoal(world, (int) v.x/ Constants.TILE_SIZE, (int) v.y/Constants.TILE_SIZE);
-        goal.addToWorld();
-        world.getSystem(PathfindingSystem.class).processSystem();
+        handleClickOnTile((int) v.x/ Constants.TILE_SIZE, (int) v.y/ Constants.TILE_SIZE);
+
+
+
         return false;
     }
 
@@ -73,5 +78,33 @@ public class GestureDetectionSystem implements GestureDetector.GestureListener{
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
+    }
+
+    private void handleClickOnTile(int x, int y){
+        Entity entity = level[x][y];
+
+        if(isWalkable(entity) && isEmpty(entity)){
+            Entity goal = EntityFactory.createPathfindingGoal(world, x, y);
+            goal.addToWorld();
+            world.getSystem(PathfindingSystem.class).processSystem();
+        }else{
+
+        }
+
+
+
+
+
+    }
+
+    //checks if another actor is already on it
+    private boolean isEmpty(Entity entity){
+        Tile tile = tileComponentMapper.get(entity);
+        return tile.getActor()==null;
+    }
+
+    private boolean isWalkable(Entity entity){
+        Solid solid = solidComponentMapper.get(entity);
+        return solid == null;
     }
 }

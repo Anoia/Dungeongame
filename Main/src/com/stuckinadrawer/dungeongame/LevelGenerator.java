@@ -1,9 +1,16 @@
 package com.stuckinadrawer.dungeongame;
 
+import com.artemis.ComponentMapper;
 import com.artemis.Entity;
+import com.artemis.EntityManager;
 import com.artemis.World;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
+import com.stuckinadrawer.dungeongame.components.AI;
+import com.stuckinadrawer.dungeongame.components.Position;
+import com.stuckinadrawer.dungeongame.components.Tile;
+import com.stuckinadrawer.dungeongame.systems.AISystem;
 
 import java.util.ArrayList;
 
@@ -45,6 +52,7 @@ public class LevelGenerator {
             int y = MathUtils.random(r.y+1, r.y+r.height-1);
             Entity entity = EntityFactory.createEnemy(world, x, y);
             entity.addToWorld();
+
         }
     }
 
@@ -252,9 +260,30 @@ public class LevelGenerator {
             }
         }
 
+        registerEnemiesWithTiles(entityLevel);
+
         return entityLevel;
 
     }
+
+    private void registerEnemiesWithTiles(Entity[][] entityLevel) {
+        ComponentMapper<Position> positionComponentMapper = world.getMapper(Position.class);
+        AISystem aIS = world.getSystem(AISystem.class);
+        ImmutableBag bag = aIS.getActives();
+        for(int i = 0; i < bag.size(); i++){
+            Entity enemy = (Entity)bag.get(i);
+            Position pos = positionComponentMapper.get(enemy);
+            Entity entity = entityLevel[pos.getX()][pos.getY()];
+            Tile tile = entity.getComponent(Tile.class);
+            tile.setActor(enemy);
+
+
+
+        }
+
+
+    }
+
 
     enum Tiles {
         EMPTY, WALL, ROOM, CORRIDOR

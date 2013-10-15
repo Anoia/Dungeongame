@@ -18,6 +18,7 @@ import java.util.LinkedList;
 public class GameScreen extends AbstractScreen {
 
     private final SpriteRenderSystem spriteRenderSystem;
+    private final AISystem aiSystem;
     private Entity[][] level;
     private Entity player;
     private World world;
@@ -41,13 +42,13 @@ public class GameScreen extends AbstractScreen {
 
         player = EntityFactory.createPlayer(world, 1,1);
         player.addToWorld();
-
+        aiSystem = world.setSystem(new AISystem(), true);
         camera.position.set(player.getComponent(Position.class).getX() * Constants.TILE_SIZE, player.getComponent(Position.class).getY() * Constants.TILE_SIZE, 0);
 
         LevelGenerator generator = new LevelGenerator(world);
         level = generator.generateLevel();
         world.setSystem(new PathfindingSystem(world,level), true);
-        world.setSystem(new AISystem());
+
         Gdx.input.setInputProcessor(new GestureDetector(new GestureDetectionSystem(world, camera, level)));
         //Gdx.input.setInputProcessor(new PlayerInputSystem(world, camera, level));
         EntityFactory.createEnemy(world, 0, 0).addToWorld();
@@ -62,9 +63,16 @@ public class GameScreen extends AbstractScreen {
                 Position newPos = movementPath.pop();
                 Position oldPos = player.getComponent(Position.class);
                 oldPos.set(newPos);
+                camera.position.set(newPos.getX()*Constants.TILE_SIZE, newPos.getY()*Constants.TILE_SIZE, 0);
+                processTurn();
             }
             timer = 0;
         }
+    }
+
+    private void processTurn() {
+        aiSystem.process();
+
     }
 
     @Override
