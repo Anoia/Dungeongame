@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame.systems;
+package com.stuckinadrawer.dungeongame.old.systems;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -6,11 +6,10 @@ import com.artemis.World;
 import com.artemis.annotations.Mapper;
 import com.artemis.managers.TagManager;
 import com.artemis.systems.VoidEntitySystem;
-import com.badlogic.gdx.Gdx;
-import com.stuckinadrawer.dungeongame.Constants;
-import com.stuckinadrawer.dungeongame.components.Position;
-import com.stuckinadrawer.dungeongame.components.Solid;
-import com.stuckinadrawer.dungeongame.screen.GameScreen;
+import com.stuckinadrawer.dungeongame.old.Constants;
+import com.stuckinadrawer.dungeongame.old.components.Position;
+import com.stuckinadrawer.dungeongame.old.components.Solid;
+import com.stuckinadrawer.dungeongame.old.screen.GameScreen;
 
 import java.io.Serializable;
 import java.util.*;

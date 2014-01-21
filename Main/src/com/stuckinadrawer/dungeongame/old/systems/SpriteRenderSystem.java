@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame.systems;
+package com.stuckinadrawer.dungeongame.old.systems;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
@@ -12,9 +12,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.stuckinadrawer.dungeongame.Constants;
-import com.stuckinadrawer.dungeongame.components.Position;
-import com.stuckinadrawer.dungeongame.components.Sprite;
+import com.stuckinadrawer.dungeongame.old.Constants;
+import com.stuckinadrawer.dungeongame.old.components.Position;
+import com.stuckinadrawer.dungeongame.old.components.Sprite;
 
 import java.util.*;
 

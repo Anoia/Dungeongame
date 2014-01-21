@@ -1,9 +1,9 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.old;
 
 import com.artemis.Entity;
 import com.artemis.World;
 import com.artemis.managers.TagManager;
-import com.stuckinadrawer.dungeongame.components.*;
+import com.stuckinadrawer.dungeongame.old.components.*;
 
 public class EntityFactory {
 
@@ -42,7 +42,7 @@ public class EntityFactory {
     public static Entity createCorridorFloorTile(World world, int x, int y){
         Entity entity = world.createEntity();
         entity.addComponent(new Position(x, y));
-        entity.addComponent(new Sprite("floor1", Sprite.Layer.TILE));
+        entity.addComponent(new Sprite("floor2", Sprite.Layer.TILE));
         entity.addComponent(new Tile());
         return entity;
     }

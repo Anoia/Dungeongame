@@ -1,33 +1,38 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.old;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
-import com.artemis.EntityManager;
 import com.artemis.World;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
-import com.stuckinadrawer.dungeongame.components.AI;
-import com.stuckinadrawer.dungeongame.components.Position;
-import com.stuckinadrawer.dungeongame.components.Tile;
-import com.stuckinadrawer.dungeongame.systems.AISystem;
+import com.stuckinadrawer.dungeongame.old.components.Position;
+import com.stuckinadrawer.dungeongame.old.components.Tile;
+import com.stuckinadrawer.dungeongame.old.systems.AISystem;
 
 import java.util.ArrayList;
 
 public class LevelGenerator {
 
     private int roomCount;
-    private int minSize = 5;
-    private int maxSize = 15;
+    private int minRoomSize = 5;
+    private int maxRoomSize = 15;
+
+    //private int minRoomSize = 5;
+    //private int maxRoomSize = 10;
+
     private Tiles[][] level;
     private ArrayList<Room> rooms;
     private int levelWidth = 64;
     private int levelHeight = 64;
+    //private int levelWidth = 32;
+    //private int levelHeight = 32;
     private World world;
 
     public LevelGenerator(World world) {
         this.world = world;
         roomCount = MathUtils.random(15, 25);
+        //roomCount = MathUtils.random(7, 10);
         initEmptyLevel();
     }
 
@@ -132,7 +137,7 @@ public class LevelGenerator {
     }
 
     private void moveRoomsCloser() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             for (int j = 0; j < rooms.size(); j++) {
                 Room room = rooms.get(j);
                 rooms.remove(room);
@@ -163,8 +168,8 @@ public class LevelGenerator {
         rooms = new ArrayList<Room>();
         for (int i = 0; i < roomCount; i++) {
 
-            int width = MathUtils.random(minSize, maxSize);
-            int height = MathUtils.random(minSize, maxSize);
+            int width = MathUtils.random(minRoomSize, maxRoomSize);
+            int height = MathUtils.random(minRoomSize, maxRoomSize);
             int x = MathUtils.random(1, levelWidth - width - 1);
             int y = MathUtils.random(1, levelHeight - height - 1);
 

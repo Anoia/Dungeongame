@@ -1,9 +1,9 @@
-package com.stuckinadrawer.dungeongame.systems;
+package com.stuckinadrawer.dungeongame.old.systems;
 
 import com.artemis.Aspect;
 import com.artemis.Entity;
 import com.artemis.systems.EntityProcessingSystem;
-import com.stuckinadrawer.dungeongame.components.AI;
+import com.stuckinadrawer.dungeongame.old.components.AI;
 
 public class AISystem extends EntityProcessingSystem{
 

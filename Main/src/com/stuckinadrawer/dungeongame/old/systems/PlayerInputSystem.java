@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame.systems;
+package com.stuckinadrawer.dungeongame.old.systems;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -9,9 +9,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.stuckinadrawer.dungeongame.Constants;
-import com.stuckinadrawer.dungeongame.components.Position;
-import com.stuckinadrawer.dungeongame.components.Solid;
+import com.stuckinadrawer.dungeongame.old.Constants;
+import com.stuckinadrawer.dungeongame.old.components.Position;
+import com.stuckinadrawer.dungeongame.old.components.Solid;
 
 public class PlayerInputSystem implements InputProcessor{
 

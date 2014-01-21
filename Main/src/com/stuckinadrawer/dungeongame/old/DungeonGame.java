@@ -1,9 +1,9 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.old;
 
 import com.badlogic.gdx.Game;
-import com.stuckinadrawer.dungeongame.screen.GameScreen;
+import com.stuckinadrawer.dungeongame.old.screen.GameScreen;
 
-public class DungeonGame extends Game {
+public class DungeonGame extends Game{
 
     @Override
     public void create() {

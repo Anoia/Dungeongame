@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.old;
 
 public class Constants {
 

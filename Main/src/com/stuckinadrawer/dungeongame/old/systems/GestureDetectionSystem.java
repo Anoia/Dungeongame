@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame.systems;
+package com.stuckinadrawer.dungeongame.old.systems;
 
 import com.artemis.ComponentMapper;
 import com.artemis.Entity;
@@ -9,10 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.stuckinadrawer.dungeongame.Constants;
-import com.stuckinadrawer.dungeongame.EntityFactory;
-import com.stuckinadrawer.dungeongame.components.Solid;
-import com.stuckinadrawer.dungeongame.components.Tile;
+import com.stuckinadrawer.dungeongame.old.Constants;
+import com.stuckinadrawer.dungeongame.old.EntityFactory;
+import com.stuckinadrawer.dungeongame.old.components.Solid;
+import com.stuckinadrawer.dungeongame.old.components.Tile;
 
 public class GestureDetectionSystem implements GestureDetector.GestureListener{
 

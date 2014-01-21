@@ -1,4 +1,4 @@
-package com.stuckinadrawer.dungeongame.components;
+package com.stuckinadrawer.dungeongame.old.components;
 
 import com.artemis.Component;
 
