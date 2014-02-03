@@ -53,6 +53,10 @@ public class Renderer {
                     float posY = tile.getPosition().getY() * Constants.TILE_SIZE;
 
                     batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+                    if(tile.object!=null){
+                        spriteRegion = regions.get(tile.object);
+                        batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ public abstract class Tile {
     int y;
     String spriteName;
     boolean solid;
+    public String object = null;
 
 
     public Tile(int x, int y, String spriteName, boolean solid){
