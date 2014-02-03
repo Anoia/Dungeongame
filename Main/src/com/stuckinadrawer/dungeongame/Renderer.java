@@ -5,22 +5,26 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Renderer {
 
     private Tile[][] level;
 
+    private ArrayList<Enemy> enemies;
     private OrthographicCamera camera;
 
     private HashMap<String, AtlasRegion> regions;
     private TextureAtlas textureAtlas;
     private SpriteBatch batch;
 
-    public Renderer(Tile[][] level, OrthographicCamera camera){
+    public Renderer(Tile[][] level, ArrayList<Enemy> enemies, OrthographicCamera camera){
         this.level = level;
+        this.enemies = enemies;
         this.camera  = camera;
         initialize();
 
@@ -40,7 +44,17 @@ public class Renderer {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         renderTiles();
+        renderEnemies();
         batch.end();
+    }
+
+    private void renderEnemies() {
+        for(Enemy e: enemies){
+            AtlasRegion spriteRegion = regions.get(e.getSpriteName());
+            float posX = e.getPosition().getX() * Constants.TILE_SIZE;
+            float posY = e.getPosition().getY() * Constants.TILE_SIZE;
+            batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+        }
     }
 
     private void renderTiles() {
