@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
@@ -43,7 +44,16 @@ public class Renderer {
         batch.begin();
         renderTiles();
         renderEnemies();
+        renderPlayer();
         batch.end();
+    }
+
+    private void renderPlayer() {
+        Player player = level.getPlayer();
+        float posX = player.getPosition().getX() * Constants.TILE_SIZE;
+        float posY = player.getPosition().getY() * Constants.TILE_SIZE;
+        AtlasRegion spriteRegion = regions.get(player.getSpriteName());
+        batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
     }
 
     private void renderEnemies() {

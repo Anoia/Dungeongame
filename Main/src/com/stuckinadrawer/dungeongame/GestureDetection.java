@@ -61,6 +61,9 @@ public class GestureDetection implements GestureDetector.GestureListener{
     }
 
     private void handleClickOnTile(int x, int y){
+        if(level.isWalkable(x, y)){
+            level.findPath(level.getPlayer().getPosition(), new Position(x, y));
 
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.stuckinadrawer.dungeongame.levelGeneration;
 
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.Utils;
+import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.actors.enemies.Rat;
 import com.stuckinadrawer.dungeongame.actors.enemies.Skeleton;
@@ -28,7 +29,9 @@ public class LevelCreator {
 
         Tile[][] data = new Tile[scatter.levelWidth][scatter.levelHeight];
 
-         enemies = new ArrayList<Enemy>();
+        enemies = new ArrayList<Enemy>();
+
+        Player player = null;
 
         for(int x = 0; x < data.length; x++){
             for(int y = 0; y < data[x].length; y++){
@@ -50,6 +53,9 @@ public class LevelCreator {
                         }
                         break;
                     case ROOM:
+                        if(player == null){
+                            player = new Player(x, y);
+                        }
                         t = new FloorTile(x, y, "tile_floor");
                         if(Utils.random(9) >4 ){
                             t.setSpriteName("tile_floor_moss");
@@ -70,6 +76,7 @@ public class LevelCreator {
         }
 
         Level level = new Level(scatter.levelWidth, scatter.levelHeight, data);
+        level.setPlayer(player);
         level.addEnemies(enemies);
 
         return level;

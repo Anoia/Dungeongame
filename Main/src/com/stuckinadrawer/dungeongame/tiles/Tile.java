@@ -29,7 +29,7 @@ public abstract class Tile {
         this.solid = solid;
     }
 
-    public boolean getSolid(){
+    public boolean isSolid(){
         return solid;
     }
 
