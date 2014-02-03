@@ -2,7 +2,6 @@ package com.stuckinadrawer.dungeongame;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.stuckinadrawer.dungeongame.old.DungeonGame;
 
 
 public class DesktopStarter {
