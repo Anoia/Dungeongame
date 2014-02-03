@@ -19,6 +19,7 @@ public class GameScreen extends AbstractScreen {
         Generator generator = new Generator();
         level = generator.getNewLevel();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
         renderer = new Renderer(level, camera);
 
 

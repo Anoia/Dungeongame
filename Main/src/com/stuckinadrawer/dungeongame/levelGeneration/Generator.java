@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame.levelGeneration;
 
+import com.stuckinadrawer.dungeongame.Utils;
 import com.stuckinadrawer.dungeongame.tiles.FloorTile;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 import com.stuckinadrawer.dungeongame.tiles.WallTile;
@@ -23,16 +24,22 @@ public class Generator {
                 Tile t = null;
                 switch (levelEnum[x][y]) {
                     case EMPTY:
-                        t = new WallTile(x, y, "wall2");
+                        t = new WallTile(x, y, "empty");
                         break;
                     case WALL:
-                        t = new WallTile(x, y, "wall1");
+                        t = new WallTile(x, y, "wall");
+                        if(Utils.random(6) >4){
+                            t.setSpriteName("wall_cracked");
+                        }
                         break;
                     case ROOM:
-                        t = new FloorTile(x, y, "floor1");
+                        t = new FloorTile(x, y, "floor");
+                        if(Utils.random(6) >4 ){
+                            t.setSpriteName("floor_moss");
+                        }
                         break;
                     case CORRIDOR:
-                        t = new FloorTile(x, y, "floor2");
+                        t = new FloorTile(x, y, "floor");
                         break;
                 }
                 level[x][y] = t;
