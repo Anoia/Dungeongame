@@ -60,6 +60,7 @@ public class Level {
 
     public void setPlayer(Player player) {
         this.player = player;
+        player.setLevel(this);
     }
 
     public void findPath(Position start, Position goal){

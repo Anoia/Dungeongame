@@ -1,17 +1,46 @@
 package com.stuckinadrawer.dungeongame.actors;
 
 import com.stuckinadrawer.dungeongame.Position;
+import com.stuckinadrawer.dungeongame.Utils;
 
 public abstract class Actor {
+
     protected int x;
     protected int y;
     protected String spriteName;
-    protected int maxHP = 10;
-    protected int currentHP = 10;
+
+
+    public int maxHP;
+    public int currentHP;
+
+    public int dmgRange;
+
+
+
 
     public Actor(int x, int y){
         this.x = x;
         this.y = y;
+    }
+
+    public void attack(Actor opponent){
+
+        int dmg = Utils.random(dmgRange);
+        System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
+        opponent.takeDmg(dmg);
+    }
+
+    public void takeDmg(int dmg){
+        currentHP -= dmg;
+        System.out.println(spriteName + " has "+currentHP + " HP left");
+        if(currentHP <= 0){
+            die();
+            System.out.println(spriteName + " died!");
+        }
+    }
+
+    private void die() {
+        System.out.println("I'm dead! - "+spriteName);
     }
 
     public void setPosition(int x, int y){
@@ -31,19 +60,4 @@ public abstract class Actor {
         this.spriteName = spriteName;
     }
 
-    public int getCurrentHP() {
-        return currentHP;
-    }
-
-    public void setCurrentHP(int currentHP) {
-        this.currentHP = currentHP;
-    }
-
-    public int getMaxHP() {
-        return maxHP;
-    }
-
-    public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
-    }
 }

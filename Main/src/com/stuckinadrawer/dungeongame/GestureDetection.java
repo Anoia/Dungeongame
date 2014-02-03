@@ -23,7 +23,7 @@ public class GestureDetection implements GestureDetector.GestureListener{
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        Gdx.app.log("hallo", "TAP: X: " + x + " Y: "+ y);
+        //Gdx.app.log("hallo", "TAP: X: " + x + " Y: "+ y);
 
         Vector3 v = new Vector3(x, y, 0);
         camera.unproject(v);

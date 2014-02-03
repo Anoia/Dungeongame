@@ -1,6 +1,8 @@
 package com.stuckinadrawer.dungeongame;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable{
     private int x;
     private int y;
 
@@ -23,5 +25,22 @@ public class Position {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj instanceof Position) {
+            Position pos = (Position) obj;
+            return (this.getX() == pos.getX()) && (this.getY() == pos.getY());
+        }
+        return super.equals(obj);
+    }
+
+
+    @Override
+    public int hashCode() {
+        long bits = java.lang.Double.doubleToLongBits(getX());
+        bits ^= java.lang.Double.doubleToLongBits(getY()) * 31;
+        return (((int) bits) ^ ((int) (bits >> 32)));
     }
 }

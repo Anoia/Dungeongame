@@ -7,9 +7,6 @@ import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
-import com.stuckinadrawer.dungeongame.tiles.Tile;
-
-import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
 
@@ -39,7 +36,7 @@ public class GameScreen extends AbstractScreen {
         timer+=delta;
         if(timer>0.1){
             //moves player if his movement queue is not empty
-            if(player.move()){
+            if(player.action()){
                 camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
                 processTurn();
             }
@@ -48,7 +45,9 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void processTurn() {
-
+        for(Enemy e: level.getEnemies()){
+            e.doTurn(player);
+        }
 
     }
 
