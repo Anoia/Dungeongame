@@ -13,18 +13,16 @@ import java.util.HashMap;
 
 public class Renderer {
 
-    private Tile[][] level;
+    private Level level;
 
-    private ArrayList<Enemy> enemies;
     private OrthographicCamera camera;
 
     private HashMap<String, AtlasRegion> regions;
     private TextureAtlas textureAtlas;
     private SpriteBatch batch;
 
-    public Renderer(Tile[][] level, ArrayList<Enemy> enemies, OrthographicCamera camera){
+    public Renderer(Level level, OrthographicCamera camera){
         this.level = level;
-        this.enemies = enemies;
         this.camera  = camera;
         initialize();
 
@@ -49,6 +47,7 @@ public class Renderer {
     }
 
     private void renderEnemies() {
+        ArrayList<Enemy> enemies = level.getEnemies();
         for(Enemy e: enemies){
             AtlasRegion spriteRegion = regions.get(e.getSpriteName());
             float posX = e.getPosition().getX() * Constants.TILE_SIZE;
@@ -58,9 +57,10 @@ public class Renderer {
     }
 
     private void renderTiles() {
-        for(int x = 0; x < level.length; x++){
-            for(int y = 0; y < level[x].length; y++){
-                Tile tile = level[x][y];
+        Tile[][] levelData = level.getLevelData();
+        for(int x = 0; x < levelData.length; x++){
+            for(int y = 0; y < levelData[x].length; y++){
+                Tile tile = levelData[x][y];
                 if(tile.getSpriteName() != null){
                     AtlasRegion spriteRegion = regions.get(tile.getSpriteName());
                     float posX = tile.getPosition().getX() * Constants.TILE_SIZE;

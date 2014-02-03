@@ -9,9 +9,9 @@ import com.stuckinadrawer.dungeongame.tiles.Tile;
 
 public class GestureDetection implements GestureDetector.GestureListener{
     private OrthographicCamera camera;
-    private Tile[][] level;
+    private Level level;
 
-    public GestureDetection(OrthographicCamera camera, Tile[][] level) {
+    public GestureDetection(OrthographicCamera camera, Level level) {
         this.camera = camera;
         this.level = level;
     }

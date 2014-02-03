@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame.levelGeneration;
 
+import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.Utils;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.actors.enemies.Rat;
@@ -13,24 +14,24 @@ import java.util.ArrayList;
 
 public class LevelCreator {
 
-    GeneratorScatterLayout scatter;
-    ArrayList<Enemy> enemies;
+    private GeneratorScatterLayout scatter;
+    private ArrayList<Enemy> enemies;
 
 
     public LevelCreator(){
         scatter = new GeneratorScatterLayout();
     }
 
-    public Tile[][] getNewLevel(){
+    public Level getNewLevel(){
 
         TileEnum[][] levelEnum = scatter.generate();
 
-        Tile[][] level = new Tile[scatter.levelWidth][scatter.levelHeight];
+        Tile[][] data = new Tile[scatter.levelWidth][scatter.levelHeight];
 
-        enemies = new ArrayList<Enemy>();
+         enemies = new ArrayList<Enemy>();
 
-        for(int x = 0; x < level.length; x++){
-            for(int y = 0; y < level[x].length; y++){
+        for(int x = 0; x < data.length; x++){
+            for(int y = 0; y < data[x].length; y++){
                 Tile t = null;
                 switch (levelEnum[x][y]) {
                     case EMPTY:
@@ -63,16 +64,17 @@ public class LevelCreator {
                         t = new FloorTile(x, y, "tile_floor");
                         break;
                 }
-                level[x][y] = t;
+                data[x][y] = t;
 
             }
         }
+
+        Level level = new Level(scatter.levelWidth, scatter.levelHeight, data);
+        level.addEnemies(enemies);
+
         return level;
     }
 
-    public ArrayList<Enemy> getEnemies(){
-        return enemies;
-    }
 
     private void placeEnemy(int x, int y) {
         int rnd = Utils.random(3);
