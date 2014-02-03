@@ -19,14 +19,18 @@ public class Player extends Actor {
         this.movementPath = movementPath;
     }
 
-    public void move() {
+    public boolean move() {
 
         if(movementPath != null && !movementPath.isEmpty()){
 
             Position newPos = movementPath.pop();
             x = newPos.getX();
             y = newPos.getY();
+            return true;
+        }else{
+            return false;
         }
+
 
     }
 }
