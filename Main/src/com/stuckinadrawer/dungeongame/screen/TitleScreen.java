@@ -34,7 +34,7 @@ public class TitleScreen extends AbstractScreen {
         r.filledRect(0, 0, 64, 64);
         r.end();
 
-        if(time > 2){
+        if(time > 20){
             dungeonGame.setScreen(new GameScreen(dungeonGame));
         }
 

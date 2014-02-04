@@ -66,4 +66,9 @@ public class Level {
     public void findPath(Position start, Position goal){
         player.setMovementPath(pathfinder.findPath(start, goal));
     }
+
+    public void removeEnemy(Enemy e) {
+        enemies.remove(e);
+
+    }
 }

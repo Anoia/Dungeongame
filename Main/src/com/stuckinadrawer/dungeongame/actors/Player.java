@@ -37,7 +37,7 @@ public class Player extends Actor {
 
     public boolean action() {
 
-        if(movementPath != null && !movementPath.isEmpty()){
+        if(!dead && movementPath != null && !movementPath.isEmpty()){
 
             Position newPos = movementPath.pop();
 
@@ -60,7 +60,7 @@ public class Player extends Actor {
 
     private Enemy getEnemyOnNewPos(Position newPos) {
         for(Enemy e: level.getEnemies()){
-            if(newPos.equals(e.getPosition())){
+            if(!e.dead && newPos.equals(e.getPosition())){
                 System.out.println("ENEMY");
                 return e;
             }

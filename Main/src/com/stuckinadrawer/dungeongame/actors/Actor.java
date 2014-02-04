@@ -15,6 +15,8 @@ public abstract class Actor {
 
     public int dmgRange;
 
+    public boolean dead = false;
+
 
 
 
@@ -24,23 +26,29 @@ public abstract class Actor {
     }
 
     public void attack(Actor opponent){
-
-        int dmg = Utils.random(dmgRange);
-        System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
-        opponent.takeDmg(dmg);
+        if(!dead){
+            int dmg = Utils.random(dmgRange);
+            System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
+            opponent.takeDmg(dmg);
+        }
     }
 
     public void takeDmg(int dmg){
-        currentHP -= dmg;
-        System.out.println(spriteName + " has "+currentHP + " HP left");
-        if(currentHP <= 0){
-            die();
-            System.out.println(spriteName + " died!");
+        if(!dead){
+            currentHP -= dmg;
+            System.out.println(spriteName + " has "+currentHP + " HP left");
+            if(currentHP <= 0){
+                die();
+                System.out.println(spriteName + " died!");
+            }
         }
     }
 
     private void die() {
         System.out.println("I'm dead! - "+spriteName);
+        this.spriteName = "effect_blood";
+        dead = true;
+
     }
 
     public void setPosition(int x, int y){

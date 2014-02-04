@@ -11,14 +11,14 @@ char_witch
   index: -1
 tile_floor_moss
   rotate: false
-  xy: 78, 78
+  xy: 112, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 tile_wall
   rotate: false
-  xy: 112, 78
+  xy: 146, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -39,7 +39,7 @@ char_player2
   index: -1
 obj_bookshelf
   rotate: false
-  xy: 44, 44
+  xy: 78, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -53,14 +53,14 @@ char_rat
   index: -1
 obj_torch_stand
   rotate: false
-  xy: 180, 44
+  xy: 214, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 tile_floor
   rotate: false
-  xy: 44, 78
+  xy: 78, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -81,28 +81,35 @@ char_rat2
   index: -1
 tile_wall_plain
   rotate: false
-  xy: 180, 78
+  xy: 214, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 tile_empty
   rotate: false
-  xy: 10, 78
+  xy: 44, 78
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+effect_blood
+  rotate: false
+  xy: 44, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 obj_torch
   rotate: false
-  xy: 146, 44
+  xy: 180, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 obj_rip
   rotate: false
-  xy: 112, 44
+  xy: 146, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -116,21 +123,21 @@ char_skeleton
   index: -1
 obj_coffin
   rotate: false
-  xy: 78, 44
+  xy: 112, 44
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 obj_urn
   rotate: false
-  xy: 214, 44
+  xy: 10, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 tile_wall_cracked
   rotate: false
-  xy: 146, 78
+  xy: 180, 78
   size: 24, 24
   orig: 24, 24
   offset: 0, 0

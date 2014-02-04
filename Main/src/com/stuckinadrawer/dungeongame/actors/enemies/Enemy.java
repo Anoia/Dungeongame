@@ -14,7 +14,7 @@ public abstract class Enemy extends Actor {
     }
 
     public void doTurn(Player p ){
-        if(playerIsCloseBy(p)){
+        if(playerIsCloseBy(p) &&!dead){
             p.movementPath = null;
             attack(p);
         }
