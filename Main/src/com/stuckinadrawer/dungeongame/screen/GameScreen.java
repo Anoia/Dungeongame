@@ -4,16 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
+import com.stuckinadrawer.dungeongame.render.Renderer;
 
 public class GameScreen extends AbstractScreen {
 
@@ -35,7 +33,7 @@ public class GameScreen extends AbstractScreen {
         player = level.getPlayer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        renderer = new Renderer(level, camera);
+        renderer = new Renderer(level, camera, font);
         //Gdx.input.setInputProcessor(new GestureDetector(new GestureDetection(camera, level)));
         camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
@@ -49,7 +47,7 @@ public class GameScreen extends AbstractScreen {
         InputMultiplexer im = new InputMultiplexer(stage, gd);
         Gdx.input.setInputProcessor(im);
 
-
+        /*
         // TESTBUTTON
         final TextButton button = new TextButton("The Button", skin);
         button.setPosition(200, 200);
@@ -63,14 +61,20 @@ public class GameScreen extends AbstractScreen {
                 System.out.println("I was clicked, yay!");
             }
         });
+        */
 
         //HEALTHBAR
         Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
         healthbar.setSize(200, 50);
-        healthbar.setPosition(50, Gdx.graphics.getHeight()-100);
-        healthbar.setValue(player.currentHP);
+        healthbar.setPosition(50, Gdx.graphics.getHeight() - 100);
+        healthbar.setValue(player.maxHP);
+        healthbar.setAnimateDuration(.5f);
+        healthbar.setTouchable(Touchable.disabled);
+
         stage.addActor(healthbar);
+
         player.healthbar = healthbar;
+
 
 
 
@@ -114,7 +118,7 @@ public class GameScreen extends AbstractScreen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 
         camera.update();
-        renderer.update();
+        renderer.update(delta);
         stage.draw();
 
 

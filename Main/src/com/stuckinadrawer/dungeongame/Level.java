@@ -2,6 +2,7 @@ package com.stuckinadrawer.dungeongame;
 
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
+import com.stuckinadrawer.dungeongame.render.TextAnimation;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
 import java.util.ArrayList;
@@ -11,6 +12,11 @@ public class Level {
     private ArrayList<Enemy> enemies;
     private Player player;
     private int width;
+
+    public ArrayList<TextAnimation> textAnimations;
+
+
+
     private int height;
 
     private Pathfinder pathfinder;
@@ -22,6 +28,7 @@ public class Level {
         enemies = new ArrayList<Enemy>();
         player = null;
         pathfinder = new Pathfinder(this);
+        textAnimations = new ArrayList<TextAnimation>();
     }
 
     public Tile[][] getLevelData(){
@@ -70,5 +77,13 @@ public class Level {
     public void removeEnemy(Enemy e) {
         enemies.remove(e);
 
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

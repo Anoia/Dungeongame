@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.stuckinadrawer.dungeongame.DungeonGame;
 
@@ -23,7 +24,7 @@ class AbstractScreen implements Screen{
 
     AbstractScreen(DungeonGame dungeonGame){
         this.dungeonGame = dungeonGame;
-        this.font = new BitmapFont(Gdx.files.internal("visitor.fnt"), Gdx.files.internal("visitor_0.png"), false);
+        this.font = new BitmapFont(Gdx.files.internal("ui/default.fnt"), Gdx.files.internal("ui/default.png"), false);
         this.batch = new SpriteBatch();
         createSkinFromJSON();
     }
@@ -63,6 +64,8 @@ class AbstractScreen implements Screen{
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         skin.add("white", new Texture(pixmap));
+
+
     }
 
     @Override
