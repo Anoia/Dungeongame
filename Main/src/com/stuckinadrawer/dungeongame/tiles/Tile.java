@@ -9,6 +9,9 @@ public abstract class Tile {
     boolean solid;
     public String object = null;
 
+    public boolean inLOS = false;
+    public boolean hasSeen = false;
+
 
     public Tile(int x, int y, String spriteName, boolean solid){
         this.x = x;

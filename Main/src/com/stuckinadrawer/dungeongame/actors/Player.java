@@ -103,6 +103,7 @@ public class Player extends Actor {
             } else{
                 x = newPos.getX();
                 y = newPos.getY();
+                map.updateFOV();
             }
 
             return true;

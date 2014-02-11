@@ -41,6 +41,7 @@ public class GameScreen extends AbstractScreen {
         camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
 
+
     }
     @Override
     public void show() {
@@ -92,6 +93,7 @@ public class GameScreen extends AbstractScreen {
 
 
 
+        level.updateFOV();
 
 
 

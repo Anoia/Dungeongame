@@ -20,6 +20,7 @@ public class Level {
     private int height;
 
     private Pathfinder pathfinder;
+    private RayTracer rayTracer;
 
     public Level(int width, int height, Tile[][] tiles){
         this.width = width;
@@ -28,6 +29,7 @@ public class Level {
         enemies = new ArrayList<Enemy>();
         player = null;
         pathfinder = new Pathfinder(this);
+        rayTracer = new RayTracer(this);
         textAnimations = new ArrayList<TextAnimation>();
     }
 
@@ -85,5 +87,9 @@ public class Level {
 
     public int getWidth() {
         return width;
+    }
+
+    public void updateFOV() {
+        rayTracer.calculatePlayerFOV();
     }
 }
