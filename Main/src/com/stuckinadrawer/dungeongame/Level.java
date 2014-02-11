@@ -36,6 +36,19 @@ public class Level {
     public Tile[][] getLevelData(){
         return tiles;
     }
+    public Tile getTile(int x, int y){
+        if(x < 0 || y < 0 || x >= width || y >= height){
+            return null;
+        }else{
+            return getLevelData()[x][y];
+        }
+
+    }
+
+    public boolean isSolid(int x, int y){
+        Tile t = getTile(x, y);
+        return t.isSolid();
+    }
 
     public void addEnemy(Enemy e){
         enemies.add(e);

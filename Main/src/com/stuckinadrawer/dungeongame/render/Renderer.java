@@ -113,7 +113,7 @@ public class Renderer {
         for(int x = 0; x < levelData.length; x++){
             for(int y = 0; y < levelData[x].length; y++){
                 Tile tile = levelData[x][y];
-                if(tile.getSpriteName() != null){
+                if(tile.getSpriteName() != null && tile.inLOS){
                     AtlasRegion spriteRegion = regions.get(tile.getSpriteName());
                     float posX = tile.getPosition().getX() * Constants.TILE_SIZE;
                     float posY = tile.getPosition().getY() * Constants.TILE_SIZE;
