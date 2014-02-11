@@ -7,6 +7,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.stuckinadrawer.dungeongame.*;
@@ -49,6 +50,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(im);
 
 
+        // TESTBUTTON
         final TextButton button = new TextButton("The Button", skin);
         button.setPosition(200, 200);
         button.setSize(200, 50);
@@ -61,6 +63,17 @@ public class GameScreen extends AbstractScreen {
                 System.out.println("I was clicked, yay!");
             }
         });
+
+        //HEALTHBAR
+        Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
+        healthbar.setSize(200, 50);
+        healthbar.setPosition(50, Gdx.graphics.getHeight()-100);
+        healthbar.setValue(player.currentHP);
+        stage.addActor(healthbar);
+        player.healthbar = healthbar;
+
+
+
 
 
 

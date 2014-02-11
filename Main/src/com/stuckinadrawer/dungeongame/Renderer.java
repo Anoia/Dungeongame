@@ -1,10 +1,12 @@
 package com.stuckinadrawer.dungeongame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
@@ -17,6 +19,7 @@ public class Renderer {
     private Level level;
 
     private OrthographicCamera camera;
+
 
     private HashMap<String, AtlasRegion> regions;
     private TextureAtlas textureAtlas;
@@ -43,8 +46,8 @@ public class Renderer {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         renderTiles();
-        renderEnemies();
         renderPlayer();
+        renderEnemies();
         batch.end();
     }
 
@@ -63,7 +66,22 @@ public class Renderer {
             float posX = e.getPosition().getX() * Constants.TILE_SIZE;
             float posY = e.getPosition().getY() * Constants.TILE_SIZE;
             batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+            if(!e.dead && e.currentHP < e.maxHP){
+                posY += Constants.TILE_SIZE;
+                batch.draw(regions.get("red"),posX, posY, Constants.TILE_SIZE, 5);
+                int barPos  = calculatePixelFilled(e.currentHP, e.maxHP);
+                batch.draw(regions.get("green"),posX, posY, barPos, 5);
+
+            }
+
         }
+    }
+
+    private int calculatePixelFilled(int currentHealth, int maxHealth) {
+        float percentFilled = 100f / (float)maxHealth * (float)currentHealth;
+        float onePercent = (float)Constants.TILE_SIZE / 100f;
+        float pixelFilled = onePercent * percentFilled;
+        return (int)pixelFilled;
     }
 
     private void renderTiles() {
@@ -85,6 +103,7 @@ public class Renderer {
             }
         }
     }
+
 
 
 }

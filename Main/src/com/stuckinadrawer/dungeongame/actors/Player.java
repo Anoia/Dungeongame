@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame.actors;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.Position;
 import com.stuckinadrawer.dungeongame.Utils;
@@ -12,6 +13,7 @@ public class Player extends Actor {
     public int baseStrength = 8;
     public LinkedList<Position> movementPath = null;
     private Level level;
+    public Slider healthbar;
 
     public Player(int x, int y) {
         super(x, y);
@@ -33,6 +35,22 @@ public class Player extends Actor {
         dmg = dmg + dmg * (strength - baseStrength)/10;
         System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
         opponent.takeDmg(dmg);
+    }
+
+    @Override
+    public void takeDmg(int dmg){
+        if(!dead){
+            currentHP -= dmg;
+            System.out.println(spriteName + " has "+currentHP + " HP left");
+
+            if(currentHP <= 0){
+                die();
+                System.out.println(spriteName + " died!");
+                healthbar.setValue(0);
+            }else{
+                healthbar.setValue(currentHP);
+            }
+        }
     }
 
     public boolean action() {

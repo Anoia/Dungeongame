@@ -44,7 +44,7 @@ public abstract class Actor {
         }
     }
 
-    private void die() {
+    protected void die() {
         System.out.println("I'm dead! - "+spriteName);
         this.spriteName = "effect_blood";
         dead = true;
