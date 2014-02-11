@@ -7,5 +7,6 @@ public class Witch extends Enemy{
         dmgRange = 6;
         maxHP = 18;
         currentHP = maxHP;
+        XPRewarded = 20;
     }
 }

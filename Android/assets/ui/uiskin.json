@@ -9,9 +9,8 @@ com.badlogic.gdx.graphics.Color: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 }},
-	healthbarRed: {name: white, color: red},
-	heathbarGreen: {name: white, color: green},
-	healthbarBG: {name: white, color: grey}
+	xpBar: {name: white, color: green},
+	xpBarBG: {name: white, color: grey}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: default-round-down, up: default-round },
@@ -34,7 +33,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
-	healthbar: { background: default-round, knobBefore: default-round-down}
+	healthbar: { background: default-round, knobBefore: default-round-down},
+	XPBar: { background: xpBarBG, knobBefore: xpBar}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white }

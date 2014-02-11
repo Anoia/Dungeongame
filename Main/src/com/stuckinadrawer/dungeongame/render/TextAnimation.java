@@ -20,13 +20,14 @@ public class TextAnimation{
     }
 
     public void animate(float delta){
-        /*
+
         if(count > 0.75){
             alpha -= 0.05;
-            color.set(color.r, color.g, color.b, alpha);
-        }*/
+            //color.set(color.r, color.g, color.b, alpha);
+            color = new Color(color.r, color.g, color.b, alpha);
+        }
 
         y += 0.2f;
-        count += delta*2;
+        count += delta+0.5*delta;
     }
 }

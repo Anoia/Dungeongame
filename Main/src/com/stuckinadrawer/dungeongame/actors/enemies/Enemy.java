@@ -7,6 +7,9 @@ import static java.lang.Math.abs;
 
 
 public abstract class Enemy extends Actor {
+
+    public int XPRewarded;
+
     public Enemy(int x, int y) {
         super(x, y);
 

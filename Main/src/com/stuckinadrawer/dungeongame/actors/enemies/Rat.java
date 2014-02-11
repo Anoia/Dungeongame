@@ -7,5 +7,6 @@ public class Rat extends Enemy {
         dmgRange = 4;
         maxHP = 10;
         currentHP = maxHP;
+        XPRewarded = 10;
     }
 }

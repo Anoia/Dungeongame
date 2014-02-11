@@ -55,7 +55,7 @@ public class Renderer {
         renderPlayer();
         renderEnemies();
         renderTextAnimations(delta);
-        font.draw(batch, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 10);
+        //font.draw(batch, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 10);
 
         batch.end();
     }

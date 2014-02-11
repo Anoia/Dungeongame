@@ -38,14 +38,6 @@ public abstract class Actor {
             currentHP -= dmg;
             System.out.println(spriteName + " has "+currentHP + " HP left");
 
-            if(dmg == 0){
-                //miss
-
-            }   else{
-                //red
-
-            }
-
             if(currentHP <= 0){
                 die();
                 System.out.println(spriteName + " died!");

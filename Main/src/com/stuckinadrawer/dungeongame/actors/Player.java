@@ -14,8 +14,13 @@ public class Player extends Actor {
     public int strength;
     public int baseStrength = 8;
     public LinkedList<Position> movementPath = null;
-    private Level level;
+    private Level map;
+    public int playerLevel = 1;
+    public int currentXP = 0;
+    public int XPToNextLevel = 100;
     public Slider healthbar;
+    public Slider XPBar;
+
 
     public Player(int x, int y) {
         super(x, y);
@@ -40,11 +45,11 @@ public class Player extends Actor {
         if(dmg == 0){
             //miss
             TextAnimation tA = new TextAnimation(opponent.x, opponent.y, "miss", Color.YELLOW);
-            level.textAnimations.add(tA);
+            map.textAnimations.add(tA);
         }else{
             //red
             TextAnimation tA = new TextAnimation(opponent.x, opponent.y, dmg+"", Color.RED);
-            level.textAnimations.add(tA);
+            map.textAnimations.add(tA);
         }
 
 
@@ -59,11 +64,11 @@ public class Player extends Actor {
             if(dmg == 0){
                 //dodge
                 TextAnimation tA = new TextAnimation(x, y, "dodge", Color.YELLOW);
-                level.textAnimations.add(tA);
+                map.textAnimations.add(tA);
             }else{
                 //orange
                 TextAnimation tA = new TextAnimation(x, y, dmg+"", Color.ORANGE);
-                level.textAnimations.add(tA);
+                map.textAnimations.add(tA);
             }
 
             if(currentHP <= 0){
@@ -86,6 +91,15 @@ public class Player extends Actor {
             Enemy e = getEnemyOnNewPos(newPos);
             if(e != null){
                 attack(e);
+                if(e.dead){
+                    currentXP +=e.XPRewarded*2;
+
+                    if(currentXP >= XPToNextLevel){
+                        levelUP();
+                    } else{
+                        XPBar.setValue(currentXP);
+                    }
+                }
             } else{
                 x = newPos.getX();
                 y = newPos.getY();
@@ -100,7 +114,7 @@ public class Player extends Actor {
     }
 
     private Enemy getEnemyOnNewPos(Position newPos) {
-        for(Enemy e: level.getEnemies()){
+        for(Enemy e: map.getEnemies()){
             if(!e.dead && newPos.equals(e.getPosition())){
                 System.out.println("ENEMY");
                 return e;
@@ -110,7 +124,24 @@ public class Player extends Actor {
     }
 
 
-    public void setLevel(Level level) {
-        this.level = level;
+    public void setMap(Level map) {
+        this.map = map;
+    }
+
+    public void levelUP(){
+        playerLevel ++;
+        strength++;
+        maxHP += 5;
+        currentHP = maxHP;
+        healthbar.setRange(0, maxHP);
+        healthbar.setValue(currentHP);
+        currentXP = currentXP-XPToNextLevel;
+        XPToNextLevel = XPToNextLevel +  (int)(XPToNextLevel * 0.25);
+        XPBar.setRange(0, XPToNextLevel);
+        XPBar.setValue(currentXP);
+        System.out.println("LevelUP " + " xp to next level: "+XPToNextLevel);
+        System.out.println("Level: " + playerLevel);
+        System.out.println("HP: " + maxHP );
+        System.out.println("Strength: "+strength);
     }
 }

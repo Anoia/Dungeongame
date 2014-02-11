@@ -7,5 +7,6 @@ public class Skeleton extends Enemy {
         dmgRange = 5;
         maxHP = 10;
         currentHP = maxHP;
+        XPRewarded = 15;
     }
 }

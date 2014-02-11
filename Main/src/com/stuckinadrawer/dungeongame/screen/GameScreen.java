@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
@@ -47,9 +50,9 @@ public class GameScreen extends AbstractScreen {
         InputMultiplexer im = new InputMultiplexer(stage, gd);
         Gdx.input.setInputProcessor(im);
 
-        /*
+
         // TESTBUTTON
-        final TextButton button = new TextButton("The Button", skin);
+        final TextButton button = new TextButton("Heal Me!", skin);
         button.setPosition(200, 200);
         button.setSize(200, 50);
 
@@ -58,10 +61,11 @@ public class GameScreen extends AbstractScreen {
         button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("I was clicked, yay!");
+                player.currentHP = player.maxHP;
+                player.healthbar.setValue(player.currentHP);
             }
         });
-        */
+
 
         //HEALTHBAR
         Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
@@ -75,6 +79,16 @@ public class GameScreen extends AbstractScreen {
 
         player.healthbar = healthbar;
 
+
+        //XP BAR
+        Slider XPBar = new Slider(0, player.XPToNextLevel, 1, false, skin, "XPBar");
+        XPBar.setSize(Gdx.graphics.getWidth()-10, 50);
+        XPBar.setPosition(5, Gdx.graphics.getHeight()-30);
+        XPBar.setValue(player.currentXP);
+        XPBar.setAnimateDuration(.5f);
+        healthbar.setTouchable(Touchable.disabled);
+        stage.addActor(XPBar);
+        player.XPBar = XPBar;
 
 
 
