@@ -3,6 +3,8 @@ package com.stuckinadrawer.dungeongame.actors;
 import com.stuckinadrawer.dungeongame.Position;
 import com.stuckinadrawer.dungeongame.Utils;
 
+import java.util.LinkedList;
+
 public abstract class Actor {
 
     protected int x;
@@ -12,8 +14,9 @@ public abstract class Actor {
 
     public int maxHP;
     public int currentHP;
-
+    public LinkedList<Position> movementPath = null;
     public int dmgRange;
+    public int viewDistance = 4;
 
     public boolean dead = false;
 
@@ -69,4 +72,7 @@ public abstract class Actor {
         this.spriteName = spriteName;
     }
 
+    public void setMovementPath(LinkedList<Position> movementPath) {
+        this.movementPath = movementPath;
+    }
 }

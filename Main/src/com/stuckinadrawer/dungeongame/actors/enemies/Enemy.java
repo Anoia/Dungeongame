@@ -1,5 +1,7 @@
 package com.stuckinadrawer.dungeongame.actors.enemies;
 
+import com.stuckinadrawer.dungeongame.Level;
+import com.stuckinadrawer.dungeongame.Position;
 import com.stuckinadrawer.dungeongame.actors.Actor;
 import com.stuckinadrawer.dungeongame.actors.Player;
 
@@ -16,10 +18,19 @@ public abstract class Enemy extends Actor {
 
     }
 
-    public void doTurn(Player p ){
+    public void doTurn(Level level ){
+        Player p = level.getPlayer();
         if(playerIsCloseBy(p) &&!dead){
+            movementPath = null;
             p.movementPath = null;
             attack(p);
+        }else if(level.isInLOS(new Position(x, y), p.getPosition(), viewDistance)){
+            level.findPath(this, p.getPosition());
+            if(movementPath!= null){
+                Position newPos = movementPath.pop();
+                x = newPos.getX();
+                y = newPos.getY();
+            }
         }
     }
 

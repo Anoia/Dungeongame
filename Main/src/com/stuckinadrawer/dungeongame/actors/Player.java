@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class Player extends Actor {
     public int strength;
     public int baseStrength = 8;
-    public LinkedList<Position> movementPath = null;
+
     private Level map;
     public int playerLevel = 1;
     public int currentXP = 0;
@@ -21,7 +21,7 @@ public class Player extends Actor {
     public Slider healthbar;
     public Slider XPBar;
 
-    public int viewDistance = 8;
+
 
 
     public Player(int x, int y) {
@@ -31,12 +31,11 @@ public class Player extends Actor {
         dmgRange = 10;
         maxHP = 25;
         currentHP = maxHP;
+        viewDistance = 8;
     }
 
 
-    public void setMovementPath(LinkedList<Position> movementPath) {
-        this.movementPath = movementPath;
-    }
+
 
     @Override
     public void attack(Actor opponent){

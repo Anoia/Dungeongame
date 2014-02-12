@@ -33,22 +33,22 @@ public class RayTracer {
         while(dx<range){
             dx++;
             Position end = new Position(start.getX()+dx, start.getY()+dy);
-            castRay(start, end, range);
+            castRay(start, end, range, true);
         }
         while(dy<range){
             dy++;
             Position end = new Position(start.getX()+dx, start.getY()+dy);
-            castRay(start, end, range);
+            castRay(start, end, range, true);
         }
         while(dx > -range){
             dx--;
             Position end = new Position(start.getX()+dx, start.getY()+dy);
-            castRay(start, end, range);
+            castRay(start, end, range, true);
         }
         while(dy > -range){
             dy--;
             Position end = new Position(start.getX()+dx, start.getY()+dy);
-            castRay(start, end, range);
+            castRay(start, end, range, true);
         }
 
     }
@@ -106,7 +106,7 @@ public class RayTracer {
 
     }
 
-    private boolean castRay(Position start, Position end, int range){
+    public boolean castRay(Position start, Position end, int range, boolean markInMap){
 
         int x, y, t, dx, dy, incrementX, incrementY, pdx, pdy, ddx, ddy, es, el, err;
 
@@ -138,7 +138,7 @@ public class RayTracer {
         x = start.getX();
         y = start.getY();
         err = el/2;
-        setPixel(x, y);
+        setPixel(x, y, markInMap);
 
         /* Pixel berechnen */
         for(t=0; t < el; t++){ /* t zaehlt die Pixel, el ist auch Anzahl */
@@ -160,7 +160,7 @@ public class RayTracer {
             if((deltaX*deltaX + deltaY*deltaY) > range*range){
                 return false;
             }
-            boolean success = setPixel(x, y);
+            boolean success = setPixel(x, y, markInMap);
             if(!success){
                 return false;
             }
@@ -176,12 +176,14 @@ public class RayTracer {
     }
 
 
-    boolean setPixel(int x, int y){
+    boolean setPixel(int x, int y, boolean markInMap){
 
         Tile t = level.getTile(x, y);
         if(t != null){
-            t.inLOS = true;
-            t.hasSeen = true;
+            if(markInMap){
+                t.inLOS = true;
+                t.hasSeen = true;
+            }
             return !level.isSolid(x, y);
         }else{
             return false;

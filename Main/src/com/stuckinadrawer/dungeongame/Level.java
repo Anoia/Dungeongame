@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame;
 
+import com.stuckinadrawer.dungeongame.actors.Actor;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.render.TextAnimation;
@@ -85,8 +86,8 @@ public class Level {
         player.setMap(this);
     }
 
-    public void findPath(Position start, Position goal){
-        player.setMovementPath(pathfinder.findPath(start, goal));
+    public void findPath(Actor a, Position goal){
+        a.setMovementPath(pathfinder.findPath(a.getPosition(), goal));
     }
 
     public void removeEnemy(Enemy e) {
@@ -104,5 +105,9 @@ public class Level {
 
     public void updateFOV() {
         rayTracer.calculatePlayerFOV();
+    }
+
+    public boolean isInLOS(Position start, Position goal, int range){
+        return rayTracer.castRay(start, goal, range, false);
     }
 }

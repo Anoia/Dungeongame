@@ -121,7 +121,7 @@ public class GameScreen extends AbstractScreen {
             if(e.dead){
                 //level.removeEnemy(e);
             }else{
-                e.doTurn(player);
+                e.doTurn(level);
             }
         }
 
