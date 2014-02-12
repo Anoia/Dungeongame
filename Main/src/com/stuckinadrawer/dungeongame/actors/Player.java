@@ -21,7 +21,7 @@ public class Player extends Actor {
     public Slider healthbar;
     public Slider XPBar;
 
-    public int viewDistance = 10;
+    public int viewDistance = 8;
 
 
     public Player(int x, int y) {

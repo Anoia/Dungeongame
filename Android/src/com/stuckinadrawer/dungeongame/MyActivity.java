@@ -4,7 +4,6 @@ package com.stuckinadrawer.dungeongame;
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.stuckinadrawer.dungeongame.old.DungeonGame;
 
 public class MyActivity extends AndroidApplication{
 

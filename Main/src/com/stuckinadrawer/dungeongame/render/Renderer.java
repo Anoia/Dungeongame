@@ -86,17 +86,22 @@ public class Renderer {
     private void renderEnemies() {
         ArrayList<Enemy> enemies = level.getEnemies();
         for(Enemy e: enemies){
-            AtlasRegion spriteRegion = regions.get(e.getSpriteName());
-            float posX = e.getPosition().getX() * Constants.TILE_SIZE;
-            float posY = e.getPosition().getY() * Constants.TILE_SIZE;
-            batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
-            if(!e.dead && e.currentHP < e.maxHP){
-                posY += Constants.TILE_SIZE;
-                batch.draw(regions.get("darkGrey"),posX, posY, Constants.TILE_SIZE, 5);
-                int barPos  = calculatePixelFilled(e.currentHP, e.maxHP);
-                batch.draw(regions.get("green"),posX, posY, barPos, 5);
+            Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
+            if(t.inLOS){
+                AtlasRegion spriteRegion = regions.get(e.getSpriteName());
+                float posX = e.getPosition().getX() * Constants.TILE_SIZE;
+                float posY = e.getPosition().getY() * Constants.TILE_SIZE;
+                batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+                /* Draw the Healthbar */
+                if(!e.dead && e.currentHP < e.maxHP){
+                    posY += Constants.TILE_SIZE;
+                    batch.draw(regions.get("darkGrey"),posX, posY, Constants.TILE_SIZE, 5);
+                    int barPos  = calculatePixelFilled(e.currentHP, e.maxHP);
+                    batch.draw(regions.get("green"),posX, posY, barPos, 5);
 
+                }
             }
+
 
         }
     }
@@ -113,7 +118,7 @@ public class Renderer {
         for(int x = 0; x < levelData.length; x++){
             for(int y = 0; y < levelData[x].length; y++){
                 Tile tile = levelData[x][y];
-                if(tile.getSpriteName() != null && tile.inLOS){
+                if(tile.getSpriteName() != null && tile.hasSeen){
                     AtlasRegion spriteRegion = regions.get(tile.getSpriteName());
                     float posX = tile.getPosition().getX() * Constants.TILE_SIZE;
                     float posY = tile.getPosition().getY() * Constants.TILE_SIZE;
@@ -122,6 +127,13 @@ public class Renderer {
                     if(tile.object!=null){
                         spriteRegion = regions.get(tile.object);
                         batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+                    }
+
+                    if(!tile.inLOS){
+                        Color c = batch.getColor();
+                        batch.setColor(1f, 1f, 1f, 0.6f);
+                        batch.draw(regions.get("black"), posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1 );
+                        batch.setColor(c);
                     }
                 }
             }

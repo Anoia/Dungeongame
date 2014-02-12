@@ -54,8 +54,8 @@ public class GameScreen extends AbstractScreen {
 
         // TESTBUTTON
         final TextButton button = new TextButton("Heal Me!", skin);
-        button.setPosition(200, 200);
-        button.setSize(200, 50);
+        button.setPosition(10, 10);
+        button.setSize(100, 25);
 
         stage.addActor(button);
 
@@ -70,8 +70,8 @@ public class GameScreen extends AbstractScreen {
 
         //HEALTHBAR
         Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
-        healthbar.setSize(200, 50);
-        healthbar.setPosition(50, Gdx.graphics.getHeight() - 100);
+        healthbar.setSize(Gdx.graphics.getWidth()/3, 50);
+        healthbar.setPosition(5, Gdx.graphics.getHeight() - 55);
         healthbar.setValue(player.maxHP);
         healthbar.setAnimateDuration(.5f);
         healthbar.setTouchable(Touchable.disabled);

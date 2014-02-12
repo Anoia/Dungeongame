@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
 import java.util.ArrayList;
@@ -19,23 +20,36 @@ public class RayTracer {
         int viewDistance = level.getPlayer().viewDistance;
         Position playerPos = level.getPlayer().getPosition();
 
-        /* Find circle in viewdistance */
-        HashSet<Position> circlePositions = findCircle(level.getPlayer().getPosition(), viewDistance);
-        for(Position circlePos : circlePositions){
-            traceRay(playerPos, circlePos);
+        useRayTracing(playerPos, viewDistance);
 
-            /*
-            //DISPLAY CIRCLE
 
-            Tile t = level.getTile(circlePos.getX(), circlePos.getY());
-            if(t != null){
-                t.inLOS = true;
-                t.hasSeen = true;
-            }
-            */
+
+    }
+
+    private void useRayTracing(Position start, int range) {
+
+        int dx = -range;
+        int dy = -range;
+        while(dx<range){
+            dx++;
+            Position end = new Position(start.getX()+dx, start.getY()+dy);
+            castRay(start, end, range);
         }
-
-
+        while(dy<range){
+            dy++;
+            Position end = new Position(start.getX()+dx, start.getY()+dy);
+            castRay(start, end, range);
+        }
+        while(dx > -range){
+            dx--;
+            Position end = new Position(start.getX()+dx, start.getY()+dy);
+            castRay(start, end, range);
+        }
+        while(dy > -range){
+            dy--;
+            Position end = new Position(start.getX()+dx, start.getY()+dy);
+            castRay(start, end, range);
+        }
 
     }
 
@@ -92,7 +106,7 @@ public class RayTracer {
 
     }
 
-    private boolean traceRay(Position start, Position end){
+    private boolean castRay(Position start, Position end, int range){
 
         int x, y, t, dx, dy, incrementX, incrementY, pdx, pdy, ddx, ddy, es, el, err;
 
@@ -141,9 +155,14 @@ public class RayTracer {
                 x += pdx;
                 y += pdy;
             }
+            int deltaX = x - start.getX();
+            int deltaY = y - start.getY();
+            if((deltaX*deltaX + deltaY*deltaY) > range*range){
+                return false;
+            }
             boolean success = setPixel(x, y);
             if(!success){
-                //return false;
+                return false;
             }
         }
 
