@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
@@ -109,6 +110,9 @@ public class GameScreen extends AbstractScreen {
 
 
                     stage.addActor(playerMenu);
+                   // playerMenu.setWidth(400);
+                   // playerMenu.setHeight(400);
+                    System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
 
                 }
                 playerMenuOpen = !playerMenuOpen;
@@ -144,6 +148,7 @@ public class GameScreen extends AbstractScreen {
 
 
         playerMenu = new Table(skin);
+
         playerMenu.add("You're SPECIAL!");
         playerMenu.row();
 
@@ -182,14 +187,18 @@ public class GameScreen extends AbstractScreen {
         playerMenu.add(l);
         playerMenu.row();
 
-        playerMenu.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
+        //playerMenu.setFillParent(true);
         //stage.addActor(playerMenu);
 
 
+       // playerMenu.setBackground(new TiledDrawable(skin.getRegion("default-round")));
+        playerMenu.setBackground(skin.getDrawable("textfield"));
 
-
-
+        System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
+        //playerMenu.debug();
+        playerMenu.pack();
+        playerMenu.setPosition(Gdx.graphics.getWidth()/2-playerMenu.getWidth()/2, Gdx.graphics.getHeight()/2-playerMenu.getHeight()/2);
     }
 
     @Override
@@ -229,7 +238,7 @@ public class GameScreen extends AbstractScreen {
         camera.update();
         renderer.update(delta);
         stage.draw();
-
+        Table.drawDebug(stage);
 
     }
 }
