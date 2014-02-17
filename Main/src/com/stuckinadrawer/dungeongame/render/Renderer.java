@@ -3,9 +3,7 @@ package com.stuckinadrawer.dungeongame.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.stuckinadrawer.dungeongame.Constants;
@@ -29,6 +27,9 @@ public class Renderer {
     private TextureAtlas textureAtlas;
     private SpriteBatch batch;
 
+    private Animation playerAnimation;
+    float stateTime;
+
     public Renderer(Level level, OrthographicCamera camera, BitmapFont font){
         this.level = level;
         this.camera  = camera;
@@ -44,7 +45,12 @@ public class Renderer {
             regions.put(region.name, region);
         }
         batch = new SpriteBatch();
+        TextureRegion[] playerFrames = new TextureRegion[2];
+        playerFrames[0] = regions.get("char_player");
+        playerFrames[1] = regions.get("char_player2");
+        playerAnimation = new Animation(0.5f, playerFrames);
 
+        stateTime = 0f;
     }
 
     public void update(float delta){
@@ -52,7 +58,7 @@ public class Renderer {
         batch.begin();
 
         renderTiles();
-        renderPlayer();
+        renderPlayer(delta);
         renderEnemies();
         renderTextAnimations(delta);
         //font.draw(batch, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 10);
@@ -75,12 +81,16 @@ public class Renderer {
 
     }
 
-    private void renderPlayer() {
+    private void renderPlayer(float delta) {
+        stateTime += Gdx.graphics.getDeltaTime();
         Player player = level.getPlayer();
         float posX = player.getPosition().getX() * Constants.TILE_SIZE;
         float posY = player.getPosition().getY() * Constants.TILE_SIZE;
-        AtlasRegion spriteRegion = regions.get(player.getSpriteName());
+        //AtlasRegion spriteRegion = regions.get(player.getSpriteName());
+        TextureRegion spriteRegion = playerAnimation.getKeyFrame(stateTime, true);
         batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+
+
     }
 
     private void renderEnemies() {

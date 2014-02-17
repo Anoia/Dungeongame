@@ -7,6 +7,7 @@ import com.stuckinadrawer.dungeongame.render.TextAnimation;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Level {
     private Tile[][] tiles;
@@ -109,5 +110,11 @@ public class Level {
 
     public boolean isInLOS(Position start, Position goal, int range){
         return rayTracer.castRay(start, goal, range, false);
+    }
+
+    public void waitTurn() {
+        player.movementPath = new LinkedList<Position>();
+        player.movementPath.add(player.getPosition());
+
     }
 }

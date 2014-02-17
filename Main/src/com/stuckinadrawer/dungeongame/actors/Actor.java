@@ -9,8 +9,17 @@ public abstract class Actor {
 
     protected int x;
     protected int y;
+    public Position renderPosition;
     protected String spriteName;
 
+    /* SPECIAL */
+    public int strength;
+    public int perception;
+    public int endurance;
+    public int charisma;
+    public int intelligence;
+    public int agility;
+    public int luck;
 
     public int maxHP;
     public int currentHP;
@@ -26,6 +35,7 @@ public abstract class Actor {
     public Actor(int x, int y){
         this.x = x;
         this.y = y;
+        renderPosition = new Position(x, y);
     }
 
     public void attack(Actor opponent){

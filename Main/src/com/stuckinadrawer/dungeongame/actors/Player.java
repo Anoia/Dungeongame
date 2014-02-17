@@ -11,7 +11,6 @@ import com.stuckinadrawer.dungeongame.render.TextAnimation;
 import java.util.LinkedList;
 
 public class Player extends Actor {
-    public int strength;
     public int baseStrength = 8;
 
     private Level map;
@@ -28,10 +27,16 @@ public class Player extends Actor {
         super(x, y);
         spriteName = "char_player";
         strength = 10;
+        perception = 6;
+        endurance = 5;
+        charisma = 5;
+        intelligence = 5;
+        agility = 5;
+        luck = 5;
         dmgRange = 10;
-        maxHP = 25;
+        maxHP = endurance*5;
         currentHP = maxHP;
-        viewDistance = 8;
+        viewDistance = perception;
     }
 
 
@@ -133,7 +138,11 @@ public class Player extends Actor {
     public void levelUP(){
         playerLevel ++;
         strength++;
-        maxHP += 5;
+
+        endurance++;
+        maxHP = endurance*5;
+        perception++;
+        viewDistance = perception;
         currentHP = maxHP;
         healthbar.setRange(0, maxHP);
         healthbar.setValue(currentHP);

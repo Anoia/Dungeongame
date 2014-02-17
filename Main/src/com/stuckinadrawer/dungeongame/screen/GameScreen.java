@@ -2,14 +2,23 @@ package com.stuckinadrawer.dungeongame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
@@ -27,6 +36,17 @@ public class GameScreen extends AbstractScreen {
     Stage stage;
 
     float timer = 0;
+
+    boolean playerMenuOpen = false;
+
+    Table playerMenu;
+    Label s;
+    Label p;
+    Label e;
+    Label c;
+    Label i;
+    Label a;
+    Label l;
 
     public GameScreen(DungeonGame dungeonGame) {
         super(dungeonGame);
@@ -67,6 +87,33 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
+        final TextButton playerButton = new TextButton("Player Info", skin);
+        playerButton.setSize(100, 25);
+        playerButton.setPosition(Gdx.graphics.getWidth()-110, 25);
+        stage.addActor(playerButton);
+        playerButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(playerMenuOpen){
+                    playerMenu.remove();
+
+                }else{
+                    s.setText(player.strength+"");
+                    p.setText(player.perception+"");
+                    e.setText(player.endurance+"");
+                    c.setText(player.charisma+"");
+                    i.setText(player.intelligence+"");
+                    a.setText(player.agility+"");
+                    l.setText(player.luck+"");
+
+
+
+                    stage.addActor(playerMenu);
+
+                }
+                playerMenuOpen = !playerMenuOpen;
+            }
+        });
 
         //HEALTHBAR
         Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
@@ -94,6 +141,52 @@ public class GameScreen extends AbstractScreen {
 
 
         level.updateFOV();
+
+
+        playerMenu = new Table(skin);
+        playerMenu.add("You're SPECIAL!");
+        playerMenu.row();
+
+        s = new Label(player.strength+"", skin);
+        playerMenu.add("Strength: ");
+        playerMenu.add(s);
+        playerMenu.row();
+
+        p = new Label(player.perception+"", skin);
+        playerMenu.add("Perception: ");
+        playerMenu.add(p);
+        playerMenu.row();
+
+        e = new Label(player.endurance+"", skin);
+        playerMenu.add("Endurance: ");
+        playerMenu.add(e);
+        playerMenu.row();
+
+        c = new Label(player.charisma+"", skin);
+        playerMenu.add("Charisma: ");
+        playerMenu.add(c);
+        playerMenu.row();
+
+        i = new Label(player.intelligence+"", skin);
+        playerMenu.add("Intelligence: ");
+        playerMenu.add(i);
+        playerMenu.row();
+
+        a = new Label(player.agility+"", skin);
+        playerMenu.add("Agility: ");
+        playerMenu.add(a);
+        playerMenu.row();
+
+        l = new Label(player.luck+"", skin);
+        playerMenu.add("Luck: ");
+        playerMenu.add(l);
+        playerMenu.row();
+
+        playerMenu.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+
+        //stage.addActor(playerMenu);
+
+
 
 
 
