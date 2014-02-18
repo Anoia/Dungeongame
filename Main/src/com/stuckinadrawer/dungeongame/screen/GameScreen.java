@@ -2,12 +2,7 @@ package com.stuckinadrawer.dungeongame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,14 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
+import com.stuckinadrawer.dungeongame.tiles.Tile;
+
+import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
 
@@ -99,13 +94,13 @@ public class GameScreen extends AbstractScreen {
                     playerMenu.remove();
 
                 }else{
-                    s.setText(player.strength+"");
-                    p.setText(player.perception+"");
-                    e.setText(player.endurance+"");
-                    c.setText(player.charisma+"");
-                    i.setText(player.intelligence+"");
-                    a.setText(player.agility+"");
-                    l.setText(player.luck+"");
+                    s.setText(player.getStrength()+"");
+                    p.setText(player.getPerception()+"");
+                    e.setText(player.getEndurance()+"");
+                    c.setText(player.getCharisma()+"");
+                    i.setText(player.getIntelligence()+"");
+                    a.setText(player.getAgility()+"");
+                    l.setText(player.getLuck()+"");
 
 
 
@@ -152,37 +147,37 @@ public class GameScreen extends AbstractScreen {
         playerMenu.add("You're SPECIAL!");
         playerMenu.row();
 
-        s = new Label(player.strength+"", skin);
+        s = new Label(player.getStrength()+"", skin);
         playerMenu.add("Strength: ");
         playerMenu.add(s);
         playerMenu.row();
 
-        p = new Label(player.perception+"", skin);
+        p = new Label(player.getPerception()+"", skin);
         playerMenu.add("Perception: ");
         playerMenu.add(p);
         playerMenu.row();
 
-        e = new Label(player.endurance+"", skin);
+        e = new Label(player.getEndurance()+"", skin);
         playerMenu.add("Endurance: ");
         playerMenu.add(e);
         playerMenu.row();
 
-        c = new Label(player.charisma+"", skin);
+        c = new Label(player.getCharisma()+"", skin);
         playerMenu.add("Charisma: ");
         playerMenu.add(c);
         playerMenu.row();
 
-        i = new Label(player.intelligence+"", skin);
+        i = new Label(player.getIntelligence()+"", skin);
         playerMenu.add("Intelligence: ");
         playerMenu.add(i);
         playerMenu.row();
 
-        a = new Label(player.agility+"", skin);
+        a = new Label(player.getAgility()+"", skin);
         playerMenu.add("Agility: ");
         playerMenu.add(a);
         playerMenu.row();
 
-        l = new Label(player.luck+"", skin);
+        l = new Label(player.getLuck()+"", skin);
         playerMenu.add("Luck: ");
         playerMenu.add(l);
         playerMenu.row();
@@ -219,13 +214,18 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void processTurn() {
+        ArrayList<Enemy> dead = new ArrayList<Enemy>();
         for(Enemy e: level.getEnemies()){
             if(e.dead){
                 //level.removeEnemy(e);
+                Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
+                t.object = "effect_blood";
+                dead.add(e);
             }else{
                 e.doTurn(level);
             }
         }
+        level.getEnemies().removeAll(dead);
 
     }
 

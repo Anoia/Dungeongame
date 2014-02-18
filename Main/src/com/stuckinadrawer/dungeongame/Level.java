@@ -14,12 +14,9 @@ public class Level {
     private ArrayList<Enemy> enemies;
     private Player player;
     private int width;
+    private int height;
 
     public ArrayList<TextAnimation> textAnimations;
-
-
-
-    private int height;
 
     private Pathfinder pathfinder;
     private RayTracer rayTracer;
@@ -70,7 +67,7 @@ public class Level {
     }
 
     public boolean isOccupied(int x, int y){
-        return isOccupiedByObject(x, y)&&isOccupiedByActor(x,y);
+        return (isOccupiedByObject(x, y) || isOccupiedByActor(x,y));
     }
 
     public boolean isOccupiedByActor(int x, int y){

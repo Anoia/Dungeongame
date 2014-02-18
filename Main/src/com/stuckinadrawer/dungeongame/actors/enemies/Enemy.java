@@ -28,8 +28,12 @@ public abstract class Enemy extends Actor {
             level.findPath(this, p.getPosition());
             if(movementPath!= null){
                 Position newPos = movementPath.pop();
-                x = newPos.getX();
-                y = newPos.getY();
+                if(level.isWalkable(newPos.getX(), newPos.getY())){
+                    System.out.println(spriteName + " moving from "+x+" "+y+" to "+newPos.getX()+" "+newPos.getY());
+                    x = newPos.getX();
+                    y = newPos.getY();
+                }
+
             }
         }
     }

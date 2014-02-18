@@ -26,17 +26,15 @@ public class Player extends Actor {
     public Player(int x, int y) {
         super(x, y);
         spriteName = "char_player";
-        strength = 10;
-        perception = 6;
-        endurance = 5;
-        charisma = 5;
-        intelligence = 5;
-        agility = 5;
-        luck = 5;
+        setStrength(10);
+        setPerception(6);
+        setEndurance(5);
+        setCharisma(5);
+        setIntelligence(5);
+        setAgility(5);
+        setLuck(5);
         dmgRange = 10;
-        maxHP = endurance*5;
         currentHP = maxHP;
-        viewDistance = perception;
     }
 
 
@@ -45,7 +43,7 @@ public class Player extends Actor {
     @Override
     public void attack(Actor opponent){
         int dmg = Utils.random(dmgRange);
-        dmg = dmg + dmg * (strength - baseStrength)/10;
+        dmg = dmg + dmg * (getStrength() - baseStrength)/10;
         System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
 
         if(dmg == 0){
@@ -94,7 +92,7 @@ public class Player extends Actor {
             Position newPos = movementPath.pop();
 
 
-            Enemy e = getEnemyOnNewPos(newPos);
+            Enemy e = map.getEnemyOnPos(newPos);
             if(e != null){
                 attack(e);
                 if(e.dead){
@@ -120,15 +118,7 @@ public class Player extends Actor {
 
     }
 
-    private Enemy getEnemyOnNewPos(Position newPos) {
-        for(Enemy e: map.getEnemies()){
-            if(!e.dead && newPos.equals(e.getPosition())){
-                System.out.println("ENEMY");
-                return e;
-            }
-        }
-        return null;
-    }
+
 
 
     public void setMap(Level map) {
@@ -136,13 +126,10 @@ public class Player extends Actor {
     }
 
     public void levelUP(){
-        playerLevel ++;
-        strength++;
-
-        endurance++;
-        maxHP = endurance*5;
-        perception++;
-        viewDistance = perception;
+        this.playerLevel ++;
+        changeStrength(1);
+        changeEndurance(1);
+        changeEndurance(1);
         currentHP = maxHP;
         healthbar.setRange(0, maxHP);
         healthbar.setValue(currentHP);
@@ -153,6 +140,6 @@ public class Player extends Actor {
         System.out.println("LevelUP " + " xp to next level: "+XPToNextLevel);
         System.out.println("Level: " + playerLevel);
         System.out.println("HP: " + maxHP );
-        System.out.println("Strength: "+strength);
+        System.out.println("Strength: "+getStrength());
     }
 }
