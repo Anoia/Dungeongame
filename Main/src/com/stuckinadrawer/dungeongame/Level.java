@@ -66,17 +66,30 @@ public class Level {
 
     public boolean isWalkable(int x, int y){
         Tile t = tiles[x][y];
-        boolean walkable = (!t.isSolid() && !isOccupied(x, y));
-        return walkable;
+        return (!t.isSolid() && !isOccupied(x, y));
     }
 
     public boolean isOccupied(int x, int y){
-        Tile t = tiles[x][y];
-        boolean occupied = !(t.object == null);
-
-        return occupied;
+        return isOccupiedByObject(x, y)&&isOccupiedByActor(x,y);
     }
 
+    public boolean isOccupiedByActor(int x, int y){
+        return getEnemyOnPos(new Position(x, y)) != null;
+    }
+
+    public boolean isOccupiedByObject(int x, int y){
+        Tile t = tiles[x][y];
+        return !(t.object == null);
+    }
+
+    public Enemy getEnemyOnPos(Position pos) {
+        for(Enemy e: getEnemies()){
+            if(!e.dead && pos.equals(e.getPosition())){
+                return e;
+            }
+        }
+        return null;
+    }
 
     public Player getPlayer() {
         return player;
