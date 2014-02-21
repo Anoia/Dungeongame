@@ -203,13 +203,17 @@ public class GameScreen extends AbstractScreen {
 
     private void update(float delta){
         timer+=delta;
-        if(timer>0.1){
-            //moves player if his movement queue is not empty
-            if(player.action()){
-                camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
-                processTurn();
+        if(player.isMoving != -1){
+            player.updateRenderPosition(delta);
+            camera.position.set(player.renderPosition.getX(), player.renderPosition.getY(), 0);
+        }else{
+            if(timer>0.1){
+                //moves player if his movement queue is not empty
+                if(player.action()){
+                    processTurn();
+                }
+                timer = 0;
             }
-            timer = 0;
         }
     }
 

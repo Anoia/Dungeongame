@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.stuckinadrawer.dungeongame.Constants;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
@@ -45,10 +44,7 @@ public class Renderer {
             regions.put(region.name, region);
         }
         batch = new SpriteBatch();
-        TextureRegion[] playerFrames = new TextureRegion[2];
-        playerFrames[0] = regions.get("char_player");
-        playerFrames[1] = regions.get("char_player2");
-        playerAnimation = new Animation(0.5f, playerFrames);
+        playerAnimation = new Animation(0.25f, textureAtlas.findRegions("char_player"));
 
         stateTime = 0f;
     }
@@ -59,7 +55,7 @@ public class Renderer {
 
         renderTiles();
         renderPlayer(delta);
-        renderEnemies();
+        renderEnemies(delta);
         renderTextAnimations(delta);
         //font.draw(batch, "FPS: "+Gdx.graphics.getFramesPerSecond(), 10, 10);
 
@@ -84,23 +80,32 @@ public class Renderer {
     private void renderPlayer(float delta) {
         stateTime += Gdx.graphics.getDeltaTime();
         Player player = level.getPlayer();
-        float posX = player.getPosition().getX() * Constants.TILE_SIZE;
-        float posY = player.getPosition().getY() * Constants.TILE_SIZE;
+        float posX = player.renderPosition.getX();
+        float posY = player.renderPosition.getY();
         //AtlasRegion spriteRegion = regions.get(player.getSpriteName());
-        TextureRegion spriteRegion = playerAnimation.getKeyFrame(stateTime, true);
+        TextureRegion spriteRegion;
+        if(player.isMoving == -1){
+            spriteRegion = regions.get(player.getSpriteName());
+        }else{
+            spriteRegion = playerAnimation.getKeyFrame(stateTime, true);
+        }
         batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
 
 
     }
 
-    private void renderEnemies() {
+    private void renderEnemies(float delta) {
         ArrayList<Enemy> enemies = level.getEnemies();
         for(Enemy e: enemies){
             Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
             if(t.inLOS){
+                // TODO move this somewhere else! no logic update in render pos?
+                if(e.isMoving !=-1){
+                    e.updateRenderPosition(delta);
+                }
                 AtlasRegion spriteRegion = regions.get(e.getSpriteName());
-                float posX = e.getPosition().getX() * Constants.TILE_SIZE;
-                float posY = e.getPosition().getY() * Constants.TILE_SIZE;
+                float posX = e.renderPosition.getX();
+                float posY = e.renderPosition.getY();
                 batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
                 /* Draw the Healthbar */
                 if(!e.dead && e.currentHP < e.maxHP){

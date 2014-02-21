@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame.actors;
 
+import com.stuckinadrawer.dungeongame.Constants;
 import com.stuckinadrawer.dungeongame.Position;
 import com.stuckinadrawer.dungeongame.Utils;
 
@@ -9,8 +10,11 @@ public abstract class Actor {
 
     protected int x;
     protected int y;
+    protected int oldX;
+    protected int oldY;
     public Position renderPosition;
-    protected String spriteName;
+    public float isMoving = -1;
+    private String spriteName;
 
     /* SPECIAL */
     private int strength;
@@ -20,6 +24,8 @@ public abstract class Actor {
     private int intelligence;
     private int agility;
     private int luck;
+
+    public int baseStrength = 8;
 
     public int maxHP;
     public int currentHP;
@@ -35,6 +41,13 @@ public abstract class Actor {
     public Actor(int x, int y){
         this.x = x;
         this.y = y;
+        setStrength(8);
+        setPerception(4);
+        setEndurance(5);
+        setCharisma(5);
+        setIntelligence(5);
+        setAgility(5);
+        setLuck(5);
         renderPosition = new Position(x, y);
     }
 
@@ -136,6 +149,11 @@ public abstract class Actor {
         }
     }
 
+    public void getAttackDamage(){
+        int dmg = Utils.random(dmgRange);
+        dmg = dmg + dmg * (getStrength() - baseStrength)/10;
+    }
+
     public void takeDmg(int dmg){
         if(!dead){
             currentHP -= dmg;
@@ -175,5 +193,21 @@ public abstract class Actor {
 
     public void setMovementPath(LinkedList<Position> movementPath) {
         this.movementPath = movementPath;
+    }
+
+    public void updateRenderPosition(float delta){
+        isMoving +=delta * Constants.WALKING_SPEED;
+
+        int currentX = (int)lerp(oldX*Constants.TILE_SIZE, x*Constants.TILE_SIZE);
+        int currentY = (int)lerp(oldY*Constants.TILE_SIZE, y*Constants.TILE_SIZE);
+        //System.out.println("currentX: "+currentX+ " currentY: "+currentY);
+        renderPosition = new Position(currentX, currentY);
+        if(isMoving >= 1){
+            isMoving = -1;
+        }
+    }
+
+    public float lerp(float start, float end){
+        return start + isMoving * (end - start);
     }
 }

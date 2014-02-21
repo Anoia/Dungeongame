@@ -2,16 +2,15 @@ package com.stuckinadrawer.dungeongame.actors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.stuckinadrawer.dungeongame.Constants;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.Position;
 import com.stuckinadrawer.dungeongame.Utils;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.render.TextAnimation;
 
-import java.util.LinkedList;
-
 public class Player extends Actor {
-    public int baseStrength = 8;
+
 
     private Level map;
     public int playerLevel = 1;
@@ -23,9 +22,12 @@ public class Player extends Actor {
 
 
 
+
+
     public Player(int x, int y) {
         super(x, y);
-        spriteName = "char_player";
+        renderPosition = new Position(x* Constants.TILE_SIZE, y* Constants.TILE_SIZE);
+        setSpriteName("char_player");
         setStrength(10);
         setPerception(6);
         setEndurance(5);
@@ -44,7 +46,7 @@ public class Player extends Actor {
     public void attack(Actor opponent){
         int dmg = Utils.random(dmgRange);
         dmg = dmg + dmg * (getStrength() - baseStrength)/10;
-        System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
+        System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+getSpriteName());
 
         if(dmg == 0){
             //miss
@@ -64,7 +66,7 @@ public class Player extends Actor {
     public void takeDmg(int dmg){
         if(!dead){
             currentHP -= dmg;
-            System.out.println(spriteName + " has "+currentHP + " HP left");
+            System.out.println(getSpriteName() + " has "+currentHP + " HP left");
             if(dmg == 0){
                 //dodge
                 TextAnimation tA = new TextAnimation(x, y, "dodge", Color.YELLOW);
@@ -77,7 +79,7 @@ public class Player extends Actor {
 
             if(currentHP <= 0){
                 die();
-                System.out.println(spriteName + " died!");
+                System.out.println(getSpriteName() + " died!");
                 healthbar.setValue(0);
             }else{
                 healthbar.setValue(currentHP);
@@ -105,9 +107,12 @@ public class Player extends Actor {
                     }
                 }
             } else{
+                oldX = x;
+                oldY = y;
                 x = newPos.getX();
                 y = newPos.getY();
                 map.updateFOV();
+                isMoving = 0;
             }
 
             return true;
@@ -117,6 +122,9 @@ public class Player extends Actor {
 
 
     }
+
+
+
 
 
 
