@@ -3,14 +3,14 @@ package com.stuckinadrawer.dungeongame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.stuckinadrawer.dungeongame.DungeonGame;
+import com.stuckinadrawer.dungeongame.GameContainer;
 
 public class TitleScreen extends AbstractScreen {
 
     private float time = 0;
 
-    public TitleScreen(DungeonGame dungeonGame) {
-        super(dungeonGame);
+    public TitleScreen(GameContainer gameContainer) {
+        super(gameContainer);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class TitleScreen extends AbstractScreen {
         r.end();
 
         if(time > 20){
-            dungeonGame.setScreen(new GameScreen(dungeonGame));
+            gameContainer.setScreen(new GameScreen(gameContainer));
         }
 
 

@@ -1,11 +1,15 @@
 package com.stuckinadrawer.dungeongame;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.stuckinadrawer.dungeongame.actors.Player;
+import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
+import com.stuckinadrawer.dungeongame.screen.GameScreen;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+
+import static java.lang.Math.abs;
 
 public class GestureDetection implements GestureDetector.GestureListener{
     private OrthographicCamera camera;
@@ -62,13 +66,23 @@ public class GestureDetection implements GestureDetector.GestureListener{
 
     private void handleClickOnTile(int x, int y){
         Tile t  = level.getTile(x, y);
-        if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
-            if(x == level.getPlayer().getPosition().getX() && y == level.getPlayer().getPosition().getY()){
-                level.waitTurn();
-            }else{
-                level.findPath(level.getPlayer(), new Position(x, y));
-            }
+        if(isNeighbourTile(x, y) && level.isOccupiedByActor(x, y)){
+            //attack!
+            Enemy e = level.getEnemyOnPos(new Position(x,y));
+            level.getPlayer().attack(e);
+        }else if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
+                    if(x == level.getPlayer().getPosition().getX() && y == level.getPlayer().getPosition().getY()){
+                        level.waitTurn();
+                    }else{
+                        level.findPath(level.getPlayer(), new Position(x, y));
+                    }
 
         }
+    }
+
+    private boolean isNeighbourTile(int x, int y){
+        Player p = level.getPlayer();
+        int distance = abs(p.getPosition().getX() - x) + abs(p.getPosition().getY()-y);
+        return (distance == 1);
     }
 }

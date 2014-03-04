@@ -10,20 +10,19 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.stuckinadrawer.dungeongame.DungeonGame;
+import com.stuckinadrawer.dungeongame.GameContainer;
 
 class AbstractScreen implements Screen{
 
-    DungeonGame dungeonGame;
+    GameContainer gameContainer;
     BitmapFont font;
     SpriteBatch batch;
 
     Skin skin;
 
-    AbstractScreen(DungeonGame dungeonGame){
-        this.dungeonGame = dungeonGame;
+    AbstractScreen(GameContainer gameContainer){
+        this.gameContainer = gameContainer;
         this.font = new BitmapFont(Gdx.files.internal("ui/default.fnt"), Gdx.files.internal("ui/default.png"), false);
         this.batch = new SpriteBatch();
         createSkinFromJSON();

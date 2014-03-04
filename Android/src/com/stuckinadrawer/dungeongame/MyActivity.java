@@ -12,6 +12,6 @@ public class MyActivity extends AndroidApplication{
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
-        initialize(new DungeonGame(), cfg);
+        initialize(new GameContainer(), cfg);
     }
 }

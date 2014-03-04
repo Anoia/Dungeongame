@@ -60,6 +60,16 @@ public class Player extends Actor {
 
 
         opponent.takeDmg(dmg);
+
+        if(opponent.dead){
+            currentXP += opponent.XPRewarded*2;
+
+            if(currentXP >= XPToNextLevel){
+                levelUP();
+            } else{
+                XPBar.setValue(currentXP);
+            }
+        }
     }
 
     @Override
@@ -97,15 +107,7 @@ public class Player extends Actor {
             Enemy e = map.getEnemyOnPos(newPos);
             if(e != null){
                 attack(e);
-                if(e.dead){
-                    currentXP +=e.XPRewarded*2;
 
-                    if(currentXP >= XPToNextLevel){
-                        levelUP();
-                    } else{
-                        XPBar.setValue(currentXP);
-                    }
-                }
             } else{
                 oldX = x;
                 oldY = y;

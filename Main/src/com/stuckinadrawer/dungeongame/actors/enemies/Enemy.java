@@ -10,7 +10,7 @@ import static java.lang.Math.abs;
 
 public abstract class Enemy extends Actor {
 
-    public int XPRewarded;
+    //public int XPRewarded;
 
     public Enemy(int x, int y) {
         super(x, y);
@@ -26,7 +26,7 @@ public abstract class Enemy extends Actor {
             attack(p);
         }else if(level.isInLOS(new Position(x, y), p.getPosition(), viewDistance)){
             level.findPath(this, p.getPosition());
-            if(movementPath!= null){
+            if(movementPath!= null && !movementPath.isEmpty()){
                 Position newPos = movementPath.pop();
                 if(level.isWalkable(newPos.getX(), newPos.getY())){
                     System.out.println(getSpriteName() + " moving from "+x+" "+y+" to "+newPos.getX()+" "+newPos.getY());

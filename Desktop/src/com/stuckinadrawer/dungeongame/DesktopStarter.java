@@ -11,6 +11,6 @@ public class DesktopStarter {
         cfg.useGL20 = true;
         cfg.width = 1000;
         cfg.height = 800;
-        new LwjglApplication(new DungeonGame(), cfg);
+        new LwjglApplication(new GameContainer(), cfg);
     }
 }

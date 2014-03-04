@@ -36,6 +36,8 @@ public abstract class Actor {
     public boolean dead = false;
 
 
+    //TEMP
+    public int XPRewarded = 3;
 
 
     public Actor(int x, int y){

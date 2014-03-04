@@ -7,10 +7,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
@@ -29,23 +26,16 @@ public class GameScreen extends AbstractScreen {
     private Level level;
     private Player player;
 
+    private HUD hud;
+
     Stage stage;
 
     float timer = 0;
 
-    boolean playerMenuOpen = false;
 
-    Table playerMenu;
-    Label s;
-    Label p;
-    Label e;
-    Label c;
-    Label i;
-    Label a;
-    Label l;
 
-    public GameScreen(DungeonGame dungeonGame) {
-        super(dungeonGame);
+    public GameScreen(GameContainer gameContainer) {
+        super(gameContainer);
 
         LevelCreator levelCreator = new LevelCreator();
         level = levelCreator.getNewLevel();
@@ -53,7 +43,6 @@ public class GameScreen extends AbstractScreen {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         renderer = new Renderer(level, camera, font);
-        //Gdx.input.setInputProcessor(new GestureDetector(new GestureDetection(camera, level)));
         camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
 
@@ -61,140 +50,20 @@ public class GameScreen extends AbstractScreen {
     }
     @Override
     public void show() {
-        System.out.println("I'm showing!");
+        // Create a new Stage
         stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+        // Create and set InputProcessors
         GestureDetector gd = new GestureDetector(new GestureDetection(camera, level));
         InputMultiplexer im = new InputMultiplexer(stage, gd);
         Gdx.input.setInputProcessor(im);
 
+        // Create a HUD
+        hud = new HUD(this);
 
-        // TESTBUTTON
-        final TextButton button = new TextButton("Heal Me!", skin);
-        button.setPosition(10, 10);
-        button.setSize(100, 25);
-
-        stage.addActor(button);
-
-        button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                player.currentHP = player.maxHP;
-                player.healthbar.setValue(player.currentHP);
-            }
-        });
-
-        final TextButton playerButton = new TextButton("Player Info", skin);
-        playerButton.setSize(100, 25);
-        playerButton.setPosition(Gdx.graphics.getWidth()-110, 25);
-        stage.addActor(playerButton);
-        playerButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(playerMenuOpen){
-                    playerMenu.remove();
-
-                }else{
-                    s.setText(player.getStrength()+"");
-                    p.setText(player.getPerception()+"");
-                    e.setText(player.getEndurance()+"");
-                    c.setText(player.getCharisma()+"");
-                    i.setText(player.getIntelligence()+"");
-                    a.setText(player.getAgility()+"");
-                    l.setText(player.getLuck()+"");
-
-
-
-                    stage.addActor(playerMenu);
-                   // playerMenu.setWidth(400);
-                   // playerMenu.setHeight(400);
-                    System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
-
-                }
-                playerMenuOpen = !playerMenuOpen;
-            }
-        });
-
-        //HEALTHBAR
-        Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
-        healthbar.setSize(Gdx.graphics.getWidth()/3, 50);
-        healthbar.setPosition(5, Gdx.graphics.getHeight() - 55);
-        healthbar.setValue(player.maxHP);
-        healthbar.setAnimateDuration(.5f);
-        healthbar.setTouchable(Touchable.disabled);
-
-        stage.addActor(healthbar);
-
-        player.healthbar = healthbar;
-
-
-        //XP BAR
-        Slider XPBar = new Slider(0, player.XPToNextLevel, 1, false, skin, "XPBar");
-        XPBar.setSize(Gdx.graphics.getWidth()-10, 50);
-        XPBar.setPosition(5, Gdx.graphics.getHeight()-30);
-        XPBar.setValue(player.currentXP);
-        XPBar.setAnimateDuration(.5f);
-        healthbar.setTouchable(Touchable.disabled);
-        stage.addActor(XPBar);
-        player.XPBar = XPBar;
-
-
-
+        // Give player inital FOV
         level.updateFOV();
-
-
-        playerMenu = new Table(skin);
-
-        playerMenu.add("You're SPECIAL!");
-        playerMenu.row();
-
-        s = new Label(player.getStrength()+"", skin);
-        playerMenu.add("Strength: ");
-        playerMenu.add(s);
-        playerMenu.row();
-
-        p = new Label(player.getPerception()+"", skin);
-        playerMenu.add("Perception: ");
-        playerMenu.add(p);
-        playerMenu.row();
-
-        e = new Label(player.getEndurance()+"", skin);
-        playerMenu.add("Endurance: ");
-        playerMenu.add(e);
-        playerMenu.row();
-
-        c = new Label(player.getCharisma()+"", skin);
-        playerMenu.add("Charisma: ");
-        playerMenu.add(c);
-        playerMenu.row();
-
-        i = new Label(player.getIntelligence()+"", skin);
-        playerMenu.add("Intelligence: ");
-        playerMenu.add(i);
-        playerMenu.row();
-
-        a = new Label(player.getAgility()+"", skin);
-        playerMenu.add("Agility: ");
-        playerMenu.add(a);
-        playerMenu.row();
-
-        l = new Label(player.getLuck()+"", skin);
-        playerMenu.add("Luck: ");
-        playerMenu.add(l);
-        playerMenu.row();
-
-
-        //playerMenu.setFillParent(true);
-        //stage.addActor(playerMenu);
-
-
-       // playerMenu.setBackground(new TiledDrawable(skin.getRegion("default-round")));
-        playerMenu.setBackground(skin.getDrawable("textfield"));
-
-        System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
-        //playerMenu.debug();
-        playerMenu.pack();
-        playerMenu.setPosition(Gdx.graphics.getWidth()/2-playerMenu.getWidth()/2, Gdx.graphics.getHeight()/2-playerMenu.getHeight()/2);
-    }
+}
 
     @Override
     public void dispose(){
@@ -244,5 +113,17 @@ public class GameScreen extends AbstractScreen {
         stage.draw();
         Table.drawDebug(stage);
 
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Skin getSkin(){
+        return skin;
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 }

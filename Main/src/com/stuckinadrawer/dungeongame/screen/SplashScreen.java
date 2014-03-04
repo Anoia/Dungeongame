@@ -3,7 +3,7 @@ package com.stuckinadrawer.dungeongame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.stuckinadrawer.dungeongame.DungeonGame;
+import com.stuckinadrawer.dungeongame.GameContainer;
 
 public class SplashScreen extends AbstractScreen {
 
@@ -11,8 +11,8 @@ public class SplashScreen extends AbstractScreen {
     private TextureRegion splashTextureRegion;
     private float time = 0;
 
-    public SplashScreen(DungeonGame dungeonGame){
-        super(dungeonGame);
+    public SplashScreen(GameContainer gameContainer){
+        super(gameContainer);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SplashScreen extends AbstractScreen {
         batch.end();
 
         if(time > 2){
-            dungeonGame.setScreen(new TitleScreen(dungeonGame));
+            gameContainer.setScreen(new TitleScreen(gameContainer));
         }
 
     }
