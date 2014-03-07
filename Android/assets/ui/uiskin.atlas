@@ -196,3 +196,27 @@ white
   orig: 1, 1
   offset: 0, 0
   index: -1
+testbutton
+    rotate: false
+    xy: 37, 3
+    size: 20, 10
+    split: 4, 4, 4, 4
+    orig: 20, 10
+    offset: 0, 0
+    index: -1
+test1
+    rotate: false
+    xy: 208, 2
+    size: 32, 32
+    split: 8, 8, 8, 8
+    orig: 32, 32
+    offset: 0, 0
+    index: -1
+test2
+    rotate: false
+    xy: 173, 2
+    size: 32, 32
+    split: 8, 8, 8, 8
+    orig: 32, 32
+    offset: 0, 0
+    index: -1
