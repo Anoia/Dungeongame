@@ -163,11 +163,6 @@ public class HUD {
         playerMenu.row();
 
 
-        //playerMenu.setFillParent(true);
-        //stage.addActor(playerMenu);
-
-
-        // playerMenu.setBackground(new TiledDrawable(skin.getRegion("default-round")));
         playerMenu.setBackground(skin.getDrawable("textfield"));
 
         System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
