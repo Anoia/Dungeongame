@@ -1,7 +1,7 @@
 package com.stuckinadrawer.dungeongame.actors.enemies;
 
 import com.stuckinadrawer.dungeongame.Level;
-import com.stuckinadrawer.dungeongame.Position;
+import com.stuckinadrawer.dungeongame.util.Position;
 import com.stuckinadrawer.dungeongame.actors.Actor;
 import com.stuckinadrawer.dungeongame.actors.Player;
 

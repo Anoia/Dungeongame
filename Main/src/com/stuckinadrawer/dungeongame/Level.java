@@ -5,6 +5,9 @@ import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.render.TextAnimation;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.util.Pathfinder;
+import com.stuckinadrawer.dungeongame.util.Position;
+import com.stuckinadrawer.dungeongame.util.RayTracer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

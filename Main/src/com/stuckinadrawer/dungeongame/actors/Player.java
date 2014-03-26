@@ -2,10 +2,10 @@ package com.stuckinadrawer.dungeongame.actors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.stuckinadrawer.dungeongame.Constants;
+import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.Level;
-import com.stuckinadrawer.dungeongame.Position;
-import com.stuckinadrawer.dungeongame.Utils;
+import com.stuckinadrawer.dungeongame.util.Position;
+import com.stuckinadrawer.dungeongame.util.Utils;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.render.TextAnimation;
 

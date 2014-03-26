@@ -1,8 +1,8 @@
 package com.stuckinadrawer.dungeongame.actors;
 
-import com.stuckinadrawer.dungeongame.Constants;
-import com.stuckinadrawer.dungeongame.Position;
-import com.stuckinadrawer.dungeongame.Utils;
+import com.stuckinadrawer.dungeongame.util.Constants;
+import com.stuckinadrawer.dungeongame.util.Position;
+import com.stuckinadrawer.dungeongame.util.Utils;
 
 import java.util.LinkedList;
 
@@ -145,15 +145,16 @@ public abstract class Actor {
 
     public void attack(Actor opponent){
         if(!dead){
-            int dmg = Utils.random(dmgRange);
+            int dmg = getAttackDamage();
             System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
             opponent.takeDmg(dmg);
         }
     }
 
-    public void getAttackDamage(){
+    public int getAttackDamage(){
         int dmg = Utils.random(dmgRange);
         dmg = dmg + dmg * (getStrength() - baseStrength)/10;
+        return dmg;
     }
 
     public void takeDmg(int dmg){
@@ -171,7 +172,7 @@ public abstract class Actor {
 
     protected void die() {
         System.out.println("I'm dead! - "+spriteName);
-        this.spriteName = "effect_blood";
+       // this.spriteName = "effect_blood";
         dead = true;
 
     }

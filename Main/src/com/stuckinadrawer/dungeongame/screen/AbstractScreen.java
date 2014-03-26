@@ -59,10 +59,7 @@ class AbstractScreen implements Screen{
         TextureAtlas atlas = new TextureAtlas("ui/uiskin.atlas");
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"), atlas);
 
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("white", new Texture(pixmap));
+
 
 
     }

@@ -1,6 +1,6 @@
 package com.stuckinadrawer.dungeongame.levelGeneration;
 
-import com.stuckinadrawer.dungeongame.Utils;
+import com.stuckinadrawer.dungeongame.util.Utils;
 
 import java.util.ArrayList;
 

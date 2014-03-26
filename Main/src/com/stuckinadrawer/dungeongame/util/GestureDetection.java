@@ -1,13 +1,15 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
-import com.stuckinadrawer.dungeongame.screen.GameScreen;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.util.Constants;
+import com.stuckinadrawer.dungeongame.util.Position;
 
 import static java.lang.Math.abs;
 

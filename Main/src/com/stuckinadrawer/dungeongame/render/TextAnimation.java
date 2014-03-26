@@ -1,7 +1,7 @@
 package com.stuckinadrawer.dungeongame.render;
 
 import com.badlogic.gdx.graphics.Color;
-import com.stuckinadrawer.dungeongame.Constants;
+import com.stuckinadrawer.dungeongame.util.Constants;
 
 public class TextAnimation{
     public float x;

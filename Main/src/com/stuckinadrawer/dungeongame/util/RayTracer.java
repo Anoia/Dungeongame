@@ -1,10 +1,8 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.util;
 
-import com.badlogic.gdx.math.MathUtils;
+import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class RayTracer {

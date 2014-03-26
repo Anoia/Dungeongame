@@ -1,6 +1,6 @@
-package com.stuckinadrawer.dungeongame;
+package com.stuckinadrawer.dungeongame.util;
 
-import com.badlogic.gdx.Gdx;
+import com.stuckinadrawer.dungeongame.Level;
 
 import java.io.Serializable;
 import java.util.*;

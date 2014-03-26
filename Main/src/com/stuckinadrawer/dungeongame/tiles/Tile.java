@@ -1,6 +1,6 @@
 package com.stuckinadrawer.dungeongame.tiles;
 
-import com.stuckinadrawer.dungeongame.Position;
+import com.stuckinadrawer.dungeongame.util.Position;
 
 public abstract class Tile {
     int x;

@@ -4,17 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.util.Constants;
+import com.stuckinadrawer.dungeongame.util.GestureDetection;
 
 import java.util.ArrayList;
 
@@ -30,9 +29,13 @@ public class GameScreen extends AbstractScreen {
 
     Stage stage;
 
-    float timer = 0;
+    float movementTimer = 0;
 
 
+    /**
+     * Initialize ALL THE THINGS!
+     * @param gameContainer
+     */
 
     public GameScreen(GameContainer gameContainer) {
         super(gameContainer);
@@ -43,11 +46,15 @@ public class GameScreen extends AbstractScreen {
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         renderer = new Renderer(level, camera, font);
-        camera.position.set(player.getPosition().getX()*Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
+        camera.position.set(player.getPosition().getX()* Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
 
 
     }
+
+    /**
+     * set up UI, gesture detection, inital fov
+     */
     @Override
     public void show() {
         // Create a new Stage
@@ -71,22 +78,27 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void update(float delta){
-        timer+=delta;
+        movementTimer +=delta;
         if(player.isMoving != -1){
             player.updateRenderPosition(delta);
             camera.position.set(player.renderPosition.getX(), player.renderPosition.getY(), 0);
         }else{
-            if(timer>0.1){
+            if(movementTimer >0.1){
                 //moves player if his movement queue is not empty
                 if(player.action()){
                     processTurn();
                 }
-                timer = 0;
+                movementTimer = 0;
             }
         }
     }
 
+
+    /**
+     * makes things happen after the player had a turn, moves enemies etc
+     */
     private void processTurn() {
+
         ArrayList<Enemy> dead = new ArrayList<Enemy>();
         for(Enemy e: level.getEnemies()){
             if(e.dead){
@@ -102,6 +114,11 @@ public class GameScreen extends AbstractScreen {
 
     }
 
+    /**
+     * this is called by Libgdx every frame,
+     * has to call the update() method for stuff to happen
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -111,7 +128,6 @@ public class GameScreen extends AbstractScreen {
         camera.update();
         renderer.update(delta);
         stage.draw();
-        Table.drawDebug(stage);
 
     }
 
