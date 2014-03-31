@@ -8,9 +8,9 @@ public class DesktopStarter {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "The Dungeongame";
-        cfg.useGL20 = true;
+        //cfg.useGL20 = true;
         cfg.width = 1000;
         cfg.height = 800;
-        new LwjglApplication(new GameContainer(), cfg);
+        new LwjglApplication(new GameContainer(), "TheDungeongame", 1000, 800);
     }
 }

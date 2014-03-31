@@ -8,8 +8,6 @@ import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
-import com.stuckinadrawer.dungeongame.util.Constants;
-import com.stuckinadrawer.dungeongame.util.Position;
 
 import static java.lang.Math.abs;
 
@@ -53,6 +51,11 @@ public class GestureDetection implements GestureDetector.GestureListener{
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         camera.translate(-deltaX, deltaY);
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
         return false;
     }
 

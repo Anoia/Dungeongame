@@ -45,7 +45,7 @@ public class GameScreen extends AbstractScreen {
         player = level.getPlayer();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        renderer = new Renderer(level, camera, font);
+        renderer = new Renderer(level, camera, fontBig);
         camera.position.set(player.getPosition().getX()* Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
 
@@ -58,8 +58,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void show() {
         // Create a new Stage
-        stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-
+       // stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        stage = new Stage();
         // Create and set InputProcessors
         GestureDetector gd = new GestureDetector(new GestureDetection(camera, level));
         InputMultiplexer im = new InputMultiplexer(stage, gd);

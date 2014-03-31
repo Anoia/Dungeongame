@@ -10,7 +10,7 @@ public class GameContainer extends Game {
     @Override
     public void create() {
         //this.setScreen(new SplashScreen(this));
-        //this.setScreen(new TitleScreen(this));
-        this.setScreen(new TestScreen(this));
+        this.setScreen(new TitleScreen(this));
+        //this.setScreen(new TestScreen(this));
     }
 }
