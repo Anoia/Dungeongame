@@ -15,6 +15,9 @@ public class TestScreen extends AbstractScreen {
 
     @Override
     public void show(){
+        for(int i = 0; i < 10; i++){
+            weaponGenerator.createNewWeapon(1);
+        }
 
     }
 

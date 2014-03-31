@@ -1,4 +1,137 @@
-<?xml version="1.0"?>
-<root>
-    Hello World!
-</root>
+<?xml version="1.0" encoding="UTF-8"?>
+<Weapons>
+  <Elements>
+    <Type>
+      <Sword>
+        <name>Sword</name>
+        <baseDmg>5</baseDmg>
+        <accuracy>1</accuracy>
+        <speed>1</speed>
+        <dmgRange>2</dmgRange>
+        <range>1</range>
+      </Sword>
+      <Dagger>
+        <name>Dagger</name>
+        <baseDmg>3</baseDmg>
+        <accuracy>1</accuracy>
+        <speed>2</speed>
+        <dmgRange>4</dmgRange>
+        <range>1</range>
+      </Dagger>
+      <Spear>
+        <name>Spear</name>
+        <baseDmg>4</baseDmg>
+        <accuracy>1</accuracy>
+        <speed>1</speed>
+        <dmgRange>2</dmgRange>
+        <range>2</range>
+      </Spear>
+      <Axe>
+        <name>Axe</name>
+        <baseDmg>6</baseDmg>
+        <accuracy>1</accuracy>
+        <speed>1</speed>
+        <dmgRange>1</dmgRange>
+        <range>1</range>
+      </Axe>
+    </Type>
+    <Material>
+      <Wood>
+        <name>Wooden</name>
+        <baseDmgBonus>-1</baseDmgBonus>
+      </Wood>
+      <Iron>
+        <name>Iron</name>
+        <baseDmgBonus>0</baseDmgBonus>
+      </Iron>
+      <Copper>
+        <name>Copper</name>
+        <baseDmgBonus>2</baseDmgBonus>
+      </Copper>
+      <Mithril>
+        <name>Mithril</name>
+        <baseDmgBonus>4</baseDmgBonus>
+      </Mithril>
+      <DragonBone>
+        <name>Dragonbone</name>
+        <baseDmgBonus>6</baseDmgBonus>
+      </DragonBone>
+      <Diamond>
+        <name>Diamond</name>
+        <baseDmgBonus>8</baseDmgBonus>
+      </Diamond>
+    </Material>
+    <Prefix>
+      <Broken>
+        <name>Broken</name>
+        <dmgRangeBonus>-1</dmgRangeBonus>
+      </Broken>
+      <Old>
+        <name>Old</name>
+        <dmgRangeBonus>0</dmgRangeBonus>
+      </Old>
+      <Sharp>
+        <name>Sharp</name>
+        <dmgRangeBonus>2</dmgRangeBonus>
+      </Sharp>
+      <Awesome>
+        <name>Awesome</name>
+        <dmgRangeBonus>4</dmgRangeBonus>
+      </Awesome>
+      <Legendary>
+        <name>Legendary</name>
+        <dmgRangeBonus>6</dmgRangeBonus>
+      </Legendary>
+    </Prefix>
+    <Suffix>
+      <None>
+        <name />
+        <effekt />
+      </None>
+      <Vampirism>
+        <name>of Vampirism</name>
+        <effekt>vampirism</effekt>
+      </Vampirism>
+      <Flames>
+        <name>of Flames</name>
+        <effekt>flames</effekt>
+      </Flames>
+    </Suffix>
+  </Elements>
+  <Weights>
+    <Level1>
+      <Type>
+          <Name>Sword</Name>
+          <Weight>2</Weight>
+      </Type>
+        <Type>
+            <Name>Spear</Name>
+            <Weight>1</Weight>
+        </Type>
+        <Type>
+            <Name>Dagger</Name>
+            <Weight>1</Weight>
+        </Type>
+      <Material>
+        <Wood>10</Wood>
+        <Iron>50</Iron>
+        <Copper>10</Copper>
+        <Mithril>1</Mithril>
+      </Material>
+      <Prefix>
+        <Broken>15</Broken>
+        <Old>50</Old>
+        <Sharp>10</Sharp>
+        <Awesome>1</Awesome>
+      </Prefix>
+      <Suffix>
+        <None>50</None>
+        <Vampirism>1</Vampirism>
+        <Flames>1</Flames>
+      </Suffix>
+    </Level1>
+    <Level2 />
+    <Level3 />
+    <Level4 />
+  </Weights>
+</Weapons>

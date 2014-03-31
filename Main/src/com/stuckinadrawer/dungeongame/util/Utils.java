@@ -34,4 +34,8 @@ public class Utils {
         return start + random.nextFloat() * (end - start);
     }
 
+    static public int nextInt(int range){
+        return random.nextInt(range);
+    }
+
 }
