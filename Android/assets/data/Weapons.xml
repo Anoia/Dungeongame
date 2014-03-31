@@ -101,23 +101,17 @@
   <Weights>
     <Level1>
       <Type>
-          <Name>Sword</Name>
-          <Weight>2</Weight>
+        <Name>Sword</Name>
+        <Weight>2</Weight>
       </Type>
-        <Type>
-            <Name>Spear</Name>
-            <Weight>1</Weight>
-        </Type>
-        <Type>
-            <Name>Dagger</Name>
-            <Weight>1</Weight>
-        </Type>
-      <Material>
-        <Wood>10</Wood>
-        <Iron>50</Iron>
-        <Copper>10</Copper>
-        <Mithril>1</Mithril>
-      </Material>
+      <Type>
+        <Name>Spear</Name>
+        <Weight>1</Weight>
+      </Type>
+      <Type>
+        <Name>Dagger</Name>
+        <Weight>1</Weight>
+      </Type>
       <Prefix>
         <Broken>15</Broken>
         <Old>50</Old>
@@ -129,6 +123,26 @@
         <Vampirism>1</Vampirism>
         <Flames>1</Flames>
       </Suffix>
+      <Material>
+        <Name>Wood</Name>
+        <Weight>10</Weight>
+      </Material>
+      <Material>
+        <Name>Iron</Name>
+        <Weight>50</Weight>
+      </Material>
+      <Material>
+        <Name>Copper</Name>
+        <Weight>30</Weight>
+      </Material>
+      <Material>
+        <Name>Mithril</Name>
+        <Weight>10</Weight>
+      </Material>
+      <Material>
+        <Name>DragonBone</Name>
+        <Weight>5</Weight>
+      </Material>
     </Level1>
     <Level2 />
     <Level3 />

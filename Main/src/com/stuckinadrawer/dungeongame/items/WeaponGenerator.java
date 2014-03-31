@@ -53,7 +53,7 @@ public class WeaponGenerator {
         //Nodes types = levelNode.query("Type");
         //System.out.println(types.get(0).getValue());
         Weapon weapon = getWeaponWithType(levelNode);
-
+        setWeaponMaterial(levelNode, weapon);
         System.out.println(weapon.toString());
 
         return weapon;
@@ -74,6 +74,16 @@ public class WeaponGenerator {
 
         return new Weapon(name, baseDmg, accuracy, speed, dmgRange, range);
 
+    }
+
+    private void setWeaponMaterial(Node levelNode, Weapon weapon){
+        Nodes materialsInLevel = levelNode.query("Material");
+        String randomMaterialName = getRandomElement(materialsInLevel);
+
+        Node materialNode = doc.query("/Weapons/Elements/Material/"+randomMaterialName).get(0);
+        String name = materialNode.getChild(0).getValue();
+        int baseDmgBonus = Integer.parseInt(materialNode.getChild(1).getValue());
+        weapon.applyMaterial(name, baseDmgBonus);
     }
 
     private class ItemWithWeight {
