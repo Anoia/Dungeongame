@@ -28,7 +28,7 @@ public class Weapon extends Item{
         this.setName(prefixName + " " + this.getName());
     }
 
-    public void applySuffix(String suffixName, Effect effect){
+    public void applySuffix(String suffixName, String effect){
         this.setName(this.getName() + " "+suffixName);
     }
 

@@ -54,7 +54,9 @@ public class WeaponGenerator {
         //System.out.println(types.get(0).getValue());
         Weapon weapon = getWeaponWithType(levelNode);
         setWeaponMaterial(levelNode, weapon);
-        System.out.println(weapon.toString());
+        setWeaponPrefix(levelNode, weapon);
+        setWeaponSuffix(levelNode, weapon);
+        System.out.println(weapon.toString()+"\n");
 
         return weapon;
     }
@@ -84,6 +86,26 @@ public class WeaponGenerator {
         String name = materialNode.getChild(0).getValue();
         int baseDmgBonus = Integer.parseInt(materialNode.getChild(1).getValue());
         weapon.applyMaterial(name, baseDmgBonus);
+    }
+
+    private void setWeaponPrefix(Node levelNode, Weapon weapon){
+        Nodes prefixesInLevel = levelNode.query("Prefix");
+        String randomPrefixName = getRandomElement(prefixesInLevel);
+
+        Node prefixNode = doc.query("/Weapons/Elements/Prefix/"+randomPrefixName).get(0);
+        String name = prefixNode.getChild(0).getValue();
+        int dmgRangeBonus = Integer.parseInt(prefixNode.getChild(1).getValue());
+        weapon.applyPrefix(name, dmgRangeBonus);
+    }
+
+    private void setWeaponSuffix(Node levelNode, Weapon weapon){
+        Nodes suffixesInLevel = levelNode.query("Suffix");
+        String randomSuffix = getRandomElement(suffixesInLevel);
+        Node suffixNode = doc.query("/Weapons/Elements/Suffix/"+randomSuffix).get(0);
+        String name = suffixNode.getChild(0).getValue();
+        String effect = suffixNode.getChild(1).getValue();
+        if(!name.equals(""))weapon.applySuffix(name, effect);
+
     }
 
     private class ItemWithWeight {

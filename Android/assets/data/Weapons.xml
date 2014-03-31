@@ -112,17 +112,6 @@
         <Name>Dagger</Name>
         <Weight>1</Weight>
       </Type>
-      <Prefix>
-        <Broken>15</Broken>
-        <Old>50</Old>
-        <Sharp>10</Sharp>
-        <Awesome>1</Awesome>
-      </Prefix>
-      <Suffix>
-        <None>50</None>
-        <Vampirism>1</Vampirism>
-        <Flames>1</Flames>
-      </Suffix>
       <Material>
         <Name>Wood</Name>
         <Weight>10</Weight>
@@ -143,6 +132,34 @@
         <Name>DragonBone</Name>
         <Weight>5</Weight>
       </Material>
+      <Prefix>
+        <Name>Broken</Name>
+        <Weight>10</Weight>
+      </Prefix>
+      <Prefix>
+        <Name>Old</Name>
+        <Weight>50</Weight>
+      </Prefix>
+      <Prefix>
+        <Name>Sharp</Name>
+        <Weight>25</Weight>
+      </Prefix>
+      <Prefix>
+        <Name>Awesome</Name>
+        <Weight>10</Weight>
+      </Prefix>
+      <Suffix>
+        <Name>Vampirism</Name>
+        <Weight>1</Weight>
+      </Suffix>
+      <Suffix>
+        <Name>Flames</Name>
+        <Weight>1</Weight>
+      </Suffix>
+      <Suffix>
+        <Name>None</Name>
+        <Weight>8</Weight>
+      </Suffix>
     </Level1>
     <Level2 />
     <Level3 />
