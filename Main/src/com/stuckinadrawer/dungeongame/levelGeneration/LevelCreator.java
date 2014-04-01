@@ -23,7 +23,7 @@ public class LevelCreator {
         scatter = new GeneratorScatterLayout();
     }
 
-    public Level getNewLevel(){
+    public Level getNewLevel(Player player){
 
         TileEnum[][] levelEnum = scatter.generate();
 
@@ -31,7 +31,7 @@ public class LevelCreator {
 
         enemies = new ArrayList<Enemy>();
 
-        Player player = null;
+
 
         for(int x = 0; x < data.length; x++){
             for(int y = 0; y < data[x].length; y++){
@@ -53,8 +53,8 @@ public class LevelCreator {
                         }
                         break;
                     case ROOM:
-                        if(player == null){
-                            player = new Player(x, y);
+                        if(player.getPosition().getX() == 0 && player.getPosition().getY() == 0){
+                            player.setPosition(x, y);
                         }
                         t = new FloorTile(x, y, "tile_floor");
                         if(Utils.random(9) >4 ){

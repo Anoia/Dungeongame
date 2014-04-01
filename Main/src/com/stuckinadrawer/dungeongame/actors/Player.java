@@ -39,6 +39,10 @@ public class Player extends Actor {
         currentHP = maxHP;
     }
 
+    public Player(){
+        this(0, 0);
+    }
+
 
 
 

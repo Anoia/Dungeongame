@@ -37,12 +37,12 @@ public class GameScreen extends AbstractScreen {
      * @param gameContainer
      */
 
-    public GameScreen(GameContainer gameContainer) {
+    public GameScreen(GameContainer gameContainer, Player player) {
         super(gameContainer);
 
         LevelCreator levelCreator = new LevelCreator();
-        level = levelCreator.getNewLevel();
-        player = level.getPlayer();
+        level = levelCreator.getNewLevel(player);   //Player ohne Pos in den level gen
+        this.player = level.getPlayer();            //player mit pos aus level
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         renderer = new Renderer(level, camera, fontBig);
@@ -51,6 +51,12 @@ public class GameScreen extends AbstractScreen {
 
 
     }
+
+    public GameScreen(GameContainer gameContainer){
+        this(gameContainer, new Player());
+    }
+
+
 
     /**
      * set up UI, gesture detection, inital fov

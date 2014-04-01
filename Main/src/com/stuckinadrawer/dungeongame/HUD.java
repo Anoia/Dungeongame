@@ -32,7 +32,7 @@ public class HUD {
         this.game =  game;
         this.stage = game.getStage();
         this.skin = game.getSkin();
-        player = game.getPlayer();
+        this.player = game.getPlayer();
 
         init();
     }
@@ -49,7 +49,7 @@ public class HUD {
         // TESTBUTTON
         final TextButton button = new TextButton("Heal Me!", skin);
         button.setPosition(10, 10);
-        button.setSize(100, 50);
+        button.setSize(120, 50);
 
         stage.addActor(button);
 
@@ -64,8 +64,8 @@ public class HUD {
 
     private void createPlayerButton(){
         final TextButton playerButton = new TextButton("Player Info", skin);
-        playerButton.setSize(100, 50);
-        playerButton.setPosition(Gdx.graphics.getWidth()-110, 25);
+        playerButton.setSize(120, 50);
+        playerButton.setPosition(Gdx.graphics.getWidth()-130, 25);
         stage.addActor(playerButton);
         playerButton.addListener(new ChangeListener() {
             @Override

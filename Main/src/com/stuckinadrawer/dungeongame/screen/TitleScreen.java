@@ -37,6 +37,17 @@ public class TitleScreen extends AbstractScreen {
             }
         });
 
+        final TextButton newCharacterButton = new TextButton("Create Char", skin);
+        menu.add(newCharacterButton).width(250).height(75).pad(20);
+        menu.row();
+        newCharacterButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("KLICK!");
+                gameContainer.setScreen(new CharacterCreationScreen(gameContainer));
+            }
+        });
+
         final TextButton settingsButton = new TextButton("Settings", skin);
         menu.add(settingsButton).width(250).height(75).pad(20);
         menu.row();
@@ -85,5 +96,11 @@ public class TitleScreen extends AbstractScreen {
 
         stage.draw();
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        stage.dispose();
     }
 }

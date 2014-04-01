@@ -50,7 +50,7 @@ public abstract class Actor {
         setIntelligence(5);
         setAgility(5);
         setLuck(5);
-        renderPosition = new Position(x, y);
+        renderPosition = new Position(x* Constants.TILE_SIZE, y* Constants.TILE_SIZE);
     }
 
     public int getStrength() {
@@ -180,6 +180,7 @@ public abstract class Actor {
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
+        renderPosition = new Position(x* Constants.TILE_SIZE, y* Constants.TILE_SIZE);
     }
 
     public Position getPosition(){
