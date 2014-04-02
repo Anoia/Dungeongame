@@ -21,11 +21,11 @@ class AbstractScreen implements Screen{
 
     AbstractScreen(GameContainer gameContainer){
         this.gameContainer = gameContainer;
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixelmix.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/munro.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 12;
+        param.size = 20;
         this.fontBig = generator.generateFont(param);
-        param.size = 24;
+        param.size = 32;
         this.fontSmall = generator.generateFont(param);
         generator.dispose();
         this.batch = new SpriteBatch();

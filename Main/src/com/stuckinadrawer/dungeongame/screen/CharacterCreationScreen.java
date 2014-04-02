@@ -34,13 +34,8 @@ public class CharacterCreationScreen extends AbstractScreen {
         pointsLeftToSpend = totalPointsToSpend - startValue * 7;
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        VerticalGroup group = new VerticalGroup();
         table = new Table(skin);
-
-
-
-
-        pointsLeftLabel = new Label("Points left to spend: "+pointsLeftToSpend, skin);
-        table.add(pointsLeftLabel);
 
         buttons.add(new PlusMinusButtons("Strength", startValue));
         buttons.add(new PlusMinusButtons("Perception", startValue));
@@ -53,13 +48,21 @@ public class CharacterCreationScreen extends AbstractScreen {
 
 
         table.pack();
-        stage.addActor(table);
-        table.setPosition(Gdx.graphics.getWidth() / 2 - table.getWidth() / 2, Gdx.graphics.getHeight() / 2 - table.getHeight() / 2);
-
 
         final Label title = new Label("You're S.P.E.C.I.A.L!", skin, "big");
-        title.setPosition(table.getX(), table.getY()+table.getHeight()+title.getHeight()+50);
-        stage.addActor(title);
+
+
+        pointsLeftLabel = new Label("Points left to spend: "+pointsLeftToSpend, skin);
+
+        group.space(40);
+        group.addActor(title);
+        group.addActor(pointsLeftLabel);
+        group.addActor(table);
+        group.pack();
+        group.setPosition(Gdx.graphics.getWidth() / 2 - group.getWidth() / 2, Gdx.graphics.getHeight() / 2 - table.getHeight() / 2);
+        stage.addActor(group);
+
+
 
         //BACK FORWARD BUTTONS
         TextButton back = new TextButton("Back", skin);
@@ -127,7 +130,7 @@ public class CharacterCreationScreen extends AbstractScreen {
             labelValue = new Label(value+"", skin);
             labelValue.setWidth(50);
             Button minus = new Button(skin, "minus");
-            minus.setSize(14, 14);
+            minus.pad(10);
             minus.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -141,7 +144,7 @@ public class CharacterCreationScreen extends AbstractScreen {
             });
 
             Button plus = new Button(skin, "plus");
-            plus.setSize(24, 24);
+            plus.pad(10);
             plus.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

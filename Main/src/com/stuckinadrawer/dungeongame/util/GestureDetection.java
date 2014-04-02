@@ -7,17 +7,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
+import com.stuckinadrawer.dungeongame.screen.GameScreen;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 
 import static java.lang.Math.abs;
 
 public class GestureDetection implements GestureDetector.GestureListener{
-    private OrthographicCamera camera;
-    private Level level;
+    private GameScreen game;
 
-    public GestureDetection(OrthographicCamera camera, Level level) {
-        this.camera = camera;
-        this.level = level;
+    public GestureDetection(GameScreen game) {
+        this.game = game;
     }
 
     @Override
@@ -30,7 +29,7 @@ public class GestureDetection implements GestureDetector.GestureListener{
         //Gdx.app.log("hallo", "TAP: X: " + x + " Y: "+ y);
 
         Vector3 v = new Vector3(x, y, 0);
-        camera.unproject(v);
+        game.getCamera().unproject(v);
 
         handleClickOnTile((int) v.x/ Constants.TILE_SIZE, (int) v.y/ Constants.TILE_SIZE);
 
@@ -50,7 +49,7 @@ public class GestureDetection implements GestureDetector.GestureListener{
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
-        camera.translate(-deltaX, deltaY);
+        game.getCamera().translate(-deltaX, deltaY);
         return false;
     }
 
@@ -70,11 +69,13 @@ public class GestureDetection implements GestureDetector.GestureListener{
     }
 
     private void handleClickOnTile(int x, int y){
+        Level level = game.getLevel();
         Tile t  = level.getTile(x, y);
         if(isNeighbourTile(x, y) && level.isOccupiedByActor(x, y)){
             //attack!
             Enemy e = level.getEnemyOnPos(new Position(x,y));
             level.getPlayer().attack(e);
+            game.processTurn();
         }else if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
                     if(x == level.getPlayer().getPosition().getX() && y == level.getPlayer().getPosition().getY()){
                         level.waitTurn();
@@ -86,7 +87,7 @@ public class GestureDetection implements GestureDetector.GestureListener{
     }
 
     private boolean isNeighbourTile(int x, int y){
-        Player p = level.getPlayer();
+        Player p = game.getPlayer();
         int distance = abs(p.getPosition().getX() - x) + abs(p.getPosition().getY()-y);
         return (distance == 1);
     }

@@ -106,7 +106,7 @@ public class Player extends Actor {
         if(!dead && movementPath != null && !movementPath.isEmpty()){
 
             Position newPos = movementPath.pop();
-
+            System.out.println("playerturn");
 
             Enemy e = map.getEnemyOnPos(newPos);
             if(e != null){

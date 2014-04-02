@@ -8,6 +8,7 @@ public abstract class Tile {
     String spriteName;
     boolean solid;
     public String object = null;
+    public String effect = null;
 
     public boolean inLOS = false;
     public boolean hasSeen = false;

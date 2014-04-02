@@ -2,6 +2,7 @@ package com.stuckinadrawer.dungeongame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -67,7 +68,7 @@ public class GameScreen extends AbstractScreen {
        // stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         stage = new Stage();
         // Create and set InputProcessors
-        GestureDetector gd = new GestureDetector(new GestureDetection(camera, level));
+        GestureDetector gd = new GestureDetector(new GestureDetection(this));
         InputMultiplexer im = new InputMultiplexer(stage, gd);
         Gdx.input.setInputProcessor(im);
 
@@ -92,6 +93,7 @@ public class GameScreen extends AbstractScreen {
             if(movementTimer >0.1){
                 //moves player if his movement queue is not empty
                 if(player.action()){
+                    System.out.println("process enemy");
                     processTurn();
                 }
                 movementTimer = 0;
@@ -103,14 +105,14 @@ public class GameScreen extends AbstractScreen {
     /**
      * makes things happen after the player had a turn, moves enemies etc
      */
-    private void processTurn() {
+    public void processTurn() {
 
         ArrayList<Enemy> dead = new ArrayList<Enemy>();
         for(Enemy e: level.getEnemies()){
             if(e.dead){
                 //level.removeEnemy(e);
                 Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
-                t.object = "effect_blood";
+                t.effect = "effect_blood";
                 dead.add(e);
             }else{
                 e.doTurn(level);
@@ -147,5 +149,13 @@ public class GameScreen extends AbstractScreen {
 
     public Stage getStage(){
         return stage;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 }
