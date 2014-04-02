@@ -16,6 +16,7 @@ public class RayTracer {
     public void calculatePlayerFOV(){
         initAsNotVisible();
         int viewDistance = level.getPlayer().viewDistance;
+        System.out.println("viewdis: "+viewDistance+" per "+level.getPlayer().getPerception());
         Position playerPos = level.getPlayer().getPosition();
 
         useRayTracing(playerPos, viewDistance);

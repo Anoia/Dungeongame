@@ -43,7 +43,6 @@ public class TitleScreen extends AbstractScreen {
         newCharacterButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("KLICK!");
                 gameContainer.setScreen(new CharacterCreationScreen(gameContainer));
             }
         });

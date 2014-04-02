@@ -123,43 +123,43 @@ public class HUD {
 
     private void createPlayerMenu(){
         playerMenu = new Table(skin);
-
-        playerMenu.add("You're SPECIAL!");
+        int pad = 10;
+        playerMenu.add(new Label("You're SPECIAL!", skin, "big")).pad(20);
         playerMenu.row();
 
         s = new Label(player.getStrength()+"", skin);
         playerMenu.add("Strength: ");
-        playerMenu.add(s);
+        playerMenu.add(s).pad(pad);
         playerMenu.row();
 
         p = new Label(player.getPerception()+"", skin);
         playerMenu.add("Perception: ");
-        playerMenu.add(p);
+        playerMenu.add(p).pad(pad);
         playerMenu.row();
 
         e = new Label(player.getEndurance()+"", skin);
         playerMenu.add("Endurance: ");
-        playerMenu.add(e);
+        playerMenu.add(e).pad(pad);
         playerMenu.row();
 
         c = new Label(player.getCharisma()+"", skin);
         playerMenu.add("Charisma: ");
-        playerMenu.add(c);
+        playerMenu.add(c).pad(pad);
         playerMenu.row();
 
         i = new Label(player.getIntelligence()+"", skin);
         playerMenu.add("Intelligence: ");
-        playerMenu.add(i);
+        playerMenu.add(i).pad(pad);
         playerMenu.row();
 
         a = new Label(player.getAgility()+"", skin);
         playerMenu.add("Agility: ");
-        playerMenu.add(a);
+        playerMenu.add(a).pad(pad);
         playerMenu.row();
 
         l = new Label(player.getLuck()+"", skin);
         playerMenu.add("Luck: ");
-        playerMenu.add(l);
+        playerMenu.add(l).pad(pad);
         playerMenu.row();
 
 
