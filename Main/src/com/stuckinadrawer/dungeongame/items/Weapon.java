@@ -18,6 +18,14 @@ public class Weapon extends Item{
         this.range = range;
     }
 
+    public int getBaseDamage() {
+        return baseDamage;
+    }
+
+    public int getDamageRange() {
+        return damageRange;
+    }
+
     public void applyMaterial(String materialName, int baseDamageBonus){
         this.baseDamage += baseDamageBonus;
         this.setName(materialName + " " + this.getName());

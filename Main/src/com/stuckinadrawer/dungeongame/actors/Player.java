@@ -2,6 +2,7 @@ package com.stuckinadrawer.dungeongame.actors;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.util.Position;
@@ -19,6 +20,7 @@ public class Player extends Actor {
     public Slider healthbar;
     public Slider XPBar;
 
+    private Weapon weapon;
 
 
 
@@ -48,7 +50,7 @@ public class Player extends Actor {
 
     @Override
     public void attack(Actor opponent){
-        int dmg = Utils.random(dmgRange);
+        int dmg = Utils.random(weapon.getBaseDamage(), weapon.getBaseDamage()+weapon.getDamageRange());
         dmg = dmg + dmg * (getStrength() - baseStrength)/10;
         System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+getSpriteName());
 
@@ -94,6 +96,7 @@ public class Player extends Actor {
             if(currentHP <= 0){
                 die();
                 System.out.println(getSpriteName() + " died!");
+                this.setSpriteName("effect_blood");
                 healthbar.setValue(0);
             }else{
                 healthbar.setValue(currentHP);
@@ -130,6 +133,13 @@ public class Player extends Actor {
     }
 
 
+    public void setWeapon(Weapon weapon){
+        this.weapon = weapon;
+    }
+
+    public Weapon getWeapon(){
+        return weapon;
+    }
 
 
 

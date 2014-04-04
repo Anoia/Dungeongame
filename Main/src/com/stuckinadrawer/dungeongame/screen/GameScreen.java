@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
+import com.stuckinadrawer.dungeongame.items.WeaponGenerator;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
@@ -35,6 +36,8 @@ public class GameScreen extends AbstractScreen {
 
     float movementTimer = 0;
 
+    WeaponGenerator weaponGenerator;
+
 
     /**
      * Initialize ALL THE THINGS!
@@ -43,7 +46,7 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(GameContainer gameContainer, Player player) {
         super(gameContainer);
-
+        weaponGenerator = new WeaponGenerator();
         LevelCreator levelCreator = new LevelCreator();
         level = levelCreator.getNewLevel(player);   //Player ohne Pos in den level gen
         this.player = level.getPlayer();            //player mit pos aus level
@@ -52,6 +55,7 @@ public class GameScreen extends AbstractScreen {
         renderer = new Renderer(level, camera, fontBig);
         camera.position.set(player.getPosition().getX()* Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
+        player.setWeapon(weaponGenerator.createNewWeapon(1));
 
 
     }
