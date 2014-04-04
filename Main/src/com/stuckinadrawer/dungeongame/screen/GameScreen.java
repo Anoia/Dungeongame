@@ -15,8 +15,11 @@ import com.stuckinadrawer.dungeongame.render.Renderer;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.GestureDetection;
+import com.stuckinadrawer.dungeongame.util.Position;
 
 import java.util.ArrayList;
+
+import static java.lang.Math.abs;
 
 public class GameScreen extends AbstractScreen {
 
@@ -120,6 +123,28 @@ public class GameScreen extends AbstractScreen {
         }
         level.getEnemies().removeAll(dead);
 
+    }
+
+    public void handleClickOnTile(int x, int y){
+        Tile t  = level.getTile(x, y);
+        if(isTileNextToPlayer(x, y) && level.isOccupiedByActor(x, y)){
+            //attack!
+            Enemy e = level.getEnemyOnPos(new Position(x,y));
+            player.attack(e);
+            processTurn();
+        }else if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
+            if(x == player.getPosition().getX() && y == player.getPosition().getY()){
+                level.waitTurn();
+            }else{
+                level.findPath(player, new Position(x, y));
+            }
+
+        }
+    }
+
+    private boolean isTileNextToPlayer(int x, int y){
+        int distance = abs(player.getPosition().getX() - x) + abs(player.getPosition().getY()-y);
+        return (distance == 1);
     }
 
     /**
