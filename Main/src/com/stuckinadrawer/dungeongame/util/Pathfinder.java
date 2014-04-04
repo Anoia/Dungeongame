@@ -121,6 +121,33 @@ public class Pathfinder {
         if(level.isWalkable(neighbour.getX(), neighbour.getY())){
             neighbours.add(new Node(neighbour));
         }
+
+        /* MORE NEIGHBOURS FOR DIAGONAL WALKING */
+        /*
+        // LINKS OBEN
+        neighbour = new Position(n.pos.getX()-1, n.pos.getY()-1);
+        if(level.isWalkable(neighbour.getX(), neighbour.getY())){
+            neighbours.add(new Node(neighbour));
+        }
+        // LINKS UNTEN
+        neighbour = new Position(n.pos.getX()-1, n.pos.getY()+1);
+        if(level.isWalkable(neighbour.getX(), neighbour.getY())){
+            neighbours.add(new Node(neighbour));
+        }
+        // RECHTS OBEN
+        neighbour = new Position(n.pos.getX()+1, n.pos.getY()-1);
+        if(level.isWalkable(neighbour.getX(), neighbour.getY())){
+            neighbours.add(new Node(neighbour));
+        }
+        // RECHTS UNTEN
+        neighbour = new Position(n.pos.getX()+1, n.pos.getY()+1);
+        if(level.isWalkable(neighbour.getX(), neighbour.getY())){
+            neighbours.add(new Node(neighbour));
+        }
+        */
+
+
+
         // System.out.println("Neighbours added!");
         //System.out.println(n.pos.toString() + " has " + neighbours.size() +" acceptable neighbours");
         return neighbours;
