@@ -14,16 +14,19 @@ import com.stuckinadrawer.dungeongame.GameContainer;
 public class TitleScreen extends AbstractScreen {
 
     Stage stage;
+    ShapeRenderer r;
 
     public TitleScreen(GameContainer gameContainer) {
         super(gameContainer);
         //stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        r = new ShapeRenderer();
     }
 
     @Override
     public void show() {
+
 
         Table menu = new Table(skin);
 
@@ -82,15 +85,13 @@ public class TitleScreen extends AbstractScreen {
 
         batch.end();
 
-        ShapeRenderer r = new ShapeRenderer();
-
         Color darker = new Color((float) (74/255.99), (float) (81/255.99), (float) (115/255.99), 1f);
         Color lighter = new Color((float) (123/255.99), (float) (134/255.99), (float) (173/255.99), 1f);
 
-       // r.begin(ShapeRenderer.ShapeType.FilledRectangle);
-     //   r.setColor(darker);
-     //   r.filledRect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), darker, darker, lighter, lighter);
-     //   r.end();
+        r.begin(ShapeRenderer.ShapeType.Filled);
+        r.setColor(darker);
+        r.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), darker, darker, lighter, lighter);
+        r.end();
 
 
         stage.draw();

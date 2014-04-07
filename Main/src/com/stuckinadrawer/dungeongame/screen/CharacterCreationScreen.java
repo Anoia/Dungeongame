@@ -1,7 +1,9 @@
 package com.stuckinadrawer.dungeongame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 
 public class CharacterCreationScreen extends AbstractScreen {
 
+    ShapeRenderer r;
     Stage stage;
     Table table;
     private int startValue = 5;
@@ -25,7 +28,7 @@ public class CharacterCreationScreen extends AbstractScreen {
 
     CharacterCreationScreen(GameContainer gameContainer) {
         super(gameContainer);
-
+        r = new ShapeRenderer();
 
     }
 
@@ -108,9 +111,18 @@ public class CharacterCreationScreen extends AbstractScreen {
         Gdx.gl.glClearColor((float) (74/255.99), (float) (81/255.99), (float) (115/255.99), 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.draw();
 
         batch.end();
+
+        Color darker = new Color((float) (74/255.99), (float) (81/255.99), (float) (115/255.99), 1f);
+        Color lighter = new Color((float) (123/255.99), (float) (134/255.99), (float) (173/255.99), 1f);
+
+        r.begin(ShapeRenderer.ShapeType.Filled);
+        r.setColor(darker);
+        r.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), darker, darker, lighter, lighter);
+        r.end();
+
+        stage.draw();
 
     }
 
