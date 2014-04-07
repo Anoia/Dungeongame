@@ -13,6 +13,7 @@ import com.stuckinadrawer.dungeongame.items.WeaponGenerator;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.ui.HUD;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.GestureDetection;
 import com.stuckinadrawer.dungeongame.util.Position;
