@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.stuckinadrawer.dungeongame.GameContainer;
 import com.stuckinadrawer.dungeongame.actors.Player;
 
@@ -23,6 +26,7 @@ public class CharacterCreationScreen extends AbstractScreen {
     private int pointsLeftToSpend;
 
     private Label pointsLeftLabel;
+    private Label descriptionLabel;
 
     ArrayList<PlusMinusButtons> buttons = new ArrayList<PlusMinusButtons>();
 
@@ -40,13 +44,13 @@ public class CharacterCreationScreen extends AbstractScreen {
         VerticalGroup group = new VerticalGroup();
         table = new Table(skin);
 
-        buttons.add(new PlusMinusButtons("Strength", startValue));
-        buttons.add(new PlusMinusButtons("Perception", startValue));
-        buttons.add(new PlusMinusButtons("Endurance", startValue));
-        buttons.add(new PlusMinusButtons("Charisma", startValue));
-        buttons.add(new PlusMinusButtons("Intelligence", startValue));
-        buttons.add(new PlusMinusButtons("Agility", startValue));
-        buttons.add(new PlusMinusButtons("Luck", startValue));
+        buttons.add(new PlusMinusButtons("Strength", "Increases meele dmg" ,startValue));
+        buttons.add(new PlusMinusButtons("Perception", " sight radius" ,startValue));
+        buttons.add(new PlusMinusButtons("Endurance", " end" ,startValue));
+        buttons.add(new PlusMinusButtons("Charisma", " char" ,startValue));
+        buttons.add(new PlusMinusButtons("Intelligence", " int" ,startValue));
+        buttons.add(new PlusMinusButtons("Agility", " ag" ,startValue));
+        buttons.add(new PlusMinusButtons("Luck", " luck" ,startValue));
 
 
 
@@ -56,13 +60,20 @@ public class CharacterCreationScreen extends AbstractScreen {
 
 
         pointsLeftLabel = new Label("Points left to spend: "+pointsLeftToSpend, skin);
+        descriptionLabel = new Label(" ", skin);
+        descriptionLabel.setWrap(true);
+        Container container = new Container(descriptionLabel);
+        container.align(Align.center);
+        container.prefWidth(300);
 
-        group.space(40);
+        group.space(20);
+        group.setWidth(500);
         group.addActor(title);
         group.addActor(pointsLeftLabel);
         group.addActor(table);
+        group.addActor(container);
         group.pack();
-        group.setPosition(Gdx.graphics.getWidth() / 2 - group.getWidth() / 2, Gdx.graphics.getHeight() / 2 - table.getHeight() / 2);
+        group.setPosition(Gdx.graphics.getWidth() / 2 - group.getWidth() / 2, Gdx.graphics.getHeight() / 2 - group.getHeight() / 2);
         stage.addActor(group);
 
 
@@ -135,8 +146,10 @@ public class CharacterCreationScreen extends AbstractScreen {
     private class PlusMinusButtons extends HorizontalGroup{
         private int value;
         private Label labelValue;
-        public PlusMinusButtons(String name,int initalValue){
+        private String description;
+        public PlusMinusButtons(String name, String descr, int initalValue){
             this.value = initalValue;
+            this.description = descr;
             table.row().pad(10);
             this.space(10);
             labelValue = new Label(value+"", skin);
@@ -151,6 +164,7 @@ public class CharacterCreationScreen extends AbstractScreen {
                         pointsLeftToSpend++;
                         pointsLeftLabel.setText("Points left to spend: "+pointsLeftToSpend);
                         labelValue.setText(value + "");
+                        descriptionLabel.setText(description);
                     }
                 }
             });
@@ -165,6 +179,7 @@ public class CharacterCreationScreen extends AbstractScreen {
                         pointsLeftToSpend--;
                         pointsLeftLabel.setText("Points left to spend: "+pointsLeftToSpend);
                         labelValue.setText(value+"");
+                        descriptionLabel.setText(description);
                     }
                 }
             });
@@ -173,7 +188,15 @@ public class CharacterCreationScreen extends AbstractScreen {
             this.addActor(plus);
 
             this.pack();
-            table.add(new Label(name, skin));
+            Label nameLabel = new Label(name, skin);
+            nameLabel.addListener(new ClickListener(){
+                @Override
+            public void clicked(InputEvent event, float x, float y){
+                    descriptionLabel.setText(description);
+                }
+
+            });
+            table.add(nameLabel);
             table.add(this);
 
         }
