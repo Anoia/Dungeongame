@@ -12,6 +12,8 @@ import com.stuckinadrawer.dungeongame.util.RayTracer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static java.lang.Math.abs;
+
 public class Level {
     private Tile[][] tiles;
     private ArrayList<Enemy> enemies;
@@ -19,7 +21,7 @@ public class Level {
     private int width;
     private int height;
 
-    public ArrayList<TextAnimation> textAnimations;
+
 
     private Pathfinder pathfinder;
     private RayTracer rayTracer;
@@ -32,7 +34,7 @@ public class Level {
         player = null;
         pathfinder = new Pathfinder(this);
         rayTracer = new RayTracer(this);
-        textAnimations = new ArrayList<TextAnimation>();
+
     }
 
     public Tile[][] getLevelData(){
@@ -97,14 +99,15 @@ public class Level {
 
     public void setPlayer(Player player) {
         this.player = player;
-        player.setMap(this);
     }
 
-    public void findPath(Actor a, Position goal){
+    public void findPathForActor(Actor a, Position goal){
         a.setMovementPath(pathfinder.findPath(a.getPosition(), goal));
     }
 
     public void removeEnemy(Enemy e) {
+        Tile t = getTile(e.getPosition().getX(), e.getPosition().getY());
+        t.effect = "effect_blood";
         enemies.remove(e);
 
     }
@@ -125,9 +128,17 @@ public class Level {
         return rayTracer.castRay(start, goal, range, false);
     }
 
+    /**
+     * this shouldn't be here!
+     */
     public void waitTurn() {
         player.movementPath = new LinkedList<Position>();
         player.movementPath.add(player.getPosition());
 
+    }
+
+    public boolean isTileNextToPlayer(int x, int y){
+        int distance = abs(player.getPosition().getX() - x) + abs(player.getPosition().getY()-y);
+        return (distance == 1);
     }
 }

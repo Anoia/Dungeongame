@@ -10,6 +10,7 @@ import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.util.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,8 @@ public class Renderer {
     private Animation playerAnimation;
     float stateTime;
 
+    private ArrayList<TextAnimation> textAnimations;
+
     public Renderer(Level level, OrthographicCamera camera, BitmapFont font){
         this.level = level;
         this.camera  = camera;
@@ -47,6 +50,8 @@ public class Renderer {
         playerAnimation = new Animation(0.25f, textureAtlas.findRegions("char_player"));
 
         stateTime = 0f;
+
+        textAnimations = new ArrayList<TextAnimation>();
     }
 
     public void update(float delta){
@@ -64,7 +69,7 @@ public class Renderer {
 
     private void renderTextAnimations(float delta) {
         ArrayList<TextAnimation> toRemove = new ArrayList<TextAnimation>();
-        for(TextAnimation tA: level.textAnimations){
+        for(TextAnimation tA: textAnimations){
             tA.animate(delta);
             font.setColor(tA.color);
             font.draw(batch, tA.text, tA.x, tA.y);
@@ -73,7 +78,7 @@ public class Renderer {
             }
             font.setColor(Color.WHITE);
         }
-        level.textAnimations.removeAll(toRemove);
+        textAnimations.removeAll(toRemove);
 
     }
 
@@ -162,5 +167,29 @@ public class Renderer {
     }
 
 
+    public void newTextAnimationOnPlayer(int dmg, Position playerPosition) {
+        if(dmg == 0){
+            //dodge
+            TextAnimation tA = new TextAnimation(playerPosition.getX(), playerPosition.getY(), "dodge", Color.YELLOW);
+            textAnimations.add(tA);
+        }else{
+            //orange
+            TextAnimation tA = new TextAnimation(playerPosition.getX(), playerPosition.getY(), dmg+"", Color.ORANGE);
+            textAnimations.add(tA);
+        }
 
+    }
+
+    public void newTextAnimationOnEnemy(int dmg, Position enemyPosition) {
+        if(dmg == 0){
+            //miss
+            TextAnimation tA = new TextAnimation(enemyPosition.getX(), enemyPosition.getY(), "miss", Color.YELLOW);
+            textAnimations.add(tA);
+        }else{
+            //red
+            TextAnimation tA = new TextAnimation(enemyPosition.getX(), enemyPosition.getY(), dmg+"", Color.RED);
+            textAnimations.add(tA);
+        }
+
+    }
 }

@@ -37,7 +37,7 @@ public abstract class Actor {
 
 
     //TEMP
-    public int XPRewarded = 3;
+    public int XPRewarded = 6;
 
 
     public Actor(int x, int y){
@@ -143,36 +143,31 @@ public abstract class Actor {
         this.luck += amount;
     }
 
-    public void attack(Actor opponent){
-        if(!dead){
-            int dmg = getAttackDamage();
-            System.out.println(opponent.getSpriteName() + " taking "+dmg + " damage from "+spriteName);
-            opponent.takeDmg(dmg);
-        }
-    }
-
     public int getAttackDamage(){
         int dmg = Utils.random(dmgRange);
         dmg = dmg + dmg * (getStrength() - baseStrength)/10;
         return dmg;
     }
 
-    public void takeDmg(int dmg){
-        if(!dead){
-            currentHP -= dmg;
-            System.out.println(spriteName + " has "+currentHP + " HP left");
+    /**
+     *
+     * @param dmg amount of damage taken
+     * @return boolean death of entity after taking damage
+     */
+    public boolean takeDmg(int dmg){
+        currentHP -= dmg;
+        System.out.println(spriteName + " has "+currentHP + " HP left");
 
-            if(currentHP <= 0){
-                System.out.println(spriteName + " died!");
-                die();
-
-            }
+        if(currentHP <= 0){
+            System.out.println(spriteName + " died!");
+            die();
         }
+        return dead;
     }
 
     protected void die() {
         System.out.println("I'm dead! - "+spriteName);
-       // this.spriteName = "effect_blood";
+        this.spriteName = "effect_blood";
         dead = true;
 
     }
@@ -209,6 +204,14 @@ public abstract class Actor {
         if(isMoving >= 1){
             isMoving = -1;
         }
+    }
+
+    public void moveToPosition(Position newPosition){
+        oldX = x;
+        oldY = y;
+        x = newPosition.getX();
+        y = newPosition.getY();
+        isMoving = 0;
     }
 
     public float lerp(float start, float end){

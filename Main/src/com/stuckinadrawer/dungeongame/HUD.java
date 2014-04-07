@@ -27,6 +27,9 @@ public class HUD {
     Label a;
     Label l;
 
+    Slider healthbar;
+    Slider XPBar;
+
 
     public HUD(GameScreen game){
         this.game =  game;
@@ -57,7 +60,7 @@ public class HUD {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 player.currentHP = player.maxHP;
-                player.healthbar.setValue(player.currentHP);
+                updateHUD();
             }
         });
     }
@@ -97,7 +100,7 @@ public class HUD {
 
     private void createHealthbar(){
         //HEALTHBAR
-        Slider healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
+        healthbar = new Slider(0, player.maxHP, 1, false, skin, "healthbar");
         healthbar.setSize(Gdx.graphics.getWidth()/3, 50);
         healthbar.setPosition(5, Gdx.graphics.getHeight() - 55);
         healthbar.setValue(player.maxHP);
@@ -105,20 +108,17 @@ public class HUD {
         healthbar.setTouchable(Touchable.disabled);
 
         stage.addActor(healthbar);
-
-        player.healthbar = healthbar;
     }
 
     private void createXPBar(){
         //XP BAR
-        Slider XPBar = new Slider(0, player.XPToNextLevel, 1, false, skin, "XPBar");
+        XPBar = new Slider(0, player.XPToNextLevel, 1, false, skin, "XPBar");
         XPBar.setSize(Gdx.graphics.getWidth()-10, 50);
         XPBar.setPosition(5, Gdx.graphics.getHeight()-30);
         XPBar.setValue(player.currentXP);
         XPBar.setAnimateDuration(.5f);
         XPBar.setTouchable(Touchable.disabled);
         stage.addActor(XPBar);
-        player.XPBar = XPBar;
     }
 
     private void createPlayerMenu(){
@@ -173,4 +173,10 @@ public class HUD {
     }
 
 
+    public void updateHUD() {
+        healthbar.setRange(0, player.maxHP);
+        healthbar.setValue(player.currentHP);
+        XPBar.setRange(0, player.XPToNextLevel);
+        XPBar.setValue(player.currentXP);
+    }
 }

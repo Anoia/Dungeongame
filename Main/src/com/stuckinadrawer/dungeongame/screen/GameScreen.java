@@ -2,7 +2,6 @@ package com.stuckinadrawer.dungeongame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -91,6 +90,11 @@ public class GameScreen extends AbstractScreen {
         stage.dispose();
     }
 
+    /**
+     * The games main update method, is called every render
+     * @param delta deltaTime
+     */
+
     private void update(float delta){
         movementTimer +=delta;
         if(player.isMoving != -1){
@@ -99,12 +103,29 @@ public class GameScreen extends AbstractScreen {
         }else{
             if(movementTimer >0.1){
                 //moves player if his movement queue is not empty
-                if(player.action()){
-                    System.out.println("process enemy");
+                if(playerAction()){
                     processTurn();
                 }
                 movementTimer = 0;
             }
+        }
+    }
+
+    public boolean playerAction(){
+        if(player.movementPath != null && !player.movementPath.isEmpty()){
+            Position newPos = player.movementPath.pop();
+            Enemy e = level.getEnemyOnPos(newPos);
+            if(e != null){
+                attackEnemy(e);
+
+            } else{
+                player.moveToPosition(newPos);
+                level.updateFOV();
+            }
+
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -113,43 +134,82 @@ public class GameScreen extends AbstractScreen {
      * makes things happen after the player had a turn, moves enemies etc
      */
     public void processTurn() {
+        for(Enemy enemy: level.getEnemies()){
+            // enemy.doTurn(level);
+            if(level.isTileNextToPlayer(enemy.getPosition().getX(), enemy.getPosition().getY())){
+                enemy.movementPath = null;
+                player.movementPath = null;
+                attackPlayer(enemy);
+            }else if(level.isInLOS(enemy.getPosition(), player.getPosition(), enemy.viewDistance)){
+                level.findPathForActor(enemy, player.getPosition());
+                if(enemy.movementPath!= null && !enemy.movementPath.isEmpty()){
+                    Position newPos = enemy.movementPath.pop();
+                    if(level.isWalkable(newPos.getX(), newPos.getY())){
+                        System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
+                        enemy.moveToPosition(newPos);
+                    }
 
-        ArrayList<Enemy> dead = new ArrayList<Enemy>();
-        for(Enemy e: level.getEnemies()){
-            if(e.dead){
-                //level.removeEnemy(e);
-                Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
-                t.effect = "effect_blood";
-                dead.add(e);
-            }else{
-                e.doTurn(level);
+                }
             }
+
         }
-        level.getEnemies().removeAll(dead);
+
 
     }
 
     public void handleClickOnTile(int x, int y){
         Tile t  = level.getTile(x, y);
-        if(isTileNextToPlayer(x, y) && level.isOccupiedByActor(x, y)){
+        if(level.isTileNextToPlayer(x, y) && level.isOccupiedByActor(x, y)){
             //attack!
             Enemy e = level.getEnemyOnPos(new Position(x,y));
-            player.attack(e);
+            attackEnemy(e);
             processTurn();
         }else if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
             if(x == player.getPosition().getX() && y == player.getPosition().getY()){
                 level.waitTurn();
             }else{
-                level.findPath(player, new Position(x, y));
+                level.findPathForActor(player, new Position(x, y));
             }
 
         }
     }
 
-    private boolean isTileNextToPlayer(int x, int y){
-        int distance = abs(player.getPosition().getX() - x) + abs(player.getPosition().getY()-y);
-        return (distance == 1);
+
+    /**
+     * is called when the Player attacks and enemy, calculates the fight
+     * @param enemy the enemy being attacked by the Player
+     */
+    private void attackEnemy(Enemy enemy){
+        int dmg = player.getAttackDamage();
+        boolean enemyIsDead = enemy.takeDmg(dmg);
+        renderer.newTextAnimationOnEnemy(dmg, enemy.getPosition());
+        if(enemyIsDead){
+            level.removeEnemy(enemy);
+            if(player.earnXP(enemy.XPRewarded)){
+                player.levelUP();
+            }
+        }
+        updateHUD();
     }
+
+    /**
+     * is called when an Enemy attacks the player, calculates the Fight
+     * @param enemy the enemy attacking the player
+     */
+    private void attackPlayer(Enemy enemy){
+        int dmg = enemy.getAttackDamage();
+        System.out.println(player.getSpriteName() + " taking "+dmg + " damage from "+enemy.getSpriteName());
+        boolean playerIsDead = player.takeDmg(dmg);
+        renderer.newTextAnimationOnPlayer(dmg, player.getPosition());
+        if(playerIsDead){
+            System.out.println("GAME OVER");
+        }
+
+        updateHUD();
+
+    }
+
+
 
     /**
      * this is called by Libgdx every frame,
@@ -166,6 +226,10 @@ public class GameScreen extends AbstractScreen {
         renderer.update(delta);
         stage.draw();
 
+    }
+
+    public void updateHUD(){
+        hud.updateHUD();
     }
 
     public Player getPlayer() {
