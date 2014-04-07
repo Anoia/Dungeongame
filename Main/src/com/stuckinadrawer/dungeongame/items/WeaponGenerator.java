@@ -26,32 +26,14 @@ public class WeaponGenerator {
             e.printStackTrace();
         }
 
-   //     Element rootElement = doc.getRootElement();
-
+        //remove empty nodes (because whitespace)
         XOMUtil.Normalizer.STRIP.normalize(doc);
 
-       // Node node = doc.query("/Weapons/Elements/Type/Sword").get(0);
-       // System.out.println(node.getValue());
-     //   for(int i = 0; i < node.getChildCount(); i++){
-      //      String val =  node.getChild(i).getValue();
-            //System.out.println("Child "+i+": "+val);
-       // }
-        //System.out.println("done");
-        /*
-        Element elements = rootElement.getChildElements("Elements").get(0);
-        System.out.println(elements.getValue());
-        Element type = elements.getChildElements("Type").get(0);
-        System.out.println(type.getValue());
-        type = type.getChildElements("Sword").get(0);
-        System.out.println("Type: " + type.getValue() + " Base Damage: "+ type.getAttribute("baseDmg").getValue());
-        */
     }
 
     public Weapon createNewWeapon(int level){
+
         Node levelNode = doc.query("/Weapons/Weights/Level"+level).get(0);
-        //System.out.println(levelNode.getValue());
-        //Nodes types = levelNode.query("Type");
-        //System.out.println(types.get(0).getValue());
         Weapon weapon = getWeaponWithType(levelNode);
         setWeaponMaterial(levelNode, weapon);
         setWeaponPrefix(levelNode, weapon);
@@ -73,8 +55,9 @@ public class WeaponGenerator {
         int speed = Integer.parseInt(typeNode.getChild(3).getValue());
         int dmgRange = Integer.parseInt(typeNode.getChild(4).getValue());
         int range = Integer.parseInt(typeNode.getChild(5).getValue());
-
-        return new Weapon(name, baseDmg, accuracy, speed, dmgRange, range);
+        Weapon w = new Weapon(name, baseDmg, accuracy, speed, dmgRange, range);
+        w.setSpriteName(typeNode.getChild(6).getValue());
+        return w;
 
     }
 
@@ -121,16 +104,8 @@ public class WeaponGenerator {
             return weigth;
         }
 
-        private void setWeigth(int weigth) {
-            this.weigth = weigth;
-        }
-
         private String getName() {
             return name;
-        }
-
-        private void setName(String name) {
-            this.name = name;
         }
     }
 

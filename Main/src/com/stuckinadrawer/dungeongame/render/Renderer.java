@@ -192,4 +192,8 @@ public class Renderer {
         }
 
     }
+
+    public AtlasRegion getSprite(String spritename){
+        return regions.get(spritename);
+    }
 }

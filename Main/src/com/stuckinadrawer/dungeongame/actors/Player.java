@@ -1,9 +1,12 @@
 package com.stuckinadrawer.dungeongame.actors;
 
+import com.stuckinadrawer.dungeongame.items.Item;
 import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.Position;
 import com.stuckinadrawer.dungeongame.util.Utils;
+
+import java.util.ArrayList;
 
 public class Player extends Actor {
 
@@ -12,9 +15,9 @@ public class Player extends Actor {
     public int currentXP = 0;
     public int XPToNextLevel = 100;
 
-    private Weapon weapon;
+    private Weapon equippedWeapon;
 
-
+    private ArrayList<Item> inventory;
 
 
 
@@ -31,6 +34,7 @@ public class Player extends Actor {
         setLuck(5);
         dmgRange = 10;
         currentHP = maxHP;
+        inventory = new ArrayList<Item>();
     }
 
     public Player(){
@@ -39,7 +43,7 @@ public class Player extends Actor {
 
     @Override
     public int getAttackDamage(){
-        int dmg = Utils.random(weapon.getBaseDamage(), weapon.getBaseDamage()+weapon.getDamageRange());
+        int dmg = Utils.random(equippedWeapon.getBaseDamage(), equippedWeapon.getBaseDamage()+ equippedWeapon.getDamageRange());
         dmg = dmg + dmg * (getStrength() - baseStrength)/10;
         dmg = (Utils.random(8)>0)? dmg : 0;
         return dmg;
@@ -61,19 +65,25 @@ public class Player extends Actor {
     }
 
 
-    public void setWeapon(Weapon weapon){
-        this.weapon = weapon;
+    public void setEquippedWeapon(Weapon equippedWeapon){
+        this.equippedWeapon = equippedWeapon;
     }
 
-    public Weapon getWeapon(){
-        return weapon;
+    public Weapon getEquippedWeapon(){
+        return equippedWeapon;
     }
 
+    public ArrayList<Item> getInventory(){
+        return inventory;
+    }
 
+    public void addToInventory(Item item){
+        inventory.add(item);
+    }
 
-
-
-
+    public void removeFromInventory(Item item){
+        inventory.remove(item);
+    }
 
     public void levelUP(){
         this.playerLevel ++;

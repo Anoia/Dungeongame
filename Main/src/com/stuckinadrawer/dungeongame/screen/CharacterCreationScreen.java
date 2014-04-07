@@ -164,8 +164,9 @@ public class CharacterCreationScreen extends AbstractScreen {
                         pointsLeftToSpend++;
                         pointsLeftLabel.setText("Points left to spend: "+pointsLeftToSpend);
                         labelValue.setText(value + "");
-                        descriptionLabel.setText(description);
+
                     }
+                    descriptionLabel.setText(description);
                 }
             });
 
@@ -179,8 +180,9 @@ public class CharacterCreationScreen extends AbstractScreen {
                         pointsLeftToSpend--;
                         pointsLeftLabel.setText("Points left to spend: "+pointsLeftToSpend);
                         labelValue.setText(value+"");
-                        descriptionLabel.setText(description);
+
                     }
+                    descriptionLabel.setText(description);
                 }
             });
             this.addActor(minus);

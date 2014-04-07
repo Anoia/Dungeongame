@@ -9,6 +9,7 @@
         <speed>1</speed>
         <dmgRange>2</dmgRange>
         <range>1</range>
+        <sprite>item_sword</sprite>
       </Sword>
       <Dagger>
         <name>Dagger</name>
@@ -17,6 +18,7 @@
         <speed>2</speed>
         <dmgRange>4</dmgRange>
         <range>1</range>
+        <sprite>item_dagger</sprite>
       </Dagger>
       <Spear>
         <name>Spear</name>
@@ -25,6 +27,7 @@
         <speed>1</speed>
         <dmgRange>2</dmgRange>
         <range>2</range>
+        <sprite>item_spear</sprite>
       </Spear>
       <Axe>
         <name>Axe</name>
@@ -33,6 +36,7 @@
         <speed>1</speed>
         <dmgRange>1</dmgRange>
         <range>1</range>
+        <sprite>item_axe</sprite>
       </Axe>
     </Type>
     <Material>

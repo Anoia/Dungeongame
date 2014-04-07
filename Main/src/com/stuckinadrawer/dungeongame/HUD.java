@@ -2,12 +2,20 @@ package com.stuckinadrawer.dungeongame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stuckinadrawer.dungeongame.actors.Player;
+import com.stuckinadrawer.dungeongame.items.Item;
+import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.screen.GameScreen;
+
+import java.util.ArrayList;
 
 public class HUD {
     private Stage stage;
@@ -17,6 +25,7 @@ public class HUD {
 
 
     boolean playerMenuOpen = false;
+    boolean inventoryOpen = false;
 
     Table playerMenu;
     Label s;
@@ -26,6 +35,8 @@ public class HUD {
     Label i;
     Label a;
     Label l;
+
+    Table inventory;
 
     Slider healthbar;
     Slider XPBar;
@@ -43,9 +54,11 @@ public class HUD {
     private void init(){
         createCheatButton();
         createPlayerButton();
+        createInventoryButton();
         createHealthbar();
         createXPBar();
         createPlayerMenu();
+        createInventory();
     }
 
     private void createCheatButton(){
@@ -68,7 +81,7 @@ public class HUD {
     private void createPlayerButton(){
         final TextButton playerButton = new TextButton("Player Info", skin);
         playerButton.setSize(120, 50);
-        playerButton.setPosition(Gdx.graphics.getWidth()-130, 25);
+        playerButton.setPosition(Gdx.graphics.getWidth()-130, 10);
         stage.addActor(playerButton);
         playerButton.addListener(new ChangeListener() {
             @Override
@@ -165,10 +178,80 @@ public class HUD {
 
         playerMenu.setBackground(skin.getDrawable("textfield"));
 
-        System.out.println("TABLESIZE!"+playerMenu.getWidth() + " " + playerMenu.getHeight());
-        //playerMenu.debug();
         playerMenu.pack();
         playerMenu.setPosition(Gdx.graphics.getWidth()/2-playerMenu.getWidth()/2, Gdx.graphics.getHeight()/2-playerMenu.getHeight()/2);
+
+    }
+
+    public void createInventoryButton(){
+        final TextButton invButton = new TextButton("Inventory", skin);
+        invButton.setSize(120, 50);
+        invButton.setPosition(Gdx.graphics.getWidth()-130, 70);
+        stage.addActor(invButton);
+        invButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(inventoryOpen){
+                    inventory.remove();
+                }else{
+                    stage.addActor(inventory);
+                }
+                inventoryOpen = !inventoryOpen;
+            }
+        });
+    }
+
+    public void createInventory(){
+        inventory = new Table(skin);
+        int pad = 5;
+
+        Weapon equippedWeapon = player.getEquippedWeapon();
+
+        //ImageButton b = new ImageButton(skin, "slot-red");
+       // ImageButton.ImageButtonStyle style = b.getStyle();
+        //style.imageUp = new TextureRegionDrawable(game.getRenderer().getSprite(equippedWeapon.getSpriteName()));
+
+        Stack stack = new Stack();
+        Image slot = new Image(skin, "inv-highlight");
+        stack.add(slot);
+        Image item = new Image(new TextureRegionDrawable(game.getRenderer().getSprite(equippedWeapon.getSpriteName())));
+        stack.add(item);
+        inventory.add(stack).pad(pad).width(32).height(32);
+        inventory.row();
+
+        ArrayList<Item> inventoryList = player.getInventory();
+        System.out.println("inv size: "+inventoryList.size());
+        int index = 0;
+        for(int x = 0; x < 4; x++){
+            for(int y = 0; y < 3; y++){
+                stack = new Stack();
+                slot = new Image(skin, "inv");
+                stack.add(slot);
+                    if(index < inventoryList.size()){
+                        String spriteName = inventoryList.get(index).getSpriteName();
+                        item = new Image(new TextureRegionDrawable(game.getRenderer().getSprite(spriteName)));
+                        item.addListener(new ClickListener() {
+                            @Override
+                            public void clicked(InputEvent event, float x, float y) {
+                                Dialog d = new Dialog("Item", skin);
+                                d.text("Hello! I'm a dialog!");
+                                d.button("Close");
+                                d.show(stage);
+                            }
+
+                        });
+                        stack.add(item);
+                    }
+                index++;
+                inventory.add(stack).pad(pad).width(32).height(32);
+            }
+            inventory.row();
+        }
+
+        inventory.setBackground(skin.getDrawable("textfield"));
+
+        inventory.pack();
+        inventory.setPosition(Gdx.graphics.getWidth()/2-inventory.getWidth()/2, Gdx.graphics.getHeight()/2-inventory.getHeight()/2);
 
     }
 

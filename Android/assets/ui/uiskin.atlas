@@ -220,3 +220,19 @@ test2
     orig: 32, 32
     offset: 0, 0
     index: -1
+inv
+    rotate: false
+    xy: 160, 2
+    size: 12, 12
+    split: 3, 3, 3, 3
+    orig: 12, 12
+    offset: 0, 0
+    index: -1
+inv-highlight
+    rotate: false
+    xy: 160, 15
+    size: 12, 12
+    split: 3, 3, 3, 3
+    orig: 12, 12
+    offset: 0, 0
+    index: -1

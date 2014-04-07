@@ -128,15 +128,6 @@ public class Level {
         return rayTracer.castRay(start, goal, range, false);
     }
 
-    /**
-     * this shouldn't be here!
-     */
-    public void waitTurn() {
-        player.movementPath = new LinkedList<Position>();
-        player.movementPath.add(player.getPosition());
-
-    }
-
     public boolean isTileNextToPlayer(int x, int y){
         int distance = abs(player.getPosition().getX() - x) + abs(player.getPosition().getY()-y);
         return (distance == 1);
