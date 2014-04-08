@@ -25,4 +25,6 @@ public abstract class Item {
     public void setSpriteName(String spriteName) {
         this.spriteName = spriteName;
     }
+
+    public abstract String getDescription();
 }

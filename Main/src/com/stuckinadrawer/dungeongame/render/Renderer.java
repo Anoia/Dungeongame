@@ -155,6 +155,11 @@ public class Renderer {
                         batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
                     }
 
+                    if(tile.item != null){
+                        spriteRegion = regions.get(tile.item.getSpriteName());
+                        batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+                    }
+
                     if(!tile.inLOS){
                         Color c = batch.getColor();
                         batch.setColor(1f, 1f, 1f, 0.6f);

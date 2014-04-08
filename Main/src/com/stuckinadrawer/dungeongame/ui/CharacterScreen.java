@@ -59,7 +59,9 @@ public class CharacterScreen extends Window {
         addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                remove();
+                if(x < 0 || y < 0 || x > getWidth() || y > getHeight()){
+                    remove();
+                }
             }
         });
 

@@ -1,5 +1,6 @@
 package com.stuckinadrawer.dungeongame.tiles;
 
+import com.stuckinadrawer.dungeongame.items.Item;
 import com.stuckinadrawer.dungeongame.util.Position;
 
 public abstract class Tile {
@@ -9,6 +10,7 @@ public abstract class Tile {
     boolean solid;
     public String object = null;
     public String effect = null;
+    public Item item = null;
 
     public boolean inLOS = false;
     public boolean hasSeen = false;
@@ -39,6 +41,20 @@ public abstract class Tile {
 
     public Position getPosition(){
         return new Position(x, y);
+    }
+
+    public void setItem(Item item){
+        this.item = item;
+    }
+
+    public Item getItem(){
+        return item;
+    }
+
+    public Item pickUpItem(){
+        Item i = item;
+        item = null;
+        return i;
     }
 
 

@@ -42,6 +42,11 @@ public class Weapon extends Item{
 
     @Override
     public String toString(){
-        return getName()+": \n BaseDmg "+baseDamage+", Accuracy "+ accuracy+", Speed "+attackSpeed+", DamageRange "+damageRange+", Weaponrange "+range;
+        return getName()+": \n BaseDmg "+baseDamage+"\nAccuracy "+ accuracy+"\nSpeed "+attackSpeed+"\nDamageRange "+damageRange+"\nWeaponrange "+range;
+    }
+
+    @Override
+    public String getDescription(){
+        return "BaseDmg "+baseDamage+"\nDamageRange "+damageRange+"\nAccuracy "+ accuracy+"\nSpeed "+attackSpeed+"\nWeaponrange "+range;
     }
 }

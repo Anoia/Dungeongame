@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
+import com.stuckinadrawer.dungeongame.items.Item;
+import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.items.WeaponGenerator;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
@@ -17,6 +19,7 @@ import com.stuckinadrawer.dungeongame.ui.HUD;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.GestureDetection;
 import com.stuckinadrawer.dungeongame.util.Position;
+import com.stuckinadrawer.dungeongame.util.Utils;
 
 import java.util.LinkedList;
 
@@ -125,6 +128,12 @@ public class GameScreen extends AbstractScreen {
             } else{
                 player.moveToPosition(newPos);
                 level.updateFOV();
+                if(player.movementPath.isEmpty()){
+                    Tile t = level.getTile(newPos.getX(), newPos.getY());
+                    if(t.getItem()!= null){
+                        player.addToInventory(t.pickUpItem());
+                    }
+                }
             }
 
             return true;
@@ -197,6 +206,7 @@ public class GameScreen extends AbstractScreen {
             if(player.earnXP(enemy.XPRewarded)){
                 player.levelUP();
             }
+            createLoot(enemy);
         }
         updateHUD();
     }
@@ -216,6 +226,14 @@ public class GameScreen extends AbstractScreen {
 
         updateHUD();
 
+    }
+
+    public void createLoot(Enemy e){
+        if(Utils.random()>0.75){
+            Weapon w = weaponGenerator.createNewWeapon(1);
+            Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
+            t.setItem(w);
+        }
     }
 
 

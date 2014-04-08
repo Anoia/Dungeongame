@@ -34,17 +34,9 @@ public class Inventory extends Window {
         int pad = 5;
 
         Weapon equippedWeapon = player.getEquippedWeapon();
-
-        //ImageButton b = new ImageButton(skin, "slot-red");
-        // ImageButton.ImageButtonStyle style = b.getStyle();
-        //style.imageUp = new TextureRegionDrawable(game.getRenderer().getSprite(equippedWeapon.getSpriteName()));
-
-        Stack stack = new Stack();
-        Image slot = new Image(skin, "inv-highlight");
-        stack.add(slot);
-        Image item = new Image(new TextureRegionDrawable(renderer.getSprite(equippedWeapon.getSpriteName())));
-        stack.add(item);
-        add(stack).pad(pad).width(32).height(32);
+        Slot slot = new Slot("inv-highlight");
+        slot.setItem(equippedWeapon);
+        add(slot).pad(pad).width(32).height(32);
         row();
 
         ArrayList<Item> inventoryList = player.getInventory();
@@ -52,26 +44,12 @@ public class Inventory extends Window {
         int index = 0;
         for(int x = 0; x < 4; x++){
             for(int y = 0; y < 3; y++){
-                stack = new Stack();
-                slot = new Image(skin, "inv");
-                stack.add(slot);
+                slot = new Slot();
                 if(index < inventoryList.size()){
-                    String spriteName = inventoryList.get(index).getSpriteName();
-                    item = new Image(new TextureRegionDrawable(renderer.getSprite(spriteName)));
-                    item.addListener(new ClickListener() {
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            Dialog d = new Dialog("Item", skin);
-                            d.text("Hello! I'm a dialog!");
-                            d.button("Close");
-                            d.show(stage);
-                        }
-
-                    });
-                    stack.add(item);
+                    slot.setItem(inventoryList.get(index));
                 }
                 index++;
-                add(stack).pad(pad).width(32).height(32);
+                add(slot).pad(pad).width(32).height(32);
             }
             row();
         }
@@ -85,9 +63,40 @@ public class Inventory extends Window {
         addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                remove();
+                if(x < 0 || y < 0 || x > getWidth() || y > getHeight()){
+                    remove();
+                }
             }
         });
     }
 
+    private class Slot extends Stack{
+        private Item item = null;
+
+        public Slot(){
+            add(new Image(skin, "inv"));
+        }
+
+        public Slot(String type){
+            add(new Image(skin, type));
+        }
+
+        public void setItem(Item i){
+            this.item = i;
+            Image image = new Image(new TextureRegionDrawable(renderer.getSprite(item.getSpriteName())));
+            image.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Dialog d = new Dialog(item.getName(), skin);
+                    d.text(item.getDescription());
+
+                    d.button("Close");
+                    d.show(stage);
+                }
+
+            });
+            add(image);
+        }
+
+    }
 }

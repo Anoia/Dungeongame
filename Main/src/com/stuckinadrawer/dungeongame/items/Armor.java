@@ -7,4 +7,9 @@ public class Armor extends Item {
     public Armor(String name) {
         super(name);
     }
+
+    @Override
+    public String getDescription() {
+        return "Armor";
+    }
 }
