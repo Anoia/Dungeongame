@@ -1,8 +1,9 @@
 package com.stuckinadrawer.dungeongame.items;
 
+import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.effects.Effect;
 
-public class Weapon extends Item{
+public class Weapon extends Item implements Equipable{
     private int attackSpeed;
     private int baseDamage;
     private int damageRange;
@@ -48,5 +49,20 @@ public class Weapon extends Item{
     @Override
     public String getDescription(){
         return "BaseDmg "+baseDamage+"\nDamageRange "+damageRange+"\nAccuracy "+ accuracy+"\nSpeed "+attackSpeed+"\nWeaponrange "+range;
+    }
+
+    @Override
+    public void equip(Player player) {
+        if(player.getEquippedWeapon() != null){
+            player.addToInventory(player.getEquippedWeapon());
+        }
+        player.setEquippedWeapon(this);
+        player.removeFromInventory(this);
+    }
+
+    @Override
+    public void unEquip(Player player) {
+        player.addToInventory(this);
+        player.setEquippedWeapon(null);
     }
 }

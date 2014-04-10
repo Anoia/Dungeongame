@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stuckinadrawer.dungeongame.actors.Player;
+import com.stuckinadrawer.dungeongame.items.Equipable;
 import com.stuckinadrawer.dungeongame.items.Item;
 import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.render.Renderer;
@@ -20,6 +21,8 @@ public class Inventory extends Window {
     private final Stage stage;
     private final Player player;
     private final Renderer renderer;
+
+    private Inventory theInventory = this;
 
     public Inventory(Skin skin, Stage stage, Player player, Renderer renderer) {
         super("Inventory", skin);
@@ -35,7 +38,9 @@ public class Inventory extends Window {
 
         Weapon equippedWeapon = player.getEquippedWeapon();
         Slot slot = new Slot("inv-highlight");
-        slot.setItem(equippedWeapon);
+        if(equippedWeapon!=null){
+            slot.setItem(equippedWeapon);
+        }
         add(slot).pad(pad).width(32).height(32);
         row();
 
@@ -72,6 +77,7 @@ public class Inventory extends Window {
 
     private class Slot extends Stack{
         private Item item = null;
+        private boolean inInventory = true;
 
         public Slot(){
             add(new Image(skin, "inv"));
@@ -79,6 +85,7 @@ public class Inventory extends Window {
 
         public Slot(String type){
             add(new Image(skin, type));
+            if(type.equals("inv-highlight")) inInventory = false;
         }
 
         public void setItem(Item i){
@@ -87,9 +94,18 @@ public class Inventory extends Window {
             image.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    Dialog d = new Dialog(item.getName(), skin);
+                    InventoryDialog d = new InventoryDialog(item.getName(), skin);
                     d.text(item.getDescription());
 
+                    if (item instanceof Equipable){
+                        if(inInventory){
+                            d.button("Equip", item);
+                        }else{
+                            d.button("Unequip", item);
+                            d.unequip = true;
+                        }
+
+                    }
                     d.button("Close");
                     d.show(stage);
                 }
@@ -98,5 +114,30 @@ public class Inventory extends Window {
             add(image);
         }
 
+    }
+
+    private class InventoryDialog extends Dialog{
+
+        private boolean unequip = false;
+
+        public InventoryDialog(String title, Skin skin) {
+            super(title, skin);
+        }
+
+        @Override
+        public void result(Object object){
+            if(object instanceof Equipable){
+                Equipable i = (Equipable) object;
+                if(unequip){
+                    i.unEquip(player);
+                    theInventory.clear();
+                    theInventory.init();
+                }else{
+                    i.equip(player);
+                    theInventory.clear();
+                    theInventory.init();
+                }
+            }
+        }
     }
 }
