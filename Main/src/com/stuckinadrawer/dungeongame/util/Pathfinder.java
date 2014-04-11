@@ -123,7 +123,7 @@ public class Pathfinder {
         }
 
         /* MORE NEIGHBOURS FOR DIAGONAL WALKING */
-        /*
+
         // LINKS OBEN
         neighbour = new Position(n.pos.getX()-1, n.pos.getY()-1);
         if(level.isWalkable(neighbour.getX(), neighbour.getY())){
@@ -144,7 +144,7 @@ public class Pathfinder {
         if(level.isWalkable(neighbour.getX(), neighbour.getY())){
             neighbours.add(new Node(neighbour));
         }
-        */
+
 
 
 

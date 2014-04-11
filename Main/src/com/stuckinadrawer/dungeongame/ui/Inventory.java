@@ -7,9 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.stuckinadrawer.dungeongame.actors.Player;
-import com.stuckinadrawer.dungeongame.items.Equipable;
-import com.stuckinadrawer.dungeongame.items.Item;
-import com.stuckinadrawer.dungeongame.items.Weapon;
+import com.stuckinadrawer.dungeongame.items.*;
 import com.stuckinadrawer.dungeongame.render.Renderer;
 
 import java.util.ArrayList;
@@ -36,12 +34,32 @@ public class Inventory extends Window {
     private void init() {
         int pad = 5;
 
+        // Weapon
         Weapon equippedWeapon = player.getEquippedWeapon();
         Slot slot = new Slot("inv-highlight");
         if(equippedWeapon!=null){
             slot.setItem(equippedWeapon);
         }
         add(slot).pad(pad).width(32).height(32);
+
+
+        // Ring
+        Ring eqippedRing = player.getEquippedRing();
+        slot = new Slot("inv-highlight");
+        if(eqippedRing!=null){
+            slot.setItem(eqippedRing);
+        }
+        add(slot).pad(pad).width(32).height(32);
+
+
+        // Chest
+        Chestpiece equippedChestpiece = player.getEquippedChestpiece();
+        slot = new Slot("inv-highlight");
+        if(equippedChestpiece!=null){
+            slot.setItem(equippedChestpiece);
+        }
+        add(slot).pad(pad).width(32).height(32);
+
         row();
 
         ArrayList<Item> inventoryList = player.getInventory();

@@ -1,15 +1,10 @@
 package com.stuckinadrawer.dungeongame.items;
 
-public class Armor extends Item {
+public abstract class Armor extends Item implements Equipable{
     private int defense;
     private int slot;
 
     public Armor(String name) {
         super(name);
-    }
-
-    @Override
-    public String getDescription() {
-        return "Armor";
     }
 }

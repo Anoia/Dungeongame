@@ -10,6 +10,7 @@ import com.stuckinadrawer.dungeongame.*;
 import com.stuckinadrawer.dungeongame.actors.Player;
 import com.stuckinadrawer.dungeongame.actors.enemies.Enemy;
 import com.stuckinadrawer.dungeongame.items.Item;
+import com.stuckinadrawer.dungeongame.items.LootGenerator;
 import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.items.WeaponGenerator;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
@@ -39,7 +40,7 @@ public class GameScreen extends AbstractScreen {
 
     float movementTimer = 0;
 
-    WeaponGenerator weaponGenerator;
+    LootGenerator lootGenerator;
 
 
     /**
@@ -49,7 +50,7 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(GameContainer gameContainer, Player player) {
         super(gameContainer);
-        weaponGenerator = new WeaponGenerator();
+        lootGenerator = new LootGenerator();
         LevelCreator levelCreator = new LevelCreator();
         level = levelCreator.getNewLevel(player);   //Player ohne Pos in den level gen
         this.player = level.getPlayer();            //player mit pos aus level
@@ -58,10 +59,10 @@ public class GameScreen extends AbstractScreen {
         renderer = new Renderer(level, camera, fontBig);
         camera.position.set(player.getPosition().getX()* Constants.TILE_SIZE, player.getPosition().getY()*Constants.TILE_SIZE, 0);
 
-        player.setEquippedWeapon(weaponGenerator.createNewWeapon(1));
-        player.addToInventory(weaponGenerator.createNewWeapon(1));
-        player.addToInventory(weaponGenerator.createNewWeapon(1));
-        player.addToInventory(weaponGenerator.createNewWeapon(1));
+        player.setEquippedWeapon(lootGenerator.generateWeapon());
+        player.addToInventory(lootGenerator.generateLoot());
+        player.addToInventory(lootGenerator.generateLoot());
+        player.addToInventory(lootGenerator.generateLoot());
 
 
     }
@@ -229,10 +230,10 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void createLoot(Enemy e){
-        if(Utils.random()>0.75){
-            Weapon w = weaponGenerator.createNewWeapon(1);
+        if(Utils.random()>0.25){
+            Item item = lootGenerator.generateLoot();
             Tile t = level.getTile(e.getPosition().getX(), e.getPosition().getY());
-            t.setItem(w);
+            t.setItem(item);
         }
     }
 

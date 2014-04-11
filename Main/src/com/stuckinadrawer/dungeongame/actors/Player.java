@@ -1,6 +1,8 @@
 package com.stuckinadrawer.dungeongame.actors;
 
+import com.stuckinadrawer.dungeongame.items.Chestpiece;
 import com.stuckinadrawer.dungeongame.items.Item;
+import com.stuckinadrawer.dungeongame.items.Ring;
 import com.stuckinadrawer.dungeongame.items.Weapon;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.Position;
@@ -15,7 +17,9 @@ public class Player extends Actor {
     public int currentXP = 0;
     public int XPToNextLevel = 100;
 
-    private Weapon equippedWeapon;
+    private Weapon equippedWeapon = null;
+    private Chestpiece equippedChestpiece = null;
+    private Ring equippedRing = null;
 
     private ArrayList<Item> inventory;
 
@@ -71,6 +75,22 @@ public class Player extends Actor {
 
     public Weapon getEquippedWeapon(){
         return equippedWeapon;
+    }
+
+    public Ring getEquippedRing() {
+        return equippedRing;
+    }
+
+    public void setEquippedRing(Ring equippedRing) {
+        this.equippedRing = equippedRing;
+    }
+
+    public Chestpiece getEquippedChestpiece() {
+        return equippedChestpiece;
+    }
+
+    public void setEquippedChestpiece(Chestpiece equippedChestpiece) {
+        this.equippedChestpiece = equippedChestpiece;
     }
 
     public ArrayList<Item> getInventory(){
