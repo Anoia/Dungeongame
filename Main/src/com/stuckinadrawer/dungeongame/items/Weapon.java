@@ -65,4 +65,8 @@ public class Weapon extends Item implements Equipable{
         player.addToInventory(this);
         player.setEquippedWeapon(null);
     }
+
+    public int getRange() {
+        return range;
+    }
 }

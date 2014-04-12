@@ -124,7 +124,7 @@ public class GameScreen extends AbstractScreen {
             Position newPos = player.movementPath.pop();
             Enemy e = level.getEnemyOnPos(newPos);
             if(e != null){
-                attackEnemy(e);
+                //attackEnemy(e);
 
             } else{
                 player.moveToPosition(newPos);
@@ -173,7 +173,7 @@ public class GameScreen extends AbstractScreen {
 
     public void handleClickOnTile(int x, int y){
         Tile t  = level.getTile(x, y);
-        if(level.isTileNextToPlayer(x, y) && level.isOccupiedByActor(x, y)){
+        if(level.isOccupiedByActor(x, y) && level.isInLOS(player.getPosition(), level.getEnemyOnPos(new Position(x,y)).getPosition(), player.getEquippedWeapon().getRange())){
             //attack!
             Enemy e = level.getEnemyOnPos(new Position(x,y));
             attackEnemy(e);
