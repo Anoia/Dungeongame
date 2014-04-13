@@ -18,6 +18,8 @@ public class LevelCreator {
     private GeneratorScatterLayout scatter;
     private ArrayList<Enemy> enemies;
 
+    TileEnum[][] levelEnum;
+
 
     public LevelCreator(){
         scatter = new GeneratorScatterLayout();
@@ -25,7 +27,7 @@ public class LevelCreator {
 
     public Level getNewLevel(Player player){
 
-        TileEnum[][] levelEnum = scatter.generate();
+        levelEnum = scatter.generate();
 
         Tile[][] data = new Tile[scatter.levelWidth][scatter.levelHeight];
 
@@ -38,7 +40,7 @@ public class LevelCreator {
                 Tile t = null;
                 switch (levelEnum[x][y]) {
                     case EMPTY:
-                        t = new WallTile(x, y, "tile_empty");
+                        t = new FloorTile(x, y, "tile_empty");
                         break;
                     case WALL:
                         t = new WallTile(x, y, "tile_wall_plain");
@@ -123,26 +125,56 @@ public class LevelCreator {
 
     public int getNeighbourValueForWall(Tile tile, TileEnum[][] levelEnum){
         int val = 0;
-        if(isInLevelArea(tile.x-1, tile.y, levelEnum) && levelEnum[tile.x-1][tile.y] == TileEnum.WALL){
+        if(isWall(tile.x-1, tile.y)){
             val += 8;
         }
-        if(isInLevelArea(tile.x+1, tile.y, levelEnum) && levelEnum[tile.x+1][tile.y] == TileEnum.WALL){
+        if(isWall(tile.x+1, tile.y)){
             val += 2;
         }
-        if(isInLevelArea(tile.x, tile.y-1, levelEnum) && levelEnum[tile.x][tile.y-1] == TileEnum.WALL){
+        if(isWall(tile.x, tile.y-1)){
             val += 4;
         }
-        if(isInLevelArea(tile.x, tile.y+1, levelEnum) && levelEnum[tile.x][tile.y+1] == TileEnum.WALL){
+        if(isWall(tile.x, tile.y+1)){
             val += 1;
         }
+
+        switch(val){
+            case 7:
+                if(isWall(tile.x+1, tile.y-1) && isWall(tile.x+1, tile.y+1)){
+                    val = 5;
+                }
+                break;
+            case 11:
+                if(isWall(tile.x-1, tile.y+1) && isWall(tile.x+1, tile.y+1)){
+                    val = 10;
+                }
+                break;
+            case 13:
+                if(isWall(tile.x-1, tile.y-1) && isWall(tile.x-1, tile.y+1)){
+                    val = 5;
+                }
+                break;
+            case 14:
+                if(isWall(tile.x-1, tile.y-1) && isWall(tile.x+1, tile.y-1)){
+                    val = 10;
+                }
+                break;
+        }
+
+
         WallTile wall = (WallTile) tile;
         wall.neighbourValue = val;
 
         return 0;
     }
 
-    public boolean isInLevelArea(int x, int y, TileEnum[][] tileEnum){
-        return !(x < 0 || y < 0 || x >= tileEnum.length || y >= tileEnum[1].length);
+    public boolean isWall(int x, int y){
+        return isInLevelArea(x, y) && levelEnum[x][y] == TileEnum.WALL;
+
+    }
+
+    public boolean isInLevelArea(int x, int y){
+        return !(x < 0 || y < 0 || x >= levelEnum.length || y >= levelEnum[1].length);
     }
 
 
