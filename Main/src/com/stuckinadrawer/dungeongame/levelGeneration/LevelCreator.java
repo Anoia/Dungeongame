@@ -42,10 +42,11 @@ public class LevelCreator {
                         break;
                     case WALL:
                         t = new WallTile(x, y, "tile_wall_plain");
+                        int val = getNeighbourValueForWall(t, levelEnum);
                         if(Utils.random(9) >4){
                             t.setSpriteName("tile_wall_cracked");
                         }else if(Utils.random(7)>4){
-                            t.setSpriteName("tile_wall");
+                            t.setSpriteName("tile_wall_moss");
                         }
 
                         if(Utils.random(30) < 1){
@@ -118,6 +119,30 @@ public class LevelCreator {
                 break;
         }
 
+    }
+
+    public int getNeighbourValueForWall(Tile tile, TileEnum[][] levelEnum){
+        int val = 0;
+        if(isInLevelArea(tile.x-1, tile.y, levelEnum) && levelEnum[tile.x-1][tile.y] == TileEnum.WALL){
+            val += 8;
+        }
+        if(isInLevelArea(tile.x+1, tile.y, levelEnum) && levelEnum[tile.x+1][tile.y] == TileEnum.WALL){
+            val += 2;
+        }
+        if(isInLevelArea(tile.x, tile.y-1, levelEnum) && levelEnum[tile.x][tile.y-1] == TileEnum.WALL){
+            val += 4;
+        }
+        if(isInLevelArea(tile.x, tile.y+1, levelEnum) && levelEnum[tile.x][tile.y+1] == TileEnum.WALL){
+            val += 1;
+        }
+        WallTile wall = (WallTile) tile;
+        wall.neighbourValue = val;
+
+        return 0;
+    }
+
+    public boolean isInLevelArea(int x, int y, TileEnum[][] tileEnum){
+        return !(x < 0 || y < 0 || x >= tileEnum.length || y >= tileEnum[1].length);
     }
 
 

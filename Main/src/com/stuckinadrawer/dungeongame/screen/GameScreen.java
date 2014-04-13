@@ -16,6 +16,7 @@ import com.stuckinadrawer.dungeongame.items.WeaponGenerator;
 import com.stuckinadrawer.dungeongame.levelGeneration.LevelCreator;
 import com.stuckinadrawer.dungeongame.render.Renderer;
 import com.stuckinadrawer.dungeongame.tiles.Tile;
+import com.stuckinadrawer.dungeongame.tiles.WallTile;
 import com.stuckinadrawer.dungeongame.ui.HUD;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.util.GestureDetection;
@@ -173,6 +174,9 @@ public class GameScreen extends AbstractScreen {
 
     public void handleClickOnTile(int x, int y){
         Tile t  = level.getTile(x, y);
+        if(t instanceof WallTile){
+            System.out.println("WALL: value " + ((WallTile) t).neighbourValue);
+        }
         if(level.isOccupiedByActor(x, y) && level.isInLOS(player.getPosition(), level.getEnemyOnPos(new Position(x,y)).getPosition(), player.getEquippedWeapon().getRange())){
             //attack!
             Enemy e = level.getEnemyOnPos(new Position(x,y));

@@ -4,8 +4,8 @@ import com.stuckinadrawer.dungeongame.items.Item;
 import com.stuckinadrawer.dungeongame.util.Position;
 
 public abstract class Tile {
-    int x;
-    int y;
+    public int x;
+    public int y;
     String spriteName;
     boolean solid;
     public String object = null;

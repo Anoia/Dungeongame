@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.utils.Array;
+import com.stuckinadrawer.dungeongame.tiles.WallTile;
 import com.stuckinadrawer.dungeongame.util.Constants;
 import com.stuckinadrawer.dungeongame.Level;
 import com.stuckinadrawer.dungeongame.actors.Player;
@@ -29,6 +31,7 @@ public class Renderer {
 
     private Animation playerAnimation;
     float stateTime;
+    private Array<AtlasRegion> wallSprites;
 
     private ArrayList<TextAnimation> textAnimations;
 
@@ -48,6 +51,7 @@ public class Renderer {
         }
         batch = new SpriteBatch();
         playerAnimation = new Animation(0.25f, textureAtlas.findRegions("char_player"));
+        wallSprites = textureAtlas.findRegions("tile_wall");
 
         stateTime = 0f;
 
@@ -143,7 +147,11 @@ public class Renderer {
                     float posX = tile.getPosition().getX() * Constants.TILE_SIZE;
                     float posY = tile.getPosition().getY() * Constants.TILE_SIZE;
 
+                    if(tile instanceof WallTile){
+                        spriteRegion = wallSprites.get(((WallTile) tile).neighbourValue);
+                    }
                     batch.draw(spriteRegion, posX, posY, Constants.TILE_SIZE+1, Constants.TILE_SIZE+1);
+
 
                     if(tile.effect!=null){
                         spriteRegion = regions.get(tile.effect);
