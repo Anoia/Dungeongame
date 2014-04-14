@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class LevelCreator {
 
     private GeneratorScatterLayout scatter;
+    private GeneratorBSP bsp;
     private ArrayList<Enemy> enemies;
 
     TileEnum[][] levelEnum;
@@ -23,11 +24,12 @@ public class LevelCreator {
 
     public LevelCreator(){
         scatter = new GeneratorScatterLayout();
+        bsp = new GeneratorBSP();
     }
 
     public Level getNewLevel(Player player){
 
-        levelEnum = scatter.generate();
+        levelEnum = bsp.generate();
 
         Tile[][] data = new Tile[scatter.levelWidth][scatter.levelHeight];
 
