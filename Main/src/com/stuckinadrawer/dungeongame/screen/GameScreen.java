@@ -159,7 +159,7 @@ public class GameScreen extends AbstractScreen {
                 level.findPathForActor(enemy, player.getPosition());
                 if(enemy.movementPath!= null && !enemy.movementPath.isEmpty()){
                     Position newPos = enemy.movementPath.pop();
-                    if(level.isWalkable(newPos.getX(), newPos.getY())){
+                    if(level.isWalkable(newPos.getX(), newPos.getY()) && !newPos.equals(player.getPosition())){
                         System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
                         enemy.moveToPosition(newPos);
                     }
