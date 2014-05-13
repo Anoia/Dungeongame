@@ -48,6 +48,7 @@ public class LevelCreator {
                         break;
                     case WALL:
                         t = new WallTile(x, y, "tile_wall_plain");
+                        getNeighbourValueForWall(t, levelEnum);
                         if(Utils.random(9) >4){
                             t.setSpriteName("tile_wall_cracked");
                         }else if(Utils.random(7)>4){
