@@ -17,6 +17,7 @@ public class LevelCreator {
 
     private GeneratorScatterLayout scatter;
     private GeneratorBSP bsp;
+    private GeneratorRogueAlgorithm rogue;
     private ArrayList<Enemy> enemies;
 
     TileEnum[][] levelEnum;
@@ -25,13 +26,14 @@ public class LevelCreator {
     public LevelCreator(){
         scatter = new GeneratorScatterLayout();
         bsp = new GeneratorBSP();
+        rogue = new GeneratorRogueAlgorithm();
     }
 
     public Level getNewLevel(Player player){
 
-        levelEnum = bsp.generate();
+        levelEnum = rogue.generate();
 
-        Tile[][] data = new Tile[scatter.levelWidth][scatter.levelHeight];
+        Tile[][] data = new Tile[rogue.levelWidth][rogue.levelHeight];
 
         enemies = new ArrayList<Enemy>();
 
@@ -46,7 +48,6 @@ public class LevelCreator {
                         break;
                     case WALL:
                         t = new WallTile(x, y, "tile_wall_plain");
-                        int val = getNeighbourValueForWall(t, levelEnum);
                         if(Utils.random(9) >4){
                             t.setSpriteName("tile_wall_cracked");
                         }else if(Utils.random(7)>4){
@@ -58,9 +59,6 @@ public class LevelCreator {
                         }
                         break;
                     case ROOM:
-                        if(player.getPosition().getX() == 0 && player.getPosition().getY() == 0){
-                            player.setPosition(x, y);
-                        }
                         t = new FloorTile(x, y, "tile_floor");
                         if(Utils.random(9) >4 ){
                             t.setSpriteName("tile_floor_moss");
@@ -74,13 +72,23 @@ public class LevelCreator {
                     case CORRIDOR:
                         t = new FloorTile(x, y, "tile_floor");
                         break;
+                    case ENTRANCE:
+                        player.setPosition(x, y);
+                        t = new FloorTile(x, y, "tile_floor");
+                        t.object = "tile_stairs_up";
+                        break;
+                    case EXIT:
+                        t = new FloorTile(x, y, "tile_floor");
+                        t.object = "tile_stairs_down";
+                        break;
+
                 }
                 data[x][y] = t;
 
             }
         }
 
-        Level level = new Level(scatter.levelWidth, scatter.levelHeight, data);
+        Level level = new Level(rogue.levelWidth, rogue.levelHeight, data);
         level.setPlayer(player);
         level.addEnemies(enemies);
 

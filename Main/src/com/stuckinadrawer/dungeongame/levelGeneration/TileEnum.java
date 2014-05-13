@@ -1,5 +1,5 @@
 package com.stuckinadrawer.dungeongame.levelGeneration;
 
 public enum TileEnum {
-    EMPTY, WALL, ROOM, CORRIDOR
+    EMPTY, WALL, ROOM, CORRIDOR, ENTRANCE, EXIT
 }
