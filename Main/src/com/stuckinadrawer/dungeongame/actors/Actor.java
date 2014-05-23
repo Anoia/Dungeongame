@@ -35,9 +35,11 @@ public abstract class Actor {
 
     public boolean dead = false;
 
+    private int actionPoints = 0;
 
     //TEMP
     public int XPRewarded = 6;
+    private int speed = 1;
 
 
     public Actor(int x, int y){
@@ -216,5 +218,26 @@ public abstract class Actor {
 
     public float lerp(float start, float end){
         return start + isMoving * (end - start);
+    }
+
+    public int getSpeed(){
+        return speed;
+    }
+
+    public void setSpeed(int i) {
+        this.speed = i;
+    }
+
+    public int getActionPoints(){
+        return actionPoints;
+    }
+
+    public void modifyActionPoints(int change){
+        this.actionPoints +=change;
+    }
+
+    public void waitTurn() {
+        this.actionPoints = 0;
+
     }
 }

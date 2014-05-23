@@ -69,4 +69,8 @@ public class Weapon extends Item implements Equipable{
     public int getRange() {
         return range;
     }
+
+    public int getSpeed() {
+        return attackSpeed;
+    }
 }

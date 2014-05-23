@@ -39,9 +39,9 @@ public class GameScreen extends AbstractScreen {
 
     Stage stage;
 
-    float movementTimer = 0;
-
     LootGenerator lootGenerator;
+
+    private int elapsedTimeInAP = 0;
 
 
     /**
@@ -105,18 +105,15 @@ public class GameScreen extends AbstractScreen {
      */
 
     private void update(float delta){
-        movementTimer +=delta;
         if(player.isMoving != -1){
             player.updateRenderPosition(delta);
             camera.position.set(player.renderPosition.getX(), player.renderPosition.getY(), 0);
         }else{
-            if(movementTimer >0.1){
-                //moves player if his movement queue is not empty
-                if(playerAction()){
-                    processTurn();
-                }
-                movementTimer = 0;
+            if(playerAction()){
+                processTurn();
             }
+
+
         }
     }
 
@@ -130,12 +127,16 @@ public class GameScreen extends AbstractScreen {
             } else{
                 player.moveToPosition(newPos);
                 level.updateFOV();
+                elapsedTimeInAP = 0;
                 if(player.movementPath.isEmpty()){
                     Tile t = level.getTile(newPos.getX(), newPos.getY());
                     if(t.getItem()!= null){
                         player.addToInventory(t.pickUpItem());
+                        elapsedTimeInAP+=50;
                     }
                 }
+                elapsedTimeInAP+=100;
+                System.out.println("ElapsedTimeMove: "+elapsedTimeInAP);
             }
 
             return true;
@@ -150,20 +151,33 @@ public class GameScreen extends AbstractScreen {
      */
     public void processTurn() {
         for(Enemy enemy: level.getEnemies()){
-            // enemy.doTurn(level);
-            if(level.isTileNextToPlayer(enemy.getPosition().getX(), enemy.getPosition().getY())){
-                enemy.movementPath = null;
-                player.movementPath = null;
-                attackPlayer(enemy);
-            }else if(level.isInLOS(enemy.getPosition(), player.getPosition(), enemy.viewDistance)){
-                level.findPathForActor(enemy, player.getPosition());
-                if(enemy.movementPath!= null && !enemy.movementPath.isEmpty()){
-                    Position newPos = enemy.movementPath.pop();
-                    if(level.isWalkable(newPos.getX(), newPos.getY()) && !newPos.equals(player.getPosition())){
-                        System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
-                        enemy.moveToPosition(newPos);
-                    }
+            enemy.modifyActionPoints(elapsedTimeInAP);
 
+            while (enemy.getActionPoints()>0){
+                if(level.isTileNextToPlayer(enemy.getPosition().getX(), enemy.getPosition().getY())){
+                    enemy.movementPath = null;
+                    player.movementPath = null;
+                    attackPlayer(enemy);
+                    enemy.modifyActionPoints(-100/enemy.getSpeed());
+                    System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after attack ");
+
+                }else if(level.isInLOS(enemy.getPosition(), player.getPosition(), enemy.viewDistance)){
+                    boolean moved = false;
+                    level.findPathForActor(enemy, player.getPosition());
+                    if(enemy.movementPath!= null && !enemy.movementPath.isEmpty()){
+                        Position newPos = enemy.movementPath.pop();
+                        if(level.isWalkable(newPos.getX(), newPos.getY()) && !newPos.equals(player.getPosition())){
+                            System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
+                            enemy.moveToPosition(newPos);
+                            enemy.modifyActionPoints(-100/enemy.getSpeed());
+                            moved = true;
+                            System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after movement ");
+                        }
+                    }
+                    if(!moved) enemy.waitTurn();
+                }else{
+                    //wait turn
+                    enemy.waitTurn();
                 }
             }
 
@@ -181,20 +195,25 @@ public class GameScreen extends AbstractScreen {
             //attack!
             Enemy e = level.getEnemyOnPos(new Position(x,y));
             attackEnemy(e);
+            elapsedTimeInAP = 100 / player.getEquippedWeapon().getSpeed();
+           // elapsedTimeInAP = 100;
+            System.out.println("ElapsedTimeAttack: "+elapsedTimeInAP);
             processTurn();
+
+
         }else if(t!=null && !level.isSolid(x, y) && !level.isOccupiedByObject(x, y)&& t.hasSeen){
             if(x == player.getPosition().getX() && y == player.getPosition().getY()){
-                waitTurn();
+                //waitTurn();
+                elapsedTimeInAP = 100;
+                System.out.println("ElapsedTimeWait: "+elapsedTimeInAP);
+                processTurn();
+
             }else{
                 level.findPathForActor(player, new Position(x, y));
+                elapsedTimeInAP = 0;
             }
 
         }
-    }
-
-    private void waitTurn(){
-        player.movementPath = new LinkedList<Position>();
-        player.movementPath.add(player.getPosition());
     }
 
 

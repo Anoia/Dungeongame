@@ -8,5 +8,8 @@ public class Rat extends Enemy {
         maxHP = 10;
         currentHP = maxHP;
         XPRewarded = 10;
+        setSpeed(2);
     }
+
+
 }
