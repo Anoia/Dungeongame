@@ -157,9 +157,17 @@ public class GameScreen extends AbstractScreen {
                 if(level.isTileNextToPlayer(enemy.getPosition().getX(), enemy.getPosition().getY())){
                     enemy.movementPath = null;
                     player.movementPath = null;
-                    attackPlayer(enemy);
-                    enemy.modifyActionPoints(-100/enemy.getSpeed());
-                    System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after attack ");
+                    int requiredAP = 100/enemy.getSpeed();
+                    if (enemy.getActionPoints() >= requiredAP){
+                        attackPlayer(enemy);
+                        enemy.modifyActionPoints(-requiredAP);
+                        System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after attack ");
+                    }else{
+                        System.out.println(enemy.getSpriteName()+" has not enough AP to attack ");
+                        break;
+                    }
+
+
 
                 }else if(level.isInLOS(enemy.getPosition(), player.getPosition(), enemy.viewDistance)){
                     boolean moved = false;
@@ -167,11 +175,20 @@ public class GameScreen extends AbstractScreen {
                     if(enemy.movementPath!= null && !enemy.movementPath.isEmpty()){
                         Position newPos = enemy.movementPath.pop();
                         if(level.isWalkable(newPos.getX(), newPos.getY()) && !newPos.equals(player.getPosition())){
-                            System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
-                            enemy.moveToPosition(newPos);
-                            enemy.modifyActionPoints(-100/enemy.getSpeed());
-                            moved = true;
-                            System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after movement ");
+
+                            int requiredAP = 100/enemy.getSpeed();
+                            if(enemy.getActionPoints()>=requiredAP){
+                                System.out.println(enemy.getSpriteName() + " moving from "+enemy.getPosition().getX()+" "+enemy.getPosition().getY()+" to "+newPos.getX()+" "+newPos.getY());
+                                enemy.moveToPosition(newPos);
+                                enemy.modifyActionPoints(-100/enemy.getSpeed());
+                                moved = true;
+                                System.out.println(enemy.getSpriteName()+" has "+enemy.getActionPoints()+" AP left after movement ");
+                            }else{
+                                System.out.println(enemy.getSpriteName()+" has not enough AP to move ");
+                                break;
+                            }
+
+
                         }
                     }
                     if(!moved) enemy.waitTurn();
